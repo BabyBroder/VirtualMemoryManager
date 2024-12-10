@@ -1,9 +1,9 @@
 #ifndef PAGE_TABLE_H
 #define PAGE_TABLE_H
-
+const int offset = 200;
 typedef struct {
     int id;
-    char data[256];
+    char data[65535];
 } Page;
 
 void initialize_page_table(int size);
