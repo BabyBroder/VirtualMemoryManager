@@ -19,4 +19,7 @@ void load_page(PageTable *page_table, TLB *tlb, uint16_t page_id, const char *da
 // Function to evict a page from memory using the TLB
 void evict_page(PageTable *page_table, TLB *tlb, uint16_t page_id);
 
+// Function to handle a page fault by loading the page into memory from the disk
+void handle_page_fault(int page_number);
+
 #endif // MEMORY_MANAGER_H
