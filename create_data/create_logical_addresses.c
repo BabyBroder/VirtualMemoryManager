@@ -5,7 +5,7 @@ const int offset = 200;
 int main()
 {
     srand(time(NULL));
-    freopen("..\\data\\physical_addresses.txt","w",stdout);
+    freopen("../data/addresses.txt","w",stdout);
     for(int i = 0 ;i<=1000; i++) 
         {
             int num = rand()%65536; 
