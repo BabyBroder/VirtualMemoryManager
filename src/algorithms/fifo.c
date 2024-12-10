@@ -42,7 +42,7 @@ void fifo_add_page(int page) {
     if (size == capacity) {
         int replaced_page = fifo_choose_page_to_replace();
         if (replaced_page == -1) {
-            return; // Handle error gracefully
+            return; 
         }
     }
 
