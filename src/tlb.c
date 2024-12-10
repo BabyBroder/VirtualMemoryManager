@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "tlb.h"
 #include "page_table.h"
-#include "constants.h"
+#include "utils/constants.h"
 
 void initialize_tlb(TLB *tlb) {}
 
