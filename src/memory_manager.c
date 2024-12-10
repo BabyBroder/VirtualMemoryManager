@@ -3,7 +3,7 @@
 #include "memory_manager.h"
 #include "page_table.h"
 #include "tlb.h"
-#include "constants.h"
+#include "utils/constants.h"
 
 // Private global variables
 static Page *frames = NULL;
