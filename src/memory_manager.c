@@ -21,3 +21,6 @@ void load_page(PageTable *page_table, TLB *tlb, uint16_t page_id, const char *da
 
 // Evict a page from memory using the TLB
 void evict_page(PageTable *page_table, TLB *tlb, uint16_t page_id) {}
+
+// Handle a page fault by loading the page into memory from the disk
+void handle_page_fault(PageTable *page_table, TLB *tlb, int page_number) {}
