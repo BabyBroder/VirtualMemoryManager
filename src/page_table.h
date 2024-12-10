@@ -10,6 +10,11 @@ typedef struct {
     bool valid;            // Valid bit to indicate if the page is in memory
 } PageTableEntry;
 
+// Structure for a physical memory page
+typedef struct {
+    char *data;            // Placeholder for page data (for simplicity, assume it holds a string)
+} Page;
+
 // Structure for the page table
 typedef struct {
     PageTableEntry *entries; // Array of page table entries
@@ -25,6 +30,12 @@ int translate_address(PageTable *page_table, uint16_t page_number);
 
 // Updates the page table when a page is loaded into memory
 void update_page_table(PageTable *page_table, uint16_t page_number, uint16_t frame_number);
+
+// Gets the page by page number
+Page *get_page(PageTable *page_table, uint16_t page_id);
+
+// Loads a page into memory
+void load_page(PageTable *page_table, uint16_t page_id, const char *data);
 
 // Cleans up resources allocated for the page table
 void free_page_table(PageTable *page_table);
