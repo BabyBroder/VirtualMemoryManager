@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "page_table.h"
-
 typedef struct {
     int page_id;
     int frame_id;
@@ -29,7 +28,7 @@ void initialize_page_table(int size) {
 }
 
 int translate_address(int virtual_address) {
-    int page_id = (virtual_address*page_table_size) + offset;
+    int page_id = (virtual_address>>8)/256;
 }
 
 void update_page_table(int page_id, int frame_id) {}
