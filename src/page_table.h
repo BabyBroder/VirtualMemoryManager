@@ -2,7 +2,7 @@
 #define PAGE_TABLE_H
 typedef struct {
     int id;
-    char data[65535];
+    char data;
 } Page;
 
 void initialize_page_table(int size);
