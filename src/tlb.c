@@ -1,20 +1,13 @@
-#include "tlb.h"
+#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include "tlb.h"
+#include "page_table.h"
+#include "constants.h"
 
-static TLBEntry *tlb = NULL;
-static int tlb_size = 0;
-static int next_entry_index = 0; 
+void initialize_tlb(TLB *tlb) {}
 
-void initialize_tlb(int size) {}
+int tlb_lookup(TLB *tlb, uint16_t page_number) {}
 
-int lookup_tlb(int virtual_address) {}
+void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number) {}
 
-void update_tlb(int virtual_address, int physical_address) {}
-
-void invalidate_tlb_entry(int virtual_address) {}
-
-void clear_tlb() {}
-
-void free_tlb() {}
-
+void print_tlb(const TLB *tlb) {}
