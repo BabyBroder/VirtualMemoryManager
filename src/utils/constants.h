@@ -1,7 +1,27 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef CONSTANT_H
+#define CONSTANT_H
 
-#define MEMORY_SIZE 4  // Number of frames in memory
-#define MAX_PAGES 100  // Maximum number of pages supported
+// Number of entries in the page table 2^8 entries in the page table
+// 2^8 entries in the page table
+#define PAGE_TABLE_ENTRIES 256
 
-#endif // CONSTANTS_H
+// Page size in bytes
+// Page size of 2^8 bytes
+#define PAGE_SIZE 28
+
+// Number of entries in the TLB (Translation Lookaside Buffer)
+// 16 entries in the TLB
+#define TLB_ENTRIES 16
+
+// Frame size in bytes
+// Frame size of 2^8 bytes
+#define FRAME_SIZE 256
+
+// 256 frames
+#define TOTAL_FRAMES 256
+
+// Total physical memory size in bytes
+// Physical memory of 65,536 bytes (256 frames × 256-byte frame size)
+#define PHYSICAL_MEMORY_SIZE (TOTAL_FRAMES * FRAME_SIZE)
+
+#endif // CONSTANT_H
