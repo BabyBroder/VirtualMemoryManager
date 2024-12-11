@@ -1,9 +1,10 @@
 #ifndef CONSTANT_H
 #define CONSTANT_H
 
-#define FIFO 0
-#define LRU 1
-#define OPT 2
+
+#define ADDRESS_SIZE 1000
+#define BACKING_STORE_SIZE 65536
+
 // Index for algorithm
 // Number of entries in the page table 2^8 entries in the page table
 // 2^8 entries in the page table

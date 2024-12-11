@@ -23,6 +23,14 @@ void initialize_page_table(PageTable *page_table, size_t num_pages) {
     }
 }
 
+int page_table_lookup(PageTable *page_table, uint16_t page_number) {
+    if (page_number < 0 || page_number >= page_table->num_pages || !page_table->entries[page_number].valid) {
+        return -1;
+    }
+
+    return page_table->entries[page_number].frame_number;
+}
+
 int translate_address(PageTable *page_table, uint32_t virtual_address) {
     const uint16_t PAGE_OFFSET_BITS = 8;
     const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
