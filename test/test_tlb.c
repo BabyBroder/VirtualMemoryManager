@@ -37,7 +37,12 @@ int main()
 
     print_tlb(_TLB);
 
-    printf("Entry to replace for LRU algorithm: %d\nPage number: %d\nFrame number: %d\n", choose_entry_to_replace(_TLB, test[13].page_number,test[13].frame_number, 18), test[13].page_number, test[13].frame_number);
+    printf("Entry to replace for LRU algorithm: %d\nPage number: %d\nFrame number: %d\n",
+        choose_entry_to_replace(
+            _TLB,
+            test[13].page_number,
+            test[13].frame_number, 18), 
+            test[13].page_number, test[13].frame_number);
 
     tlb_add_entry( _TLB, test[13].page_number, test[13].frame_number, 18);
     print_tlb(_TLB);

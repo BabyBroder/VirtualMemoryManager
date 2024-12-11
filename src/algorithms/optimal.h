@@ -17,7 +17,6 @@ typedef struct
     int **idx;
 } Optimal;
 
-void build_future_usage(Optimal *structure);
 /**
  * Initializes the Optimal structure with the specified capacity.
  *
@@ -25,6 +24,20 @@ void build_future_usage(Optimal *structure);
  * @param capacity The maximum number of pages the memory can hold.
  */
 void initialize_optimal(Optimal *structure, int capacity);
+
+/**
+ * @brief Builds the future usage pattern for the optimal page replacement algorithm.
+ *
+ * This function analyzes the future memory access pattern and constructs the
+ * necessary data structures to determine the optimal page to replace in the
+ * future. It is used by the Optimal page replacement algorithm to minimize
+ * page faults by always replacing the page that will not be used for the
+ * longest period of time.
+ *
+ * @param structure A pointer to the Optimal structure that holds the data
+ *                  necessary for the optimal page replacement algorithm.
+ */
+void build_future_usage(Optimal *structure);
 
 /**
  * Chooses the page to replace using the Optimal page replacement algorithm.
