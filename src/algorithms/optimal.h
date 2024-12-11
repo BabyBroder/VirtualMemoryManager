@@ -8,8 +8,11 @@ typedef struct {
     int capacity;       // Maximum number of pages the memory can hold
     int size;           // Current number of pages in memory
     int *future_usage;  // Array to track future usage of pages
+    int *map;
+    int **idx;    
 } Optimal;
 
+void build_future_usage(Optimal *structure);
 /**
  * Initializes the Optimal structure with the specified capacity.
  * 
@@ -23,11 +26,9 @@ void initialize_optimal(Optimal *structure, int capacity);
  * 
  * @param structure Pointer to the Optimal structure.
  * @param current_index The current index in the reference string.
- * @param reference_string The reference string of pages.
- * @param reference_length The total length of the reference string.
  * @return The index of the page to replace in the Optimal structure.
  */
-int optimal_choose_page_to_replace(const Optimal *structure, int current_index, const int *reference_string, size_t reference_length);
+int optimal_choose_page_to_replace(const Optimal *structure, int current_index);
 
 /**
  * Adds a page to the Optimal structure.

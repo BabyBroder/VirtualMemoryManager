@@ -36,10 +36,12 @@ int fifo_choose_page_to_replace(FIFO *structure) {
 
 void fifo_add_page(FIFO *structure, int page) {
     if (structure->size == structure->capacity) {
-        int replaced_page = fifo_choose_page_to_replace(structure);
-        if (replaced_page == -1) {
-            return; 
+        for (int i = 0; i < structure->size; i++) {
+            if (structure->queue[i] == page) {
+                return; 
+            }
         }
+        fifo_choose_page_to_replace(structure);
     }
 
     structure->queue[structure->rear] = page;
