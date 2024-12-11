@@ -11,4 +11,10 @@ typedef enum {
     OPT
 } Algorithm;
 
+typedef struct {
+    FIFO fifo;
+    LRU lru;
+    Optimal optimal;
+} AlgorithmStruct;
+
 #endif // ALGORITHM_H
