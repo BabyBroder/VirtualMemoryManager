@@ -18,11 +18,11 @@ typedef struct {
 // Structure for the TLB
 typedef struct {
     TLBEntry entries[TLB_SIZE]; // Array of TLB entries
-    int next_replace_index;     // Index for replacement (FIFO or other policy)
+    int next_replace_index;     // Index for replacement (FIFO = 0, LRU = 1, OPT = 2)
 } TLB;
 
 // Initializes the TLB
-void initialize_tlb(TLB *tlb);
+void initialize_tlb(TLB *tlb, int replacement);
 
 // Looks up the TLB for a given page number
 // Returns the frame number on a hit, -1 on a miss
