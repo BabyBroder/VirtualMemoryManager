@@ -19,7 +19,7 @@ typedef struct {
 } PageTable;
 
 // Initializes the page table
-void initialize_page_table(PageTable *page_table, size_t num_pages);
+void initialize_page_table(PageTable *page_table);
 
 // Looks up the page table for a given page number
 int page_table_lookup(page_table, page_number);
@@ -35,7 +35,7 @@ void update_page_table(PageTable *page_table, uint16_t page_number, uint16_t fra
 Frame *get_page(PageTable *page_table, uint16_t page_id);
 
 // Loads a page into memory
-void load_page(PageTable *page_table, uint16_t page_id, const char *data);
+void load_page(PhysicalMemory *physical_memory, PageTable *page_table, uint16_t page_id, const char *data, int current_index);
 
 // Cleans up resources allocated for the page table
 void free_page_table(PageTable *page_table);
