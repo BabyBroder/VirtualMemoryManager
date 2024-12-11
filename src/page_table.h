@@ -38,6 +38,6 @@ Frame *get_page(PageTable *page_table, uint16_t page_id);
 void load_page(PhysicalMemory *physical_memory, PageTable *page_table, uint16_t page_id, const char *data, int current_index);
 
 // Cleans up resources allocated for the page table
-void free_page_table(PageTable *page_table);
+void free_page_table(PhysicalMemory* physical_memory, PageTable *page_table);
 
 #endif // PAGE_TABLE_H

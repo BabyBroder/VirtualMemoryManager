@@ -30,7 +30,8 @@ void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algor
 
 void add_page_to_physical_memory(PhysicalMemory *physical_memory, int page, int current_index)
 {
-    int free_frame = find_free_frame(physical_memory, current_index);
+    //int free_frame = find_free_frame(physical_memory, current_index);
+    
     if (physical_memory->algorithm == FIFO_ALGORITHM)
     {
         fifo_add_page(&physical_memory->algorithm_struct.fifo, page);
@@ -81,7 +82,7 @@ int find_free_frame(PhysicalMemory *physical_memory, int current_index)
 {
     for (int i = 0; i < TOTAL_FRAMES; i++)
     {
-        if (physical_memory->frames[i].data == NULL)
+        if (physical_memory->frames[i].data[0] == 0)
         {
             return i;
         }
@@ -90,14 +91,16 @@ int find_free_frame(PhysicalMemory *physical_memory, int current_index)
     // Page replacement algorithm
     if (physical_memory->algorithm == FIFO_ALGORITHM)
     {
-        return fifo_choose_page_to_replace(physical_memory);
+        return fifo_choose_page_to_replace(&physical_memory->algorithm_struct.fifo);
     }
     else if (physical_memory->algorithm == LRU_ALGORITHM)
     {
-        return lru_choose_page_to_replace(physical_memory);
+        return lru_choose_page_to_replace(&physical_memory->algorithm_struct.lru);
     }
     else if (physical_memory->algorithm == OPT_ALGORITHM)
     {
-        return optimal_choose_page_to_replace(physical_memory, current_index);
+        return optimal_choose_page_to_replace(&physical_memory->algorithm_struct.optimal, current_index);
     }
+
+    return -1;
 }

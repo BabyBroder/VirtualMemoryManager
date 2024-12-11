@@ -29,7 +29,7 @@ char *read_BACKINGSTORE(VirtualMemory *virtual_memory, uint32_t virtual_address)
     const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
 
     uint16_t page_number = (virtual_address >> PAGE_OFFSET_BITS) & ((1 << PAGE_NUMBER_BITS) - 1);
-    uint16_t offset = virtual_address & ((1 << PAGE_OFFSET_BITS) - 1);
+    //uint16_t offset = virtual_address & ((1 << PAGE_OFFSET_BITS) - 1);
     
     memcpy(result, &virtual_memory->data[page_number * 256], sizeof(char) * 256);
     return result;

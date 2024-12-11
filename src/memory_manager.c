@@ -21,7 +21,7 @@ void handle_tlb_miss(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, P
     const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
 
     uint16_t page_number = (virtual_address >> PAGE_OFFSET_BITS) & ((1 << PAGE_NUMBER_BITS) - 1);
-    uint16_t offset = virtual_address & ((1 << PAGE_OFFSET_BITS) - 1);
+    //uint16_t offset = virtual_address & ((1 << PAGE_OFFSET_BITS) - 1);
 
     // Check if the page is in the TLB
     if (tlb_lookup(tlb, page_number) != -1) {

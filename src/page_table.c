@@ -88,18 +88,17 @@ void load_page(PhysicalMemory *physical_memory, PageTable *page_table, uint16_t 
     physical_memory->frames[frame_id].data[FRAME_SIZE - 1] = '\0';
 }
 
-void free_page_table(PageTable *page_table) {
+void free_page_table(PhysicalMemory* physical_memory, PageTable *page_table) {
     for (size_t i = 0; i < page_table->num_pages; i++) {
         if (page_table->entries[i].valid) {
             int frame_id = page_table->entries[i].frame_number;
-            free(physical_memory.frames[frame_id].data); // Free data stored in the frame
-            physical_memory.frames[frame_id].data[0] = NULL;
+            memset(physical_memory->frames[frame_id].data, 0, FRAME_SIZE); // Clear data stored in the frame
         }
     }
 
     free(page_table->entries);
-    free(physical_memory.frames);
+    free(physical_memory->frames);
 
     page_table->entries = NULL;
-    physical_memory.nums_frames = 0;
+    physical_memory->nums_frames = 0;
 }
