@@ -22,7 +22,7 @@ typedef struct {
 void initialize_page_table(PageTable *page_table);
 
 // Looks up the page table for a given page number
-int page_table_lookup(page_table, page_number);
+int page_table_lookup(PageTable *page_table, uint16_t page_number);
 
 // Translates a logical page number to a frame number
 // Returns -1 if the page is not valid (i.e., a page fault)

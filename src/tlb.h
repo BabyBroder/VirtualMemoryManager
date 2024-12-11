@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "page_table.h"
-#include "algorithm.h"
+#include "algorithms/algorithm.h"
     
 // Maximum number of entries in the TLB
 #define TLB_SIZE 16
