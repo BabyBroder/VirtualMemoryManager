@@ -6,10 +6,29 @@
 #include "utils/constants.h"
 #include <stdint.h>
 
-void initialize_physical_memory(PhysicalMemory *physical_memory){
+void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm){
     physical_memory->nums_frames = TOTAL_FRAMES;
     for(int i = 0; i < TOTAL_FRAMES; i++){
         memset(physical_memory->frames[i].data, 0, FRAME_SIZE);
+    }
+    physical_memory->algorithm = algorithm;
+    if( algorithm == FIFO){
+        initialize_fifo(&physical_memory->algorithm_struct.fifo, TOTAL_FRAMES);
+    } else if( algorithm == LRU){
+        initialize_lru(&physical_memory->algorithm_struct.lru, TOTAL_FRAMES);
+    } else if( algorithm == OPT){
+        initialize_optimal(&physical_memory->algorithm_struct.optimal, TOTAL_FRAMES);
+    }
+}
+
+void add_page_to_physical_memory(PhysicalMemory *physical_memory, int page, int current_index){
+    int free_frame = find_free_frame(physical_memory, current_index);
+    if(physical_memory->algorithm == FIFO){
+        fifo_add_page(&physical_memory->algorithm_struct.fifo, page);
+    } else if(physical_memory->algorithm == LRU){
+        lru_add_page(&physical_memory->algorithm_struct.lru, page);
+    } else if(physical_memory->algorithm == OPT){
+        optimal_add_page(&physical_memory->algorithm_struct.optimal, page);
     }
 }
 
@@ -40,7 +59,7 @@ int write_to_physical_memory(PhysicalMemory *physical_memory, uint32_t physical_
 }
 
 
-int find_free_frame(PhysicalMemory *physical_memory){
+int find_free_frame(PhysicalMemory *physical_memory, int current_index){
     for(int i = 0; i < TOTAL_FRAMES; i++){
         if(physical_memory->frames[i].data == NULL){
             return i;
@@ -48,5 +67,11 @@ int find_free_frame(PhysicalMemory *physical_memory){
     }
 
     // Page replacement algorithm
-    
+    if( physical_memory->algorithm == FIFO){
+        return fifo_choose_page_to_replace(physical_memory);
+    } else if( physical_memory->algorithm  == LRU){
+        return lru_choose_page_to_replace(physical_memory);
+    } else if( physical_memory->algorithm  == OPT){
+        return optimal_choose_page_to_replace(physical_memory, current_index);
+    }
 }
