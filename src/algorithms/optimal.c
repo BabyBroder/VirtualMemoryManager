@@ -55,7 +55,7 @@ void initialize_optimal(Optimal *structure, int capacity) {
 }
 
 void build_future_usage(Optimal *structure) {
-    freopen("../data/accesses.txt", "r", stdin);
+    freopen("../../data/accesses.txt", "r", stdin);
     
     for (int page, i = 0; i < 1000; i++) {
         scanf("%d", &page);
@@ -99,7 +99,7 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index) 
 void optimal_add_page(Optimal *structure, int page, int current_index) {
     for (int i = 0; i < structure->capacity; i++)
         if (structure->pages[i] == page) 
-            return;
+             return;
 
     if (structure->size < structure->capacity) {
         structure->pages[structure->size++] = page;
