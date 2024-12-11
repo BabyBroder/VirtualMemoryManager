@@ -55,7 +55,7 @@ void initialize_optimal(Optimal *structure, int capacity) {
 }
 
 void build_future_usage(Optimal *structure) {
-    freopen("../../data/accesses.txt", "r", stdin);
+    freopen("../../data/addresses.txt", "r", stdin);
     
     for (int page, i = 0; i < 1000; i++) {
         scanf("%d", &page);
