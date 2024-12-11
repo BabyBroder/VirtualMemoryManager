@@ -1,3 +1,8 @@
+/**
+ * @file memory_manager.h
+ * @brief Header file for memory management components including TLB and Page Fault management.
+ */
+
 #ifndef MEMORY_MANAGER_H
 #define MEMORY_MANAGER_H
 
@@ -6,20 +11,54 @@
 #include "page_table.h"
 #include "tlb.h"
 
-typedef struct{
-    int TLBhits;
-    bool TLBmiss;
+/**
+ * @struct TLBManager
+ * @brief Structure to manage TLB hits and misses.
+ * 
+ * @var TLBManager::TLBhits
+ * Number of TLB hits.
+ * 
+ * @var TLBManager::TLBmiss
+ * Boolean flag indicating a TLB miss.
+ */
+typedef struct {
+    int TLBhits; /**< Total number of TLB hits. */
+    bool TLBmiss; /**< Flag indicating if the most recent lookup was a TLB miss. */
 } TLBManager;
 
-typedef struct{
-    int pageFaults;
-    bool pageFault;
+/**
+ * @struct PageFaultManager
+ * @brief Structure to manage page faults.
+ * 
+ * @var PageFaultManager::pageFaults
+ * Number of page faults.
+ * 
+ * @var PageFaultManager::pageFault
+ * Boolean flag indicating a page fault.
+ */
+typedef struct {
+    int pageFaults; /**< Total number of page faults. */
+    bool pageFault; /**< Flag indicating if the most recent memory access caused a page fault. */
 } PageFaultManager;
 
-// Function to initialize memory management components
+/**
+ * @brief Initializes memory management components.
+ * 
+ * @param tlb_manager Pointer to TLBManager structure.
+ * @param page_fault_manager Pointer to PageFaultManager structure.
+ */
 void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_fault_manager);
 
-// Function to handle a TLB miss
+/**
+ * @brief Handles a TLB miss.
+ * 
+ * @param tlb Pointer to TLB structure.
+ * @param page_table Pointer to PageTable structure.
+ * @param tlb_manager Pointer to TLBManager structure.
+ * @param page_fault_manager Pointer to PageFaultManager structure.
+ * @param virtual_address The virtual address that caused the TLB miss.
+ * @param current_index The current index in the TLB.
+ */
 void handle_tlb_miss(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index);
 
 #endif // MEMORY_MANAGER_H

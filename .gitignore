@@ -1,1 +1,40 @@
+# Ignore build artifacts
+*.o
+*.out
+*.log
+*.exe
+*.a
+*.so
+*.swp
+*.tmp
+*.dSYM/
+
+# Ignore compiled binaries
+test_memory_manager
+test_page_table
+test_disk_manager
+test_algorithms
+test_tlb
+vm_manager
+
+# Ignore temporary and backup files
+*.~*
+*.bak
+*.old
+*.orig
+*.rej
+*~
+# Ignore editor/IDE specific files
 .vscode/
+.idea/
+*.code-workspace
+__pycache__/
+*.user
+*.DS_Store
+
+# Ignore generated data files
+data/output.log
+data/*.bin
+
+# Ignore Makefile backups
+Makefile~
