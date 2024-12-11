@@ -7,7 +7,7 @@
 
 // Page size in bytes
 // Page size of 2^8 bytes
-#define PAGE_SIZE 28
+#define PAGE_SIZE 256
 
 // Number of entries in the TLB (Translation Lookaside Buffer)
 // 16 entries in the TLB
