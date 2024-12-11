@@ -3,12 +3,27 @@
 #include "tlb.h"
 #include "page_table.h"
 #include "utils/constants.h"
+#include "fifo.h"
+#include "lru.h"
+#include "optimal.h"
 
 void initialize_tlb(TLB *tlb, int replacement) {
     tlb->next_replace_index = replacement; // chossing algorithm 
     for(int i = 0 ;i < TLB_SIZE ;i++)
     {
         tlb->entries[i].valid = false;
+    }
+    if(tlb->next_replace_index == FIFO)
+    {
+        
+    }
+    else if(tlb->next_replace_index == OPT)
+    {
+
+    }
+    else if(tlb->next_replace_index == LRU)
+    {
+        
     }
 }
 

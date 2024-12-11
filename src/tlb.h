@@ -7,7 +7,6 @@
 
 // Maximum number of entries in the TLB
 #define TLB_SIZE 16
-
 // Structure for a single TLB entry
 typedef struct {
     uint16_t page_number; // Logical page number
