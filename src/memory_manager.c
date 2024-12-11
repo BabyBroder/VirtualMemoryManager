@@ -4,23 +4,9 @@
 #include "page_table.h"
 #include "tlb.h"
 #include "utils/constants.h"
+#include "disk_manager.h"
+#include "algorithms/fifo.h"
+#include "algorithms/lru.h"
+#include "algorithms/optimal.h"
 
-// Private global variables
-static Page *frames = NULL;
-static int frame_count = 0;
 
-// Initialize memory management components
-void initialize_memory_manager(PageTable *page_table, TLB *tlb, size_t num_frames) {}
-
-// Translate a virtual address to a physical address
-// Returns -1 if the address translation fails (page fault)
-int translate_address(PageTable *page_table, TLB *tlb, uint32_t virtual_address) {}
-
-// Load a page into memory
-void load_page(PageTable *page_table, TLB *tlb, uint16_t page_id, const char *data) {}
-
-// Evict a page from memory using the TLB
-void evict_page(PageTable *page_table, TLB *tlb, uint16_t page_id) {}
-
-// Handle a page fault by loading the page into memory from the disk
-void handle_page_fault(PageTable *page_table, TLB *tlb, int page_number) {}

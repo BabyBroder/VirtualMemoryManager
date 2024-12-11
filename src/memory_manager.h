@@ -6,20 +6,20 @@
 #include "page_table.h"
 #include "tlb.h"
 
+typedef struct{
+    int TLBhits;
+    bool TLBmiss;
+} TLBManager;
+
+typedef struct{
+    int pageFaults;
+    bool pageFault;
+} PageFaultManager;
+
 // Function to initialize memory management components
-void initialize_memory_manager(PageTable *page_table, TLB *tlb, size_t num_frames);
+void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_fault_manager);
 
-// Function to translate a virtual address to a physical address
-// Returns -1 if the address translation fails (page fault)
-int translate_address(PageTable *page_table, TLB *tlb, uint32_t virtual_address);
-
-// Function to load a page into memory
-void load_page(PageTable *page_table, TLB *tlb, uint16_t page_id, const char *data);
-
-// Function to evict a page from memory using the TLB
-void evict_page(PageTable *page_table, TLB *tlb, uint16_t page_id);
-
-// Function to handle a page fault by loading the page into memory from the disk
-void handle_page_fault(PageTable *page_table, TLB *tlb, int page_number);
+// Function to handle a TLB miss
+void handle_tlb_miss(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address);
 
 #endif // MEMORY_MANAGER_H

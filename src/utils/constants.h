@@ -5,7 +5,6 @@
 #define LRU 1
 #define OPT 2
 // Index for algorithm
-
 // Number of entries in the page table 2^8 entries in the page table
 // 2^8 entries in the page table
 #define PAGE_TABLE_ENTRIES 256
