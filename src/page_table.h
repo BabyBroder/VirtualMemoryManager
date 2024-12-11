@@ -26,13 +26,16 @@ void initialize_page_table(PageTable *page_table, size_t num_pages);
 
 // Translates a logical page number to a frame number
 // Returns -1 if the page is not valid (i.e., a page fault)
-int translate_address(PageTable *page_table, uint16_t page_number);
+int translate_address(PageTable *page_table, uint32_t virtual_address);
 
 // Updates the page table when a page is loaded into memory
 void update_page_table(PageTable *page_table, uint16_t page_number, uint16_t frame_number);
 
 // Gets the page by page number
 Page *get_page(PageTable *page_table, uint16_t page_id);
+
+// Finds a free frame in physical memory
+int find_free_frame();
 
 // Loads a page into memory
 void load_page(PageTable *page_table, uint16_t page_id, const char *data);
