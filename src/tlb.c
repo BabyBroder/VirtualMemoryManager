@@ -19,7 +19,7 @@ void initialize_tlb(TLB *tlb, Algorithm algorithm) {
         initialize_optimal(&tlb->algorithm_struct.optimal, TLB_ENTRIES);
     }
     // default value: invalid
-    for(int i = 0 ;i < TLB_SIZE ;i++)
+    for(int i = 0 ;i < TLB_ENTRIES ;i++)
     {
         tlb->entries[i].valid = false;
     }
@@ -66,7 +66,7 @@ int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_numbe
 void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index) {
     bool needReplace = false;
     // finding free TLB entry to add
-    for(int i = 0 ;i < TLB_SIZE ;i++)
+    for(int i = 0 ;i < TLB_ENTRIES ;i++)
     {
         if(!tlb->entries[i].valid)
         {
@@ -81,7 +81,7 @@ void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int cu
     if (needReplace) 
     {   // choose a page to be replaced by using tlb algorithm 
         int indx = choose_entry_to_replace(tlb, page_number, frame_number, current_index);
-        if(indx>=TLB_SIZE) { // wrong index
+        if(indx>=TLB_ENTRIES) { // wrong index
             printf("Error index replacement\n");
             return;
         }
@@ -91,7 +91,7 @@ void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int cu
 }
 
 int tlb_lookup(TLB *tlb, uint16_t page_number) {
-    for(int i = 0 ;i < TLB_SIZE ;i++)
+    for(int i = 0 ;i < TLB_ENTRIES ;i++)
     {
         // finding the TLB entry valid and match page number
         if(tlb->entries[i].valid&&
@@ -106,7 +106,7 @@ int tlb_lookup(TLB *tlb, uint16_t page_number) {
 void print_tlb(const TLB *tlb) {
     // print tlb
     printf("Page number - Frame number\n");
-    for(int i = 0 ;i < TLB_SIZE ;i++)
+    for(int i = 0 ;i < TLB_ENTRIES ;i++)
     {
         if(tlb->entries[i].valid){
             int page_number = tlb->entries[i].page_number;

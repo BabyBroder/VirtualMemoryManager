@@ -102,8 +102,9 @@ void load_page(PhysicalMemory *physical_memory, PageTable *page_table, uint16_t 
 /**
  * Cleans up resources allocated for the page table.
  *
+ * @param physical_memory A pointer to the PhysicalMemory structure associated with the page table.
  * @param page_table A pointer to the PageTable structure to be freed.
  */
-void free_page_table(PageTable *page_table);
+void free_page_table(PhysicalMemory* physical_memory, PageTable *page_table) ;
 
 #endif // PAGE_TABLE_H
