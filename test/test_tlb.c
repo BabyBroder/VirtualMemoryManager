@@ -30,6 +30,10 @@ int main()
         );
     }
     print_tlb(_TLB);
+    printf("%d\n",choose_entry_to_replace(_TLB,
+            test[17].page_number,
+            test[17].frame_number,
+            17));
     tlb_add_entry(
             _TLB,
             test[17].page_number,

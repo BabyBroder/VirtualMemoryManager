@@ -70,13 +70,13 @@ void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int cu
     {
         if(!tlb->entries[i].valid)
         {
-            needReplace = add_entry_to_replacment(tlb, page_number, frame_number, current_index);
             tlb->entries[i].valid = true;
             tlb->entries[i].frame_number = frame_number;
             tlb->entries[i].page_number = page_number; 
             return;
         }
-    } 
+    }
+    needReplace = add_entry_to_replacment(tlb, page_number, frame_number, current_index); 
     // TLB is full use page replacement
     if (needReplace) 
     {   // choose a page to be replaced by using tlb algorithm 
