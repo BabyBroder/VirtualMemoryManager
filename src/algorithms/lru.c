@@ -51,7 +51,10 @@ bool lru_add_page(LRU *structure, int page) {
     for (int i = 0; i < structure->size; i++) 
     {
         if (structure->table[i].page == page)
-            return true; 
+            {
+                structure->table[i].timestamp = structure->time;
+                return true; 
+            }
     }
 
     if (structure->size < structure->capacity) {
