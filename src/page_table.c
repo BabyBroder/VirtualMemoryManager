@@ -50,7 +50,7 @@ void update_page_table(PageTable *page_table, uint16_t page_number, uint16_t fra
 }
 
 Page* get_page(PageTable *page_table, uint16_t page_id) {
-    if (page_id >= page_table->num_pages || !page_table->entries[page_id].valid) {
+    if (page_id < 0 || page_id >= page_table->num_pages || !page_table->entries[page_id].valid) {
         printf("Error: Page is not valid!\n");
         return NULL;
     }
