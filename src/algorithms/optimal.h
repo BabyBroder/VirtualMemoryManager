@@ -2,6 +2,10 @@
 #define OPTIMAL_H
 
 #include <stddef.h> // For size_t
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <stdbool.h>
 
 typedef struct
 {
@@ -37,13 +41,13 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index);
  * @param structure Pointer to the Optimal structure.
  * @param page The page to add.
  */
-void optimal_add_page(Optimal *structure, int page, int current_index);
+bool optimal_add_page(Optimal *structure, int page, int current_index);
 
 /**
  * Frees the dynamically allocated memory used by the Optimal structure.
  *
  * @param structure Pointer to the Optimal structure.
  */
-void free_optimal_memory(Optimal *structure);
+void free_optimal(Optimal *structure);
 
 #endif // OPTIMAL_H

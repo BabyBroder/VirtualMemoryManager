@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
 #include "lru.h"
 
 void initialize_lru(LRU *structure, int capacity_value) {
@@ -9,6 +6,7 @@ void initialize_lru(LRU *structure, int capacity_value) {
         exit(EXIT_FAILURE);
     }
 
+    structure->table = NULL;
     if (structure->table != NULL) {
         fprintf(stderr, "LRU Warning: Table is already initialized.\n");
         return;
@@ -47,25 +45,28 @@ int lru_choose_page_to_replace(LRU *structure) {
     return index;
 }
 
-void lru_add_page(LRU *structure, int page) {
+bool lru_add_page(LRU *structure, int page) {
     ++structure->time;
-    for (int i = 0; i < structure->capacity; i++) {
-        if (structure->table[i].page == page) {
-            structure->table[i].timestamp = structure->time;
-            return;
-        }
+
+    for (int i = 0; i < structure->size; i++) 
+    {
+        if (structure->table[i].page == page)
+            return true; 
     }
 
     if (structure->size < structure->capacity) {
         structure->table[structure->size].page = page;
         structure->table[structure->size].timestamp = structure->time;
         ++structure->size;
-    } else {
-        int index = lru_choose_page_to_replace(structure);
+    } 
+    else {
+        return false;
+        // int index = lru_choose_page_to_replace(structure);
 
-        structure->table[index].page = page;
-        structure->table[index].timestamp = structure->time;
+        // structure->table[index].page = page;
+        // structure->table[index].timestamp = structure->time;
     }
+    return true;
 }
 
 void free_lru(LRU *structure) {

@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "fifo.h"
 
 void initialize_fifo(FIFO *structure, int capacity_value) {
@@ -8,6 +6,7 @@ void initialize_fifo(FIFO *structure, int capacity_value) {
         exit(EXIT_FAILURE);
     }
 
+    structure->queue = NULL;
     if (structure->queue != NULL) {
         fprintf(stderr, "FIFO Warning: Queue is already initialized.\n");
         return;
@@ -34,19 +33,23 @@ int fifo_choose_page_to_replace(FIFO *structure) {
     return page;
 }
 
-void fifo_add_page(FIFO *structure, int page) {
+bool fifo_add_page(FIFO *structure, int page) {
+    for (int i = 0; i < structure->size; i++) 
+    {
+        if (structure->queue[i] == page)
+            return true; 
+    }
+
     if (structure->size == structure->capacity) {
-        for (int i = 0; i < structure->size; i++) {
-            if (structure->queue[i] == page) {
-                return; 
-            }
-        }
-        fifo_choose_page_to_replace(structure);
+        
+        return false;
+        //fifo_choose_page_to_replace(structure);
     }
 
     structure->queue[structure->rear] = page;
     structure->rear = (structure->rear + 1) % structure->capacity; 
     structure->size++;
+    return false;
 }
 
 void free_fifo(FIFO *structure) {

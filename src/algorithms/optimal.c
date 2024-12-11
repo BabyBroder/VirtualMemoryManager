@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <stdbool.h>
 #include "optimal.h"
 
 void initialize_optimal(Optimal *structure, int capacity) {
@@ -9,7 +5,11 @@ void initialize_optimal(Optimal *structure, int capacity) {
         fprintf(stderr, "Optimal Error: Invalid capacity value!\n");
         exit(EXIT_FAILURE);
     }
-
+    
+    structure->pages = NULL;
+    structure->future_usage = NULL;
+    structure->map = NULL;
+    structure->idx = NULL;
     structure->capacity = capacity;
     structure->size = 0;
     structure->pages = (int *)malloc(structure->capacity * sizeof(int));
@@ -83,6 +83,7 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index) 
         return -1;
     }
 
+    return 0;
     int index = -1, farthest = -1;
     for (int i = 0; i < structure->capacity; i++) {
        if (structure->idx[structure->map[structure->pages[i]]][current_index] == -1)
@@ -96,19 +97,23 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index) 
     return index;
 }
 
-void optimal_add_page(Optimal *structure, int page, int current_index) {
-    for (int i = 0; i < structure->capacity; i++)
+bool optimal_add_page(Optimal *structure, int page, int current_index) {
+    for (int i = 0; i < structure->size; i++)
         if (structure->pages[i] == page) 
-             return;
+            return true;
 
     if (structure->size < structure->capacity) {
         structure->pages[structure->size++] = page;
     } else {
-        int index = optimal_choose_page_to_replace(structure, current_index);
-        structure->pages[index] = page;
+        return false;
+
+        // int index = optimal_choose_page_to_replace(structure, current_index);
+        // structure->pages[index] = page;
     }
+
+    return true;
 }
-void free_optimal_memory(Optimal *structure) {
+void free_optimal(Optimal *structure) {
     if (structure->pages) {
         free(structure->pages);
         structure->pages = NULL;
