@@ -3,50 +3,90 @@
 #include "tlb.h"
 #include "page_table.h"
 #include "utils/constants.h"
-#include "fifo.h"
-#include "lru.h"
-#include "optimal.h"
-
-void initialize_tlb(TLB *tlb, int replacement) {
-    tlb->next_replace_index = replacement; // chossing algorithm 
+void initialize_tlb(TLB *tlb, Algorithm algorithm) {
+    // chossing algorithm
+    tlb->algorithm = algorithm;
+    if (algorithm == FIFO_ALGORITHM)
+    {
+        initialize_fifo(&tlb->algorithm_struct.fifo, TLB_ENTRIES);
+    }
+    else if (algorithm == LRU_ALGORITHM)
+    {
+        initialize_lru(&tlb->algorithm_struct.lru, TLB_ENTRIES);
+    }
+    else if (algorithm == OPT_ALGORITHM)
+    {
+        initialize_optimal(&tlb->algorithm_struct.optimal, TLB_ENTRIES);
+    }
+    // default value: invalid
     for(int i = 0 ;i < TLB_SIZE ;i++)
     {
         tlb->entries[i].valid = false;
     }
-    if(tlb->next_replace_index == FIFO)
-    {
-        
-    }
-    else if(tlb->next_replace_index == OPT)
-    {
-
-    }
-    else if(tlb->next_replace_index == LRU)
-    {
-        
-    }
 }
 
-void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number) {
-    bool hasSpace = false;
+bool add_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
+{
+    // adding entry
+    bool needReplace = false;
+    if (tlb->algorithm == FIFO_ALGORITHM)
+    {
+        needReplace = fifo_add_page(&tlb->algorithm_struct.fifo, page_number);
+    }
+    else if (tlb->algorithm == LRU_ALGORITHM)
+    {
+        needReplace = lru_add_page(&tlb->algorithm_struct.lru, page_number);
+    }
+    else if (tlb->algorithm == OPT_ALGORITHM)
+    {
+        needReplace = optimal_add_page(&tlb->algorithm_struct.optimal, page_number, current_index);
+    }
+    return needReplace;
+}
+
+int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
+{
+    // return need to be replaced index
+    int index = false;
+    if (tlb->algorithm == FIFO_ALGORITHM)
+    {
+        index = fifo_choose_page_to_replace(&tlb->algorithm_struct.fifo);
+    }
+    else if (tlb->algorithm == LRU_ALGORITHM)
+    {
+        index = lru_choose_page_to_replace(&tlb->algorithm_struct.lru);
+    }
+    else if (tlb->algorithm == OPT_ALGORITHM)
+    {
+        index = optimal_choose_page_to_replace(&tlb->algorithm_struct.optimal,current_index);
+    }
+    return index;
+}
+
+void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index) {
+    bool needReplace = false;
     // finding free TLB entry to add
     for(int i = 0 ;i < TLB_SIZE ;i++)
     {
         if(!tlb->entries[i].valid)
         {
+            needReplace = add_entry_to_replacment(tlb, page_number, frame_number, current_index);
             tlb->entries[i].valid = true;
             tlb->entries[i].frame_number = frame_number;
             tlb->entries[i].page_number = page_number; 
-            hasSpace = true;
             return;
         }
-    }
+    } 
     // TLB is full use page replacement
-    if ( !hasSpace ) 
-    {   // update later for algorithm
-        // temporarily use first match
-        tlb->entries[0].frame_number = frame_number;
-        tlb->entries[0].page_number = page_number;
+    if (needReplace) 
+    {   // choose a page to be replaced by using tlb algorithm 
+        int indx = choose_entry_to_replace(tlb, page_number, frame_number, current_index);
+        if(indx>=TLB_SIZE) { // wrong index
+            printf("Error index replacement\n");
+            return;
+        }
+        tlb->entries[indx].frame_number = frame_number;
+        tlb->entries[indx].page_number = page_number; 
     }   
 }
 
@@ -64,6 +104,7 @@ int tlb_lookup(TLB *tlb, uint16_t page_number) {
 }
 
 void print_tlb(const TLB *tlb) {
+    // print tlb
     printf("Page number - Frame number\n");
     for(int i = 0 ;i < TLB_SIZE ;i++)
     {
