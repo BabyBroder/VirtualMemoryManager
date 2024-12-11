@@ -2,22 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "constants.h"
 #include "page_table.h"
 #include "physical_memory.h"
 
 PhysicalMemory physical_memory;
 
-void initialize_page_table(PageTable *page_table, size_t num_pages) {
-    page_table->num_pages = num_pages;
-    page_table->entries = (PageTableEntry *)malloc(num_pages * sizeof(PageTableEntry));
+void initialize_page_table(PageTable *page_table) {
+    page_table->num_pages = PAGE_TABLE_ENTRIES;
+    page_table->entries = (PageTableEntry *)malloc(PAGE_TABLE_ENTRIES * sizeof(PageTableEntry));
 
     if (page_table->entries == NULL) {
         printf("Error: Memory allocation for page table entries failed!\n");
         exit(EXIT_FAILURE);
     }
 
-    for (size_t i = 0; i < num_pages; i++) {
+    for (size_t i = 0; i < PAGE_TABLE_ENTRIES; i++) {
         page_table->entries[i].frame_number = 0;
         page_table->entries[i].valid = false;
     }
@@ -69,13 +68,13 @@ Frame *get_page(PageTable *page_table, uint16_t page_id) {
     return &physical_memory.frames[frame_id];
 }
 
-void load_page(PageTable *page_table, uint16_t page_id, const char *data) {
+void load_page(PhysicalMemory *physical_memory, PageTable *page_table, uint16_t page_id, const char *data, int current_index) {
     if (page_id >= page_table->num_pages) {
         printf("Error: Invalid page ID.\n");
         return;
     }
 
-    int frame_id = find_free_frame();
+    int frame_id = find_free_frame(physical_memory, current_index);
     if (frame_id == -1) {
         printf("Error: No free frames available.\n");
         return;
@@ -85,11 +84,8 @@ void load_page(PageTable *page_table, uint16_t page_id, const char *data) {
     update_page_table(page_table, page_id, frame_id);
 
     // Load the data into the frame
-    physical_memory.frames[frame_id].data[0] = strdup(data);
-    if (physical_memory.frames[frame_id].data == NULL) {
-        printf("Error: Memory allocation for frame data failed!\n");
-        return;
-    }
+    strncpy(physical_memory->frames[frame_id].data, data, FRAME_SIZE);
+    physical_memory->frames[frame_id].data[FRAME_SIZE - 1] = '\0';
 }
 
 void free_page_table(PageTable *page_table) {
