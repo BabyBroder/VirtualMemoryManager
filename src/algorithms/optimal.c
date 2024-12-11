@@ -1,4 +1,7 @@
 #include "optimal.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 void initialize_optimal(Optimal *structure, int capacity) {
     if (capacity <= 0) {
@@ -55,25 +58,37 @@ void initialize_optimal(Optimal *structure, int capacity) {
 }
 
 void build_future_usage(Optimal *structure) {
-    freopen("../../data/addresses.txt", "r", stdin);
+    FILE *file = fopen("../../data/addresses.txt", "r");
+    if (!file) {
+        perror("Optimal Error: Failed to open addresses file");
+        exit(EXIT_FAILURE);
+    }
     
     for (int page, i = 0; i < 1000; i++) {
-        scanf("%d", &page);
+        if (fscanf(file, "%d", &page) != 1) {
+            fprintf(stderr, "Optimal Error: Failed to read page number\n");
+            fclose(file);
+            exit(EXIT_FAILURE);
+        }
         structure->future_usage[i] = page;
     }
+
+    fclose(file);
 
     int _size = 0;
 
     for (int i = 999; i >= 0; i--) {
-        if (i < 999) {
-            for (int j = 0; j < _size; ++j)
-                structure->idx[j][i] = structure->idx[j][i + 1];
-        }
+        
+        for (int j = 0; j < _size && i < 999; ++j)
+            structure->idx[j][i] = structure->idx[j][i + 1];
+        
+        int optimal_page = structure->future_usage[i];
+        int optimal_idx = structure->map[optimal_page];
 
-        if (structure->map[structure->future_usage[i]] == -1) 
-            structure->map[structure->future_usage[i]] = _size++;
+        if (optimal_idx == -1) 
+            structure->map[optimal_page] = _size++;
 
-        structure->idx[structure->map[structure->future_usage[i]]][i] = i;
+        structure->idx[optimal_idx][i] = i;
     }
 }
 
@@ -83,7 +98,6 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index) 
         return -1;
     }
 
-    return 0;
     int index = -1, farthest = -1;
     for (int i = 0; i < structure->capacity; i++) {
        if (structure->idx[structure->map[structure->pages[i]]][current_index] == -1)
@@ -97,6 +111,7 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index) 
     return index;
 }
 
+
 bool optimal_add_page(Optimal *structure, int page, int current_index) {
     for (int i = 0; i < structure->size; i++)
         if (structure->pages[i] == page) 
@@ -104,15 +119,18 @@ bool optimal_add_page(Optimal *structure, int page, int current_index) {
 
     if (structure->size < structure->capacity) {
         structure->pages[structure->size++] = page;
-    } else {
-        return false;
-
-        // int index = optimal_choose_page_to_replace(structure, current_index);
-        // structure->pages[index] = page;
+        return true;
     }
 
+    int index = optimal_choose_page_to_replace(structure, current_index);
+    if (index == -1) {
+        fprintf(stderr, "Optimal Error: Failed to choose page to replace\n");
+        return false;
+    }
+    structure->pages[index] = page;
     return true;
 }
+
 void free_optimal(Optimal *structure) {
     if (structure->pages) {
         free(structure->pages);
