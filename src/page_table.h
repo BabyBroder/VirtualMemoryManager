@@ -23,7 +23,8 @@ typedef struct {
 
 // Initializes the page table
 void initialize_page_table(PageTable *page_table, size_t num_pages);
-
+// Initializes physical memory
+void initialize_physical_memory(PageTable *page_table, const char *file_path);
 // Translates a logical page number to a frame number
 // Returns -1 if the page is not valid (i.e., a page fault)
 int translate_address(PageTable *page_table, uint32_t virtual_address);
