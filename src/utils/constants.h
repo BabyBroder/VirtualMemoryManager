@@ -1,6 +1,9 @@
 #ifndef CONSTANT_H
 #define CONSTANT_H
 
+#define ADDRESS_SIZE 1000
+#define BACKING_STORE_SIZE 65536
+
 // Number of entries in the page table 2^8 entries in the page table
 // 2^8 entries in the page table
 #define PAGE_TABLE_ENTRIES 256
