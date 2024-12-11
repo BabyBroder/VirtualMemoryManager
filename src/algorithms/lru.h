@@ -99,7 +99,7 @@ int lru_choose_page_to_replace(LRU *structure);
  * @param page The page number to add.
  * @return true if the page was added successfully, false otherwise.
  */
-bool lru_add_page(LRU *structure, int page);
+int lru_add_page(LRU *structure, int page);
 
 /**
  * @brief Frees the resources allocated for the LRU structure.

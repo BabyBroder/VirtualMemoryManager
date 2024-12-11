@@ -25,10 +25,10 @@ void initialize_tlb(TLB *tlb, Algorithm algorithm) {
     }
 }
 
-bool add_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
+int add_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
 {
     // adding entry
-    bool needReplace = false;
+    int needReplace = false;
     if (tlb->algorithm == FIFO_ALGORITHM)
     {
         needReplace = fifo_add_page(&tlb->algorithm_struct.fifo, page_number);
@@ -64,25 +64,26 @@ int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_numbe
 }
 
 void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index) {
-    bool goodState = false;
+    int goodState = -1;
     // finding free TLB entry to add
     goodState = add_entry_to_replacment(tlb, page_number, frame_number, current_index); 
-    if (goodState){   
-        for(int i = 0 ;i < TLB_ENTRIES ;i++)
-        {
-            if(!tlb->entries[i].valid)
+    if (goodState<0){
+        if(goodState==-1) 
+            for(int i = 0 ;i < TLB_ENTRIES ;i++)
             {
-                tlb->entries[i].valid = true;
-                tlb->entries[i].frame_number = frame_number;
-                tlb->entries[i].page_number = page_number; 
-                return;
+                if(!tlb->entries[i].valid)
+                {
+                    tlb->entries[i].valid = true;
+                    tlb->entries[i].frame_number = frame_number;
+                    tlb->entries[i].page_number = page_number; 
+                    return;
+                }
             }
-        }
-        return; 
+        else return; 
     }
     // TLB is full use page replacement
         // choose a page to be replaced by using tlb algorithm 
-    int indx = choose_entry_to_replace(tlb, page_number, frame_number, current_index);
+    int indx = goodState;
     if(indx>=TLB_ENTRIES) { // wrong index
             printf("Error index replacement\n");
             return;

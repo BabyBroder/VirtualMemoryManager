@@ -78,7 +78,7 @@ int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_numbe
  * @param current_index The current index in the TLB.
  * @return True if the entry was added successfully, false otherwise.
  */
-bool add_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index);
+int add_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index);
 
 /**
  * @brief Adds an entry to the TLB.

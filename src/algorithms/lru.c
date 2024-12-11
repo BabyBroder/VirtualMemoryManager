@@ -45,7 +45,7 @@ int lru_choose_page_to_replace(LRU *structure) {
     return index;
 }
 
-bool lru_add_page(LRU *structure, int page) {
+int lru_add_page(LRU *structure, int page) {
     ++structure->time;
 
     for (int i = 0; i < structure->size; i++) 
@@ -53,23 +53,20 @@ bool lru_add_page(LRU *structure, int page) {
         if (structure->table[i].page == page)
             {
                 structure->table[i].timestamp = structure->time;
-                return true;
+                return -2; // do nothing
             }
     }
 
-    if (structure->size < structure->capacity) {
-        structure->table[structure->size].page = page;
-        structure->table[structure->size].timestamp = structure->time;
-        ++structure->size;
-    } 
-    else {
-        return false;
-        // int index = lru_choose_page_to_replace(structure);
-
-        // structure->table[index].page = page;
-        // structure->table[index].timestamp = structure->time;
+    if (structure->size == structure->capacity) {
+        int index = lru_choose_page_to_replace(structure);
+        structure->table[index].page = page;
+        structure->table[index].timestamp = structure->time;
+        return index; // replacement
     }
-    return true;
+    structure->table[structure->size].page = page;
+    structure->table[structure->size].timestamp = structure->time;
+    ++structure->size;
+    return -1; // adding new
 }
 
 void free_lru(LRU *structure) {

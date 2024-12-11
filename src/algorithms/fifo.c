@@ -29,27 +29,25 @@ int fifo_choose_page_to_replace(FIFO *structure) {
 
     int page = structure->queue[structure->front];
     structure->front = (structure->front + 1) % structure->capacity; 
-    structure->size--;
     return page;
 }
 
-bool fifo_add_page(FIFO *structure, int page) {
+int fifo_add_page(FIFO *structure, int page) {
     for (int i = 0; i < structure->size; i++) 
     {
         if (structure->queue[i] == page)
-            return true; 
+            return -2; //doing nothing
     }
 
     if (structure->size == structure->capacity) {
         
-        return false;
-        //fifo_choose_page_to_replace(structure);
+        return fifo_choose_page_to_replace(structure);
     }
 
     structure->queue[structure->rear] = page;
     structure->rear = (structure->rear + 1) % structure->capacity; 
     structure->size++;
-    return true;
+    return -1; //adding new
 }
 
 void free_fifo(FIFO *structure) {
