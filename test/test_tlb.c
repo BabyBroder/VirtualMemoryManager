@@ -1,10 +1,11 @@
 #include "../src/tlb.h"
 #include <stdio.h>
 #include <stdlib.h>
-typedef struct{
+typedef struct
+{
     uint16_t page_number;
     uint16_t frame_number;
-}TLB_input;
+} TLB_input;
 
 int main()
 {
@@ -14,9 +15,10 @@ int main()
         test[i].page_number = i;
         test[i].frame_number = i;
     }
-     // Allocate memory for the TLB
+    // Allocate memory for the TLB
     TLB *_TLB = (TLB *)malloc(sizeof(TLB));
-    if (_TLB == NULL) {
+    if (_TLB == NULL)
+    {
         printf("Error: Memory allocation for TLB failed!\n");
         return 1;
     }
@@ -27,32 +29,16 @@ int main()
             _TLB,
             test[i].page_number,
             test[i].frame_number,
-            i
-        );
+            i);
     }
     print_tlb(_TLB);
-    printf("%d\n",choose_entry_to_replace(_TLB,
-            test[17].page_number,
-            test[17].frame_number,
-            17));
-    tlb_add_entry(
-            _TLB,
-            test[17].page_number,
-            test[17].frame_number,
-            17
-        );
+    printf("Entry to replace for LRU algorithm: %d\nPage number: %d\nFrame number: %d\n", choose_entry_to_replace(_TLB, test[17].page_number,test[17].frame_number, 17), test[17].page_number, test[17].frame_number);
+    tlb_add_entry(_TLB, test[17].page_number, test[17].frame_number, 17);
 
     print_tlb(_TLB);
 
-    printf("%d\n",choose_entry_to_replace(_TLB,
-            test[3].page_number,
-            test[3].frame_number,
-            18));
-    tlb_add_entry(
-            _TLB,
-            test[3].page_number,
-            test[3].frame_number,
-            18
-        );
+    printf("Entry to replace for LRU algorithm: %d\nPage number: %d\nFrame number: %d\n", choose_entry_to_replace(_TLB, test[13].page_number,test[13].frame_number, 18), test[13].page_number, test[13].frame_number);
+
+    tlb_add_entry( _TLB, test[13].page_number, test[13].frame_number, 18);
     print_tlb(_TLB);
 }
