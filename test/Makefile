@@ -20,16 +20,16 @@ TEST_SRC = test/test_memory_manager.c test/test_page_table.c \
 all: $(TESTS)
 
 # Compile each test binary
-test_memory_manager: test/test_memory_manager.c $(SRC)
+test_memory_manager: test_memory_manager.c $(SRC)
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-test_page_table: test/test_page_table.c $(SRC)
+test_page_table: test_page_table.c $(SRC)
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-test_disk_manager: test/test_disk_manager.c $(SRC)
+test_disk_manager: test_disk_manager.c $(SRC)
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-test_algorithms: test/test_algorithms.c $(SRC)
+test_algorithms: test_algorithms.c $(SRC)
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 test_tlb: test_tlb.c $(SRC)

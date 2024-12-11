@@ -5,6 +5,7 @@ typedef struct{
     uint16_t page_number;
     uint16_t frame_number;
 }TLB_input;
+
 int main()
 {
     TLB_input test[18];
@@ -39,6 +40,19 @@ int main()
             test[17].page_number,
             test[17].frame_number,
             17
+        );
+
+    print_tlb(_TLB);
+
+    printf("%d\n",choose_entry_to_replace(_TLB,
+            test[3].page_number,
+            test[3].frame_number,
+            18));
+    tlb_add_entry(
+            _TLB,
+            test[3].page_number,
+            test[3].frame_number,
+            18
         );
     print_tlb(_TLB);
 }
