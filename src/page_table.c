@@ -20,16 +20,24 @@ void initialize_page_table(PageTable *page_table) {
     }
 }
 
-int translate_address(PageTable *page_table, uint16_t page_number) {
+int translate_address(PageTable *page_table, uint32_t virtual_address) {
+    const uint16_t PAGE_OFFSET_BITS = 8; 
+    const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS; 
+
+    uint16_t page_number = (virtual_address >> PAGE_OFFSET_BITS) & ((1 << PAGE_NUMBER_BITS) - 1);
+    uint16_t offset = virtual_address & ((1 << PAGE_OFFSET_BITS) - 1);
+
     if (page_number >= page_table->num_pages || !page_table->entries[page_number].valid) {
         printf("Error: Invalid virtual address or page not loaded!\n");
         return -1;
     }
-    
+
     int frame_id = page_table->entries[page_number].frame_number;
-    int physical_address = frame_id * PAGE_SIZE; // Calculate physical address from frame and page size
+    int physical_address = frame_id * PAGE_SIZE + offset;
+
     return physical_address;
 }
+
 
 void update_page_table(PageTable *page_table, uint16_t page_number, uint16_t frame_number) {
     if (page_number >= page_table->num_pages) {
