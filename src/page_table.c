@@ -97,7 +97,8 @@ void load_page(PageTable *page_table, uint16_t page_id, const char *data) {
     }
 
     // Update the page table
-    update_page_table(page_table, page_id, frame_id);
+    update_page_table(page_table, page_id, frame_id); 
+    // case: when logical and physical memory have the same size
 
     // Load the data into the frame
     frames[frame_id].data = strdup(data);
