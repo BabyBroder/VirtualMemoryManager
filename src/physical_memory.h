@@ -6,17 +6,18 @@
 #include "utils/constants.h"
 #include "algorithms/algorithm.h"
 
-typedef struct{
+typedef struct
+{
     char data[FRAME_SIZE];
 } Frame;
 
-typedef struct {
+typedef struct
+{
     Frame frames[TOTAL_FRAMES];
     int nums_frames;
     Algorithm algorithm;
     AlgorithmStruct algorithm_struct;
 } PhysicalMemory;
-
 
 void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm);
 
