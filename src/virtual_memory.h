@@ -13,8 +13,8 @@ typedef struct{
 } VirtualMemory;
 
 // Initializes the virtual memory
-void initialize_virtual_memory(VirtualMemory *virtual_memory);
+void initialize_virtual_memory(VirtualMemory *virtual_memory, char* address_file, char* backing_store_file);
 
-// Reads a byte from the virtual memory
-char *read_byte_from_virtual_memory(VirtualMemory *virtual_memory, uint32_t virtual_address);
+// Reads  byte from the virtual memory
+char *read_BACKINGSTORE(VirtualMemory *virtual_memory, uint32_t virtual_address);
 #endif // VIRTUAL_MEMORY_H

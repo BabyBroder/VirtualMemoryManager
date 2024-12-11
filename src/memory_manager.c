@@ -16,7 +16,7 @@ void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_f
     page_fault_manager->pageFault = false;
 }
 
-void handle_tlb_miss(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address) {
+void handle_tlb_miss(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index) {
     const uint16_t PAGE_OFFSET_BITS = 8;
     const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
 
@@ -35,7 +35,7 @@ void handle_tlb_miss(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, P
     // If the page is not in the TLB, check the page table
     if (page_table_lookup(page_table, page_number) != -1) {
         // If the page is in the page table, add it to the TLB
-        tlb_add_entry(tlb, page_number, page_table->entries[page_number].frame_number);
+        tlb_add_entry(tlb, page_number, page_table->entries[page_number].frame_number, current_index);
     } else {
         // If the page is not in the page table, it is a page fault
         page_fault_manager->pageFaults++;

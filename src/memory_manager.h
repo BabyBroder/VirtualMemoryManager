@@ -20,6 +20,6 @@ typedef struct{
 void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_fault_manager);
 
 // Function to handle a TLB miss
-void handle_tlb_miss(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address);
+void handle_tlb_miss(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index);
 
 #endif // MEMORY_MANAGER_H

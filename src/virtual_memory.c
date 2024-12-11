@@ -23,7 +23,7 @@ void initialize_virtual_memory(VirtualMemory *virtual_memory, char* address_file
     fclose(backingStore);
 }
 
-char *read_byte_from_virtual_memory(VirtualMemory *virtual_memory, uint32_t virtual_address){
+char *read_BACKINGSTORE(VirtualMemory *virtual_memory, uint32_t virtual_address){
     char* result = (char*)malloc(sizeof(char) * 256);
     const uint16_t PAGE_OFFSET_BITS = 8;
     const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
