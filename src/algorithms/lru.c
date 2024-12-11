@@ -53,7 +53,7 @@ bool lru_add_page(LRU *structure, int page) {
         if (structure->table[i].page == page)
             {
                 structure->table[i].timestamp = structure->time;
-                return true; 
+                return true;
             }
     }
 
