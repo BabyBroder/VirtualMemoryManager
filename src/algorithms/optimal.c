@@ -96,7 +96,7 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index) 
     return index;
 }
 
-void optimal_add_page(Optimal *structure, int page) {
+void optimal_add_page(Optimal *structure, int page, int current_index) {
     for (int i = 0; i < structure->capacity; i++)
         if (structure->pages[i] == page) 
             return;
@@ -104,7 +104,7 @@ void optimal_add_page(Optimal *structure, int page) {
     if (structure->size < structure->capacity) {
         structure->pages[structure->size++] = page;
     } else {
-        int index = optimal_choose_page_to_replace(structure, structure->future_usage[structure->size]);
+        int index = optimal_choose_page_to_replace(structure, current_index);
         structure->pages[index] = page;
     }
 }
