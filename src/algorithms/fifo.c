@@ -49,7 +49,7 @@ bool fifo_add_page(FIFO *structure, int page) {
     structure->queue[structure->rear] = page;
     structure->rear = (structure->rear + 1) % structure->capacity; 
     structure->size++;
-    return false;
+    return true;
 }
 
 void free_fifo(FIFO *structure) {
