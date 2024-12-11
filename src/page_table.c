@@ -13,6 +13,11 @@ void initialize_page_table(PageTable *page_table, size_t num_pages) {
     page_table->num_pages = num_pages;
     page_table->entries = (PageTableEntry *)malloc(num_pages * sizeof(PageTableEntry));
 
+    if (page_table->entries == NULL) {
+        printf("Error: Memory allocation for page table entries failed!\n");
+        exit(EXIT_FAILURE);
+    }
+
     for (size_t i = 0; i < num_pages; i++) {
         page_table->entries[i].frame_number = 0;
         page_table->entries[i].valid = false;
@@ -21,14 +26,20 @@ void initialize_page_table(PageTable *page_table, size_t num_pages) {
     // Initialize physical memory frames
     frame_count = TOTAL_FRAMES;
     frames = (Page *)malloc(frame_count * sizeof(Page));
+    if (frames == NULL) {
+        printf("Error: Memory allocation for physical memory frames failed!\n");
+        free(page_table->entries);
+        exit(EXIT_FAILURE);
+    }
+
     for (int i = 0; i < frame_count; i++) {
         frames[i].data = NULL;
     }
 }
 
 int translate_address(PageTable *page_table, uint32_t virtual_address) {
-    const uint16_t PAGE_OFFSET_BITS = 8; 
-    const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS; 
+    const uint16_t PAGE_OFFSET_BITS = 8;
+    const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
 
     uint16_t page_number = (virtual_address >> PAGE_OFFSET_BITS) & ((1 << PAGE_NUMBER_BITS) - 1);
     uint16_t offset = virtual_address & ((1 << PAGE_OFFSET_BITS) - 1);
@@ -90,6 +101,10 @@ void load_page(PageTable *page_table, uint16_t page_id, const char *data) {
 
     // Load the data into the frame
     frames[frame_id].data = strdup(data);
+    if (frames[frame_id].data == NULL) {
+        printf("Error: Memory allocation for frame data failed!\n");
+        return;
+    }
 }
 
 void free_page_table(PageTable *page_table) {
