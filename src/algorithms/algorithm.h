@@ -5,10 +5,18 @@
 #include "lru.h"
 #include "optimal.h"
 
-typedef enum {
-    FIFO,
-    LRU,
-    OPT
+typedef enum
+{
+    FIFO_ALGORITHM,
+    LRU_ALGORITHM,
+    OPT_ALGORITHM
 } Algorithm;
+
+typedef struct
+{
+    FIFO fifo;
+    LRU lru;
+    Optimal optimal;
+} AlgorithmStruct;
 
 #endif // ALGORITHM_H
