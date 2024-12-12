@@ -40,13 +40,13 @@ typedef struct
  * @struct PhysicalMemory
  * @brief Represents the physical memory.
  */
-typedef struct
-{
-    Frame frames[TOTAL_FRAMES];       /**< Array of frames in physical memory. */
-    int nums_frames;                  /**< Number of frames currently in use. */
-    Algorithm algorithm;              /**< Algorithm used for page replacement. */
-    AlgorithmStruct algorithm_struct; /**< Data structure for the algorithm. */
+typedef struct PhysicalMemory {
+    Frame frames[TOTAL_FRAMES];
+    int nums_frames;
+    Algorithm algorithm;
+    AlgorithmStruct algorithm_struct;
 } PhysicalMemory;
+
 
 /**
  * @brief Initializes the physical memory.

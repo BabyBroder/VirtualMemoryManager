@@ -12,15 +12,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "physical_memory.h"  // Use relative path
 #include "utils/constants.h"
 #include "algorithms/algorithm.h"
 #include "virtual_memory.h"
-#include "physical_memory.h"
 #include "memory_manager.h"
 #include "page_table.h"
 #include "tlb.h"
-
-
+// Forward declaration
+struct PhysicalMemory;  
+typedef struct PhysicalMemory PhysicalMemory;
  /**
     * @brief Initializes the disk manager.
     *
