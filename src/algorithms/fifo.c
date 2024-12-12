@@ -13,9 +13,12 @@ void initialize_fifo(FIFO *structure, int capacity_value) {
 
     structure->capacity = capacity_value;
     structure->queue = (int *)malloc(structure->capacity * sizeof(int));
+
+    // Initialize all elements in queue to -1 (avoid confusion with unsigned values)
     for (int i = 0; i < structure->capacity; i++) {
         structure->queue[i] = -1;
     }
+
     if (!structure->queue) {
         perror("FIFO Error: Memory allocation failed");
         exit(EXIT_FAILURE);
