@@ -10,20 +10,7 @@
 #ifndef PHYSICAL_MEMORY_H
 #define PHYSICAL_MEMORY_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include "utils/constants.h"
-#include "algorithms/algorithm.h"
 #include "virtual_memory.h"
-#include "disk_manager.h" 
-#include "memory_manager.h"
-#include "page_table.h"
-#include "tlb.h"
-
-
 
 /**
  * @struct Frame
@@ -40,13 +27,13 @@ typedef struct
  * @struct PhysicalMemory
  * @brief Represents the physical memory.
  */
-typedef struct PhysicalMemory {
+typedef struct PhysicalMemory
+{
     Frame frames[TOTAL_FRAMES];
     int nums_frames;
     Algorithm algorithm;
     AlgorithmStruct algorithm_struct;
 } PhysicalMemory;
-
 
 /**
  * @brief Initializes the physical memory.
@@ -69,7 +56,6 @@ void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algor
  * @return The index of the entry to replace.
  */
 int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, uint8_t frame_number, int current_index);
-
 
 /**
  * @brief Adds a page to the physical memory.
@@ -94,4 +80,5 @@ void add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory 
  * @return The data read from the physical memory.
  */
 char *read_from_physical_memory(PhysicalMemory *physical_memory, uint8_t frame_number, uint8_t offset);
+
 #endif // PHYSICAL_MEMORY_H;

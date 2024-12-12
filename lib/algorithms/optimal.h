@@ -1,13 +1,32 @@
 #ifndef OPTIMAL_H
 #define OPTIMAL_H
 
-#include <stddef.h> // For size_t
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <stdbool.h>
-#include "../virtual_memory.h"
+#include "../necessary.h"
 
+/**
+ * @struct Optimal
+ * @brief Structure to represent the state of the Optimal page replacement algorithm.
+ * 
+ * This structure contains the necessary information to implement the Optimal page replacement algorithm.
+ * 
+ * @var Optimal::pages
+ * Array to store the pages currently in memory.
+ * 
+ * @var Optimal::capacity
+ * Maximum number of pages the memory can hold.
+ * 
+ * @var Optimal::size
+ * Current number of pages in memory.
+ * 
+ * @var Optimal::future_usage
+ * Array to track future usage of pages. This helps in determining which page to replace.
+ * 
+ * @var Optimal::map
+ * Additional array for mapping purposes (specific usage can be defined based on implementation).
+ * 
+ * @var Optimal::idx
+ * 2D array to store indices (specific usage can be defined based on implementation).
+ */
 typedef struct
 {
     int *pages;        // Array to store the pages currently in memory
@@ -17,6 +36,7 @@ typedef struct
     int *map;
     int **idx;
 } Optimal;
+
 /**
  * @brief Initializes the Optimal structure.
  *
@@ -24,7 +44,7 @@ typedef struct
  * @param virtual_memory Pointer to the VirtualMemory structure.
  * @param capacity The capacity of the Optimal structure.
  */
-void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int capacity);
+void initialize_optimal(Optimal *structure, char *fileAddress, int capacity);
 
 /**
  * @brief Builds the future usage table for the Optimal structure.
@@ -65,5 +85,4 @@ void free_optimal(Optimal *structure);
  * @param structure Pointer to the Optimal structure to print.
  */
 void print_optimal(const Optimal *structure);
-
 #endif // OPTIMAL_H

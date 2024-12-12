@@ -9,13 +9,7 @@
 #ifndef TLB_H
 #define TLB_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include "page_table.h"
-#include "algorithms/algorithm.h"
-#include "utils/constants.h"
-#include "virtual_memory.h"
-
+#include "../memory/memory.h"
 
 /**
  * @struct TLBEntry
@@ -24,12 +18,12 @@
  * This structure represents an entry in the TLB, containing the logical
  * page number, physical frame number, and a valid bit.
  */
-typedef struct {
-    uint16_t page_number; /**< Logical page number */
+typedef struct
+{
+    uint16_t page_number;  /**< Logical page number */
     uint16_t frame_number; /**< Physical frame number */
     bool valid;            /**< Valid bit to indicate if the entry is valid */
 } TLBEntry;
-
 
 /**
  * @struct TLB
@@ -38,13 +32,13 @@ typedef struct {
  * This structure represents the TLB, containing an array of TLB entries
  * and the replacement algorithm used.
  */
-typedef struct {
-    TLBEntry entries[TLB_ENTRIES]; /**< Array of TLB entries */
-    int replacement;     /**< Index for replacement (FIFO = 0, LRU = 1, OPT = 2) */
-    Algorithm algorithm; /**< Algorithm used for replacement */
+typedef struct
+{
+    TLBEntry entries[TLB_ENTRIES];    /**< Array of TLB entries */
+    int replacement;                  /**< Index for replacement (FIFO = 0, LRU = 1, OPT = 2) */
+    Algorithm algorithm;              /**< Algorithm used for replacement */
     AlgorithmStruct algorithm_struct; /**< Structure for the algorithm */
 } TLB;
-
 
 /**
  * @brief Initializes the TLB with the specified virtual memory and replacement algorithm.
@@ -57,8 +51,7 @@ typedef struct {
  * @param virtual_memory Pointer to the VirtualMemory structure.
  * @param algorithm The replacement algorithm to use.
  */
-void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory ,Algorithm algorithm);
-
+void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory, Algorithm algorithm);
 
 /**
  * @brief Chooses an entry to replace in the TLB.
@@ -85,7 +78,6 @@ int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_numbe
  * @param current_index The current index in the TLB.
  */
 void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index);
-
 
 /**
  * @brief Looks up the TLB for a given page number.

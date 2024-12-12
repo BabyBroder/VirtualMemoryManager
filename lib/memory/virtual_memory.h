@@ -9,49 +9,40 @@
 #ifndef VIRTUAL_MEMORY_H
 #define VIRTUAL_MEMORY_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include "utils/constants.h"
-#include "utils/parser.h"
-
+#include "../algorithms/algorithms.h"
 
 /**
  * @struct VirtualMemory
  * @brief Represents the virtual memory.
- * 
+ *
  * @var VirtualMemory::data
  * Data array representing the backing store.
- * 
+ *
  * @var VirtualMemory::address
  * Array of pointers representing addresses.
- * 
+ *
  * @var VirtualMemory::initialized
  * Flag indicating if the virtual memory has been initialized.
  */
-typedef struct {
-    char *data; /**< Data array representing the backing store. */
-    int *address;    /**< Array of pointers representing addresses. */
-    bool initialized; /**< Flag indicating if the virtual memory has been initialized. */   
+typedef struct VirtualMemory
+{
+    char *data;       /**< Data array representing the backing store. */
+    int *address;     /**< Array of pointers representing addresses. */
+    bool initialized; /**< Flag indicating if the virtual memory has been initialized. */
 } VirtualMemory;
 
 /**
  * @brief Initializes the virtual memory with the provided address and backing store files.
- * 
+ *
  * @param virtual_memory Pointer to the VirtualMemory structure.
  * @param address_file The address file to read from.
  * @param backing_store_file The backing store file to read from.
  */
-void initialize_virtual_memory(VirtualMemory *virtual_memory, char* address_file, char* backing_store_file);
-
+void initialize_virtual_memory(VirtualMemory *virtual_memory, char *address_file, char *backing_store_file);
 
 /**
  * @brief Reads data from the virtual memory.
- * 
+ *
  * @param virtual_memory Pointer to the VirtualMemory structure.
  * @param page_number The page number to read from.
  * @param offset The offset within the page to start reading.

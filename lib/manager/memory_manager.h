@@ -6,38 +6,38 @@
 #ifndef MEMORY_MANAGER_H
 #define MEMORY_MANAGER_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include "page_table.h"
-#include "tlb.h"
+#include "../structure/structure.h"
+
+// #include "page_table.h"
+// #include "tlb.h"
 
 /**
  * @struct TLBManager
  * @brief Structure to manage TLB hits.
- * 
+ *
  * @var TLBManager::TLBhits
  * Number of TLB hits.
  */
-typedef struct {
+typedef struct
+{
     int TLBhits; /**< Total number of TLB hits. */
 } TLBManager;
-
 
 /**
  * @struct PageFaultManager
  * @brief Structure to manage page faults.
- * 
+ *
  * @var PageFaultManager::pageFaults
  * Number of page faults.
  */
-typedef struct {
+typedef struct
+{
     int pageFaults; /**< Total number of page faults. */
 } PageFaultManager;
 
-
 /**
  * @brief Initializes the memory manager with the provided TLB and page fault manager.
- * 
+ *
  * @param tlb_manager Pointer to TLBManager structure.
  * @param page_fault_manager Pointer to PageFaultManager structure.
  */
@@ -45,7 +45,7 @@ void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_f
 
 /**
  * @brief Checks if the virtual address is in the TLB.
- * 
+ *
  * @param tlb Pointer to the TLB structure.
  * @param page_table Pointer to the PageTable structure.
  * @param tlb_manager Pointer to the TLBManager structure.
@@ -58,7 +58,7 @@ bool tlb_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFau
 
 /**
  * @brief Checks if the virtual address is in the page table.
- * 
+ *
  * @param tlb Pointer to the TLB structure.
  * @param page_table Pointer to the PageTable structure.
  * @param tlb_manager Pointer to the TLBManager structure.

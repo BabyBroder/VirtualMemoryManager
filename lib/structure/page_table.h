@@ -1,52 +1,46 @@
 /**
  * @file page_table.h
  * @brief Defines structures for page table entries and the page table.
-*/
+ */
 
 #ifndef PAGE_TABLE_H
 #define PAGE_TABLE_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include "utils/constants.h"
-#include "algorithms/algorithm.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "../memory/memory.h"
 
 /**
  * @struct PageTableEntry
  * @brief Represents an entry in the page table.
- * 
+ *
  * @var PageTableEntry::frame_number
  * Frame number in physical memory.
- * 
+ *
  * @var PageTableEntry::valid
  * Valid bit to indicate if the page is in memory.
  */
-typedef struct {
+typedef struct
+{
     uint16_t frame_number; /**< Frame number in physical memory. */
     bool valid;            /**< Valid bit to indicate if the page is in memory. */
 } PageTableEntry;
 
-
 /**
  * @struct PageTable
  * @brief Represents the page table.
- * 
+ *
  * @var PageTable::entries
  * Array of page table entries.
- * 
+ *
  * @var PageTable::num_pages
  * Total number of pages.
  */
 // Structure for a page table entry
 
-typedef struct {
+typedef struct
+{
     PageTableEntry *entries; /**< Array of page table entries. */
     size_t num_pages;        /**< Total number of pages. */
 } PageTable;
-
 
 /**
  * Initializes the page table with the given number of pages.
@@ -64,7 +58,6 @@ void initialize_page_table(PageTable *page_table);
  */
 int page_table_lookup(PageTable *page_table, uint16_t page_number);
 
-
 /**
  * Updates the page table when a page is loaded into memory.
  *
@@ -78,6 +71,6 @@ void link_page_table_to_frame(PageTable *page_table, uint16_t page_number, uint1
  * Cleans up resources allocated for the page table.
  * @param page_table A pointer to the PageTable structure to be freed.
  */
-void free_page_table(PageTable *page_table) ;
+void free_page_table(PageTable *page_table);
 
 #endif // PAGE_TABLE_H

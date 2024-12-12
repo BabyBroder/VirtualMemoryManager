@@ -1,14 +1,22 @@
-#include "lru.h"
+#include "../../lib/algorithms/algorithms.h"
 
-void initialize_lru(LRU *structure, int capacity_value) {
-    
+/**
+ * @brief Initializes the LRU structure with the given capacity.
+ *
+ * @param structure Pointer to the LRU structure to initialize.
+ * @param capacity The maximum number of entries the LRU cache can hold.
+ */
+void initialize_lru(LRU *structure, int capacity_value)
+{
+
     if (structure)
     {
         fprintf(stderr, "Error: LRU already initialized.\n");
         exit(EXIT_FAILURE);
     }
-    
-    if (capacity_value <= 0) {
+
+    if (capacity_value <= 0)
+    {
         fprintf(stderr, "LRU Error: Invalid capacity value!\n");
         exit(EXIT_FAILURE);
     }
@@ -16,20 +24,28 @@ void initialize_lru(LRU *structure, int capacity_value) {
     structure->capacity = capacity_value;
     structure->size = structure->time = 0;
     structure->table = (LRUEntry *)malloc(structure->capacity * sizeof(LRUEntry));
-    
-    if (!structure->table) {
+
+    if (!structure->table)
+    {
         fprintf(stderr, "Error: Memory allocation failed.\n");
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 0; i < structure->capacity; i++) {
+    for (int i = 0; i < structure->capacity; i++)
+    {
         structure->table[i].page = -1;
         structure->table[i].timestamp = INT_MAX;
     }
 }
 
-
-int lru_choose_page_to_replace(LRU *structure) {
+/**
+ * @brief Chooses a page to replace based on the LRU policy.
+ *
+ * @param structure Pointer to the LRU structure.
+ * @return The page number to replace.
+ */
+int lru_choose_page_to_replace(LRU *structure)
+{
 
     if (!structure)
     {
@@ -37,15 +53,18 @@ int lru_choose_page_to_replace(LRU *structure) {
         exit(EXIT_FAILURE);
     }
 
-    if (structure->size == 0) {
+    if (structure->size == 0)
+    {
         fprintf(stderr, "LRU Error: No pages to replace (table is empty)!\n");
         exit(EXIT_FAILURE);
     }
 
     int min_timestamp = INT_MAX;
     int index = -1;
-    for (int i = 0; i < structure->capacity; i++) {
-        if (structure->table[i].timestamp < min_timestamp) {
+    for (int i = 0; i < structure->capacity; i++)
+    {
+        if (structure->table[i].timestamp < min_timestamp)
+        {
             min_timestamp = structure->table[i].timestamp;
             index = i;
         }
@@ -54,33 +73,43 @@ int lru_choose_page_to_replace(LRU *structure) {
     return index;
 }
 
-int lru_add_page(LRU *structure, int page) {
-    
+/**
+ * @brief Adds a page to the LRU cache.
+ *
+ * @param structure Pointer to the LRU structure.
+ * @param page The page number to add.
+ * @return Index of page in queue if the page was replaced successfully, -1 if the queue is not full, -2 if the queue have no changed.
+ */
+int lru_add_page(LRU *structure, int page)
+{
+
     if (!structure)
     {
         fprintf(stderr, "Error: LRU not initialized.\n");
         exit(EXIT_FAILURE);
     }
-    
-    if(structure->size > structure->capacity){
+
+    if (structure->size > structure->capacity)
+    {
         fprintf(stderr, "LRU Error: Capacity exceeded\n");
         exit(EXIT_FAILURE);
     }
-    
+
     ++structure->time;
 
-    for (int i = 0; i < structure->size; i++) 
+    for (int i = 0; i < structure->size; i++)
         if (structure->table[i].page == page)
         {
             structure->table[i].timestamp = structure->time;
             return -2;
         }
 
-    if (structure->size == structure->capacity) {
+    if (structure->size == structure->capacity)
+    {
         int index = lru_choose_page_to_replace(structure);
         structure->table[index].page = page;
         structure->table[index].timestamp = structure->time;
-        return index; 
+        return index;
     }
 
     structure->table[structure->size].page = page;
@@ -90,17 +119,31 @@ int lru_add_page(LRU *structure, int page) {
     return -1;
 }
 
-void free_lru(LRU *structure) {
-    if (structure->table) {
+/**
+ * @brief Frees the memory allocated for the LRU structure.
+ *
+ * @param structure Pointer to the LRU structure to free.
+ */
+void free_lru(LRU *structure)
+{
+    if (structure->table)
+    {
         free(structure->table);
         structure->table = NULL;
     }
     structure->capacity = structure->size = structure->time = 0;
 }
 
-void print_lru(LRU *structure) {
+/**
+ * @brief Prints the current state of the LRU cache.
+ *
+ * @param structure Pointer to the LRU structure to print.
+ */
+void print_lru(LRU *structure)
+{
     printf("LRU Table: ");
-    for (int i = 0; i < structure->size; i++) {
+    for (int i = 0; i < structure->size; i++)
+    {
         printf("%d ", structure->table[i].page);
     }
     printf("\n");

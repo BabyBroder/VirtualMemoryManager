@@ -1,20 +1,15 @@
+/**
+ * @file disk_manager.h
+ * @brief Header file for managing physical memory in the virtual memory manager.
+ */
 #ifndef DISK_MANAGER_H
 #define DISK_MANAGER_H
 
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "physical_memory.h"  // Use relative path
-#include "utils/constants.h"
-#include "algorithms/algorithm.h"
-#include "virtual_memory.h"
-#include "memory_manager.h"
-#include "page_table.h"
-#include "tlb.h"
-
-struct PhysicalMemory;  
-typedef struct PhysicalMemory PhysicalMemory;
+#include "../structure/structure.h"
+/**
+ * @struct PhysicalMemory
+ * @brief Represents the physical memory structure.
+ */
 
 /**
  * @brief Initializes the disk manager with the provided virtual memory, physical memory, TLB, page table, and algorithm.
