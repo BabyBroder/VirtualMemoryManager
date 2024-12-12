@@ -6,7 +6,6 @@ void initialize_fifo(FIFO *structure, int capacity_value) {
         exit(EXIT_FAILURE);
     }
 
-    structure->queue = NULL;
     if (structure->queue != NULL) {
         fprintf(stderr, "FIFO Warning: Queue is already initialized.\n");
         return;
@@ -27,27 +26,40 @@ int fifo_choose_page_to_replace(FIFO *structure) {
         return -1; 
     }
 
-    int page = structure->queue[structure->front];
+    // Choose the front page to replace
+    int page = structure->front;
     structure->front = (structure->front + 1) % structure->capacity; 
     return page;
 }
 
-int fifo_add_page(FIFO *structure, int page) {
+bool fifo_add_page(FIFO *structure, int page) {
     for (int i = 0; i < structure->size; i++) 
     {
         if (structure->queue[i] == page)
-            return -2; //doing nothing
+        {
+            //print_fifo(structure);
+            return true;
+        }
     }
 
     if (structure->size == structure->capacity) {
-        
-        return fifo_choose_page_to_replace(structure);
+
+        int indexReplace = fifo_choose_page_to_replace(structure);
+        if (indexReplace == -1) {
+            fprintf(stderr, "FIFO Error: Failed to choose page to replace\n");
+            exit(EXIT_FAILURE);
+        }
+
+        structure->queue[indexReplace] = page;
+        //print_fifo(structure);
+        return false;
     }
 
     structure->queue[structure->rear] = page;
     structure->rear = (structure->rear + 1) % structure->capacity; 
     structure->size++;
-    return -1; //adding new
+    //print_fifo(structure);
+    return true; 
 }
 
 void free_fifo(FIFO *structure) {
@@ -56,4 +68,17 @@ void free_fifo(FIFO *structure) {
         structure->queue = NULL;
     }
     structure->capacity = structure->front = structure->rear = structure->size = 0;
+}
+
+void print_fifo(FIFO *structure) {
+    if (structure->size == 0) {
+        printf("FIFO Queue is empty\n");
+        return;
+    }
+
+    printf("FIFO Queue: ");
+    for (int i = 0; i < structure->size; i++) {
+        printf("%d ", structure->queue[i]);
+    }
+    printf("\n");
 }

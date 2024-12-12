@@ -43,7 +43,7 @@ int fifo_choose_page_to_replace(FIFO* structure);
  * @param page The page number to add to the queue.
  * @return true if the page was successfully added, false otherwise.
  */
-int fifo_add_page(FIFO* structure, int page);
+bool fifo_add_page(FIFO* structure, int page);
 
 /**
  * @brief Frees the resources allocated for the FIFO structure.
@@ -52,4 +52,16 @@ int fifo_add_page(FIFO* structure, int page);
  */
 void free_fifo(FIFO* structure);
 
-#endif // FIFO_H;
+/**
+ * @brief Prints the contents of the FIFO queue for debugging purposes.
+ *
+ * This function takes a pointer to a FIFO structure and prints its contents
+ * to the standard output. It is useful for debugging and verifying the state
+ * of the FIFO queue.
+ *
+ * @param structure A pointer to the FIFO structure to be printed.
+ */
+// For debug, print FIFO queue
+void print_fifo(FIFO* structure);
+
+#endif // FIFO_H

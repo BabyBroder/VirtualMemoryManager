@@ -2,22 +2,34 @@
 #include "../src/algorithms/fifo.h"
 #include "../src/algorithms/lru.h"
 
-int main()
-{
+void testFIFO(){
     FIFO fifo;
     initialize_fifo(&fifo, 3);
     fifo_add_page(&fifo, 1);
+    print_fifo(&fifo);
     fifo_add_page(&fifo, 2);
+    print_fifo(&fifo);
     fifo_add_page(&fifo, 3);
+    print_fifo(&fifo);
     fifo_add_page(&fifo, 4);
+    print_fifo(&fifo);
     fifo_add_page(&fifo, 5);
+    print_fifo(&fifo);
     fifo_add_page(&fifo, 6);
+    print_fifo(&fifo);
     fifo_add_page(&fifo, 7);
+    print_fifo(&fifo);
     fifo_add_page(&fifo, 8);
+    print_fifo(&fifo);
     fifo_add_page(&fifo, 9);
+    print_fifo(&fifo);
     fifo_add_page(&fifo, 10);
+    print_fifo(&fifo);
     free_fifo(&fifo);
 
+}
+
+void testLRU(){
     LRU lru;
     initialize_lru(&lru, 3);
     lru_add_page(&lru, 1);
@@ -31,17 +43,26 @@ int main()
     lru_add_page(&lru, 9);
     lru_add_page(&lru, 10);
     free_lru(&lru);
+}
 
-    // add pages in addresses.txt
+void testOPT(){
     Optimal optimal;
     initialize_optimal(&optimal, 3);
-    optimal_add_page(&optimal, 34504, 0);
-    optimal_add_page(&optimal, 12488, 1);
-    optimal_add_page(&optimal, 18376, 2);
-    optimal_add_page(&optimal, 45256, 3);
-    optimal_add_page(&optimal, 39112, 4);
-   
+    optimal_add_page(&optimal, 1, 0);
+    optimal_add_page(&optimal, 2, 1);
+    optimal_add_page(&optimal, 3, 2);
+    optimal_add_page(&optimal, 4, 3);
+    optimal_add_page(&optimal, 5, 4);
+    optimal_add_page(&optimal, 6, 5);
+    optimal_add_page(&optimal, 7, 6);
+    optimal_add_page(&optimal, 8, 7);
+    optimal_add_page(&optimal, 9, 8);
+    optimal_add_page(&optimal, 10, 9);
     free_optimal(&optimal);
+}
 
+int main()
+{
+    testFIFO();
     return 0;
 }
