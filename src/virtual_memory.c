@@ -25,14 +25,14 @@ void initialize_virtual_memory(VirtualMemory *virtual_memory, char* address_file
     virtual_memory->initialized = true;
 }
 
-char *read_BACKINGSTORE(VirtualMemory *virtual_memory, uint32_t virtual_address){
-    char* result = (char*)malloc(sizeof(char) * 256);
-    const uint16_t PAGE_OFFSET_BITS = 8;
-    const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
+char *readVirtualMemory(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, uint8_t size){
+    char* result = (char*)malloc(sizeof(char) * size);
 
-    uint16_t page_number = (virtual_address >> PAGE_OFFSET_BITS) & ((1 << PAGE_NUMBER_BITS) - 1);
-    //uint16_t offset = virtual_address & ((1 << PAGE_OFFSET_BITS) - 1);
-    
-    memcpy(result, &virtual_memory->data[page_number * 256], sizeof(char) * 256);
+    if(result == NULL) {
+        perror("Error allocating memory");
+        exit(1);
+    }
+
+    memcpy(result, &virtual_memory->data[page_number * 256 + offset], sizeof(char) * size);
     return result;
 }
