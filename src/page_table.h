@@ -47,10 +47,11 @@ typedef struct {
     size_t num_pages;        /**< Total number of pages. */
 } PageTable;
 
+
 /**
- * Initializes the page table.
+ * Initializes the page table with the given number of pages.
  *
- * @param page_table A pointer to the PageTable structure to be initialized.
+ * @param page_table A pointer to the PageTable structure.
  */
 void initialize_page_table(PageTable *page_table);
 

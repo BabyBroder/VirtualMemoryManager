@@ -70,25 +70,28 @@ void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algor
  */
 int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, uint8_t frame_number, int current_index);
 
+
 /**
  * @brief Adds a page to the physical memory.
  *
+ * This function adds a page to the physical memory at the specified frame number.
+ *
  * @param physical_memory Pointer to the PhysicalMemory structure.
- * @param page The page number to be added.
- * @param current_index The current index in the page table.
+ * @param virtual_memory Pointer to the VirtualMemory structure.
+ * @param frame_number The frame number to add the page to.
+ * @param page_number The page number to add.
  */
-
 void add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, uint8_t frame_number, uint8_t page_number);
 
 /**
- * @brief Reads data from the physical memory.
+ * @brief Reads data from physical memory.
+ *
+ * This function reads data from the physical memory at the specified frame number and offset.
  *
  * @param physical_memory Pointer to the PhysicalMemory structure.
- * @param physical_address The physical address to read from.
- * @param buffer Buffer to store the read data.
- * @param size Number of bytes to read.
- * @return Number of bytes read, or -1 on error.
+ * @param frame_number The frame number to read from.
+ * @param offset The offset within the frame to start reading.
+ * @return The data read from the physical memory.
  */
-
 char *read_from_physical_memory(PhysicalMemory *physical_memory, uint8_t frame_number, uint8_t offset);
 #endif // PHYSICAL_MEMORY_H;

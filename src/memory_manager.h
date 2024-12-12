@@ -13,17 +13,15 @@
 
 /**
  * @struct TLBManager
- * @brief Structure to manage TLB hits and misses.
+ * @brief Structure to manage TLB hits.
  * 
  * @var TLBManager::TLBhits
  * Number of TLB hits.
- * 
- * @var TLBManager::TLBmiss
- * Boolean flag indicating a TLB miss.
  */
 typedef struct {
     int TLBhits; /**< Total number of TLB hits. */
 } TLBManager;
+
 
 /**
  * @struct PageFaultManager
@@ -31,16 +29,14 @@ typedef struct {
  * 
  * @var PageFaultManager::pageFaults
  * Number of page faults.
- * 
- * @var PageFaultManager::pageFault
- * Boolean flag indicating a page fault.
  */
 typedef struct {
     int pageFaults; /**< Total number of page faults. */
 } PageFaultManager;
 
+
 /**
- * @brief Initializes memory management components.
+ * @brief Initializes the memory manager with the provided TLB and page fault manager.
  * 
  * @param tlb_manager Pointer to TLBManager structure.
  * @param page_fault_manager Pointer to PageFaultManager structure.
@@ -48,17 +44,29 @@ typedef struct {
 void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_fault_manager);
 
 /**
- * @brief Handles a TLB miss.
+ * @brief Checks if the virtual address is in the TLB.
  * 
- * @param tlb Pointer to TLB structure.
- * @param page_table Pointer to PageTable structure.
- * @param tlb_manager Pointer to TLBManager structure.
- * @param page_fault_manager Pointer to PageFaultManager structure.
- * @param virtual_address The virtual address that caused the TLB miss.
+ * @param tlb Pointer to the TLB structure.
+ * @param page_table Pointer to the PageTable structure.
+ * @param tlb_manager Pointer to the TLBManager structure.
+ * @param page_fault_manager Pointer to the PageFaultManager structure.
+ * @param virtual_address The virtual address to check.
  * @param current_index The current index in the TLB.
+ * @return True if the virtual address is in the TLB, false otherwise.
  */
 bool tlb_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index);
 
+/**
+ * @brief Checks if the virtual address is in the page table.
+ * 
+ * @param tlb Pointer to the TLB structure.
+ * @param page_table Pointer to the PageTable structure.
+ * @param tlb_manager Pointer to the TLBManager structure.
+ * @param page_fault_manager Pointer to the PageFaultManager structure.
+ * @param virtual_address The virtual address to check.
+ * @param current_index The current index in the TLB.
+ * @return True if the virtual address is in the page table, false otherwise.
+ */
 bool page_table_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index);
 
 #endif // MEMORY_MANAGER_H

@@ -19,8 +19,19 @@
 #include "utils/constants.h"
 #include "utils/parser.h"
 
+
 /**
- * @brief Structure representing the virtual memory.
+ * @struct VirtualMemory
+ * @brief Represents the virtual memory.
+ * 
+ * @var VirtualMemory::data
+ * Data array representing the backing store.
+ * 
+ * @var VirtualMemory::address
+ * Array of pointers representing addresses.
+ * 
+ * @var VirtualMemory::initialized
+ * Flag indicating if the virtual memory has been initialized.
  */
 typedef struct {
     char *data; /**< Data array representing the backing store. */
@@ -29,20 +40,23 @@ typedef struct {
 } VirtualMemory;
 
 /**
- * @brief Initializes the virtual memory.
+ * @brief Initializes the virtual memory with the provided address and backing store files.
  * 
- * @param virtual_memory Pointer to the VirtualMemory structure to be initialized.
- * @param address_file Path to the file containing address information.
- * @param backing_store_file Path to the file containing backing store data.
+ * @param virtual_memory Pointer to the VirtualMemory structure.
+ * @param address_file The address file to read from.
+ * @param backing_store_file The backing store file to read from.
  */
 void initialize_virtual_memory(VirtualMemory *virtual_memory, char* address_file, char* backing_store_file);
 
+
 /**
- * @brief Reads a byte from the virtual memory.
+ * @brief Reads data from the virtual memory.
  * 
  * @param virtual_memory Pointer to the VirtualMemory structure.
- * @param virtual_address The virtual address to read from.
- * @return Pointer to the byte read from the backing store.
+ * @param page_number The page number to read from.
+ * @param offset The offset within the page to start reading.
+ * @param size The number of bytes to read.
+ * @return A pointer to the data read from the virtual memory.
  */
 char *readVirtualMemory(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, uint8_t size);
 
