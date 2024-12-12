@@ -6,7 +6,6 @@ void initialize_lru(LRU *structure, int capacity_value) {
         exit(EXIT_FAILURE);
     }
 
-    structure->table = NULL;
     if (structure->table != NULL) {
         fprintf(stderr, "LRU Warning: Table is already initialized.\n");
         return;
@@ -15,6 +14,7 @@ void initialize_lru(LRU *structure, int capacity_value) {
     structure->capacity = capacity_value;
     structure->size = structure->time = 0;
     structure->table = (LRUEntry *)malloc(structure->capacity * sizeof(LRUEntry));
+    
     if (!structure->table) {
         perror("LRU Error: Memory allocation failed");
         exit(EXIT_FAILURE);
@@ -26,7 +26,7 @@ void initialize_lru(LRU *structure, int capacity_value) {
     }
 }
 
-// returns the index of the page to replace
+
 int lru_choose_page_to_replace(LRU *structure) {
     if (structure->size == 0) {
         fprintf(stderr, "LRU Error: No pages to replace (table is empty)!\n");
@@ -41,32 +41,39 @@ int lru_choose_page_to_replace(LRU *structure) {
             index = i;
         }
     }
-
+    //printf("LRU: Replacing index %d\n", index);
     return index;
 }
 
-int lru_add_page(LRU *structure, int page) {
+bool lru_add_page(LRU *structure, int page) {
     ++structure->time;
 
     for (int i = 0; i < structure->size; i++) 
     {
         if (structure->table[i].page == page)
-            {
-                structure->table[i].timestamp = structure->time;
-                return -2; // do nothing
-            }
+        {
+            structure->table[i].timestamp = structure->time;
+            //printf("LRU: Page %d already in memory\n", page);
+            //print_lru(structure);
+            return true;
+        }
     }
 
     if (structure->size == structure->capacity) {
         int index = lru_choose_page_to_replace(structure);
         structure->table[index].page = page;
         structure->table[index].timestamp = structure->time;
-        return index; // replacement
+        //printf("LRU: Replacing index %d with page %d\n", index, page);
+        //print_lru(structure);
+        return false; 
     }
+
     structure->table[structure->size].page = page;
     structure->table[structure->size].timestamp = structure->time;
     ++structure->size;
-    return -1; // adding new
+    //printf("LRU: Adding page %d\n", page);
+    //print_lru(structure);
+    return true;
 }
 
 void free_lru(LRU *structure) {
@@ -75,4 +82,12 @@ void free_lru(LRU *structure) {
         structure->table = NULL;
     }
     structure->capacity = structure->size = structure->time = 0;
+}
+
+void print_lru(LRU *structure) {
+    printf("LRU Table: ");
+    for (int i = 0; i < structure->size; i++) {
+        printf("%d ", structure->table[i].page);
+    }
+    printf("\n");
 }

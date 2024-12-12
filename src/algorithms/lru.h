@@ -1,3 +1,7 @@
+/**
+ * @file lru.h
+ * @brief Header file for the Least Recently Used (LRU) page replacement algorithm.
+*/
 #ifndef LRU_H
 #define LRU_H
 
@@ -5,38 +9,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdbool.h>
-/**
- * @file lru.h
- * @brief Header file for the Least Recently Used (LRU) page replacement algorithm.
- */
 
-/**
- * @struct LRUEntry
- * @brief Represents an entry in the LRU table.
- * 
- * @var LRUEntry::page
- * The page number.
- * 
- * @var LRUEntry::timestamp
- * The timestamp indicating the last access time of the page.
- */
-
-/**
- * @struct LRU
- * @brief Represents the LRU structure.
- * 
- * @var LRU::table
- * Pointer to an array of LRUEntry representing the LRU table.
- * 
- * @var LRU::capacity
- * The maximum number of entries the LRU table can hold.
- * 
- * @var LRU::size
- * The current number of entries in the LRU table.
- * 
- * @var LRU::time
- * The current time, used for timestamping entries.
- */
 
 /**
  * @struct LRUEntry
@@ -99,7 +72,7 @@ int lru_choose_page_to_replace(LRU *structure);
  * @param page The page number to add.
  * @return true if the page was added successfully, false otherwise.
  */
-int lru_add_page(LRU *structure, int page);
+bool lru_add_page(LRU *structure, int page);
 
 /**
  * @brief Frees the resources allocated for the LRU structure.
@@ -107,5 +80,12 @@ int lru_add_page(LRU *structure, int page);
  * @param structure Pointer to the LRU structure to free.
  */
 void free_lru(LRU *structure);
+
+/**
+ * @brief Prints the contents of the LRU structure.
+ * 
+ * @param structure Pointer to the LRU structure to print.
+ */
+void print_lru(LRU *structure);
 
 #endif // LRU_H

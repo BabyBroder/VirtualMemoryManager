@@ -29,6 +29,8 @@ int fifo_choose_page_to_replace(FIFO *structure) {
     // Choose the front page to replace
     int page = structure->front;
     structure->front = (structure->front + 1) % structure->capacity; 
+
+    //printf("FIFO: Replacing index %d\n", page);
     return page;
 }
 
@@ -37,6 +39,7 @@ bool fifo_add_page(FIFO *structure, int page) {
     {
         if (structure->queue[i] == page)
         {
+            //printf("FIFO: Page %d already in memory\n", page);
             //print_fifo(structure);
             return true;
         }
@@ -51,6 +54,7 @@ bool fifo_add_page(FIFO *structure, int page) {
         }
 
         structure->queue[indexReplace] = page;
+        //printf("FIFO: Replacing index %d with page %d\n", indexReplace, page);
         //print_fifo(structure);
         return false;
     }
@@ -58,6 +62,7 @@ bool fifo_add_page(FIFO *structure, int page) {
     structure->queue[structure->rear] = page;
     structure->rear = (structure->rear + 1) % structure->capacity; 
     structure->size++;
+    //printf("FIFO: Adding page %d\n", page);
     //print_fifo(structure);
     return true; 
 }
