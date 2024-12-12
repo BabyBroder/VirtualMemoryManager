@@ -65,7 +65,7 @@ void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory ,Algorithm algorithm
  * @param current_index The current index in the TLB.
  * @return The index of the entry to replace.
  */
-int choose_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index);
+int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index);
 
 /**
  * @brief Adds an entry to the TLB.

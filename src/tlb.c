@@ -25,7 +25,7 @@ void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory ,Algorithm algorithm
     }
 }
 
-int choose_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
+int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
 {
     // adding entry
     int needReplace = -2;
@@ -48,7 +48,7 @@ int choose_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_nu
 void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index) {
     int goodState = -1;
     // finding free TLB entry to add
-    goodState = choose_entry_to_replacment(tlb, page_number, frame_number, current_index); 
+    goodState = choose_entry_to_replace(tlb, page_number, frame_number, current_index); 
     if (goodState<0){
         if(goodState==-1) 
             for(int i = 0 ;i < TLB_ENTRIES ;i++)
