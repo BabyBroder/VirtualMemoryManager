@@ -14,6 +14,7 @@
 #include "page_table.h"
 #include "algorithms/algorithm.h"
 #include "utils/constants.h"
+#include "virtual_memory.h"
 
 /**
  * @struct TLBEntry
@@ -50,7 +51,7 @@ typedef struct {
  * @param tlb Pointer to the TLB structure to initialize.
  * @param algorithm The replacement algorithm to use.
  */
-void initialize_tlb(TLB *tlb, Algorithm algorithm);
+void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory ,Algorithm algorithm);
 
 /**
  * @brief Chooses an entry to replace in the TLB.

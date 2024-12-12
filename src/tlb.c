@@ -3,7 +3,7 @@
 #include "tlb.h"
 #include "page_table.h"
 #include "utils/constants.h"
-void initialize_tlb(TLB *tlb, Algorithm algorithm) {
+void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory ,Algorithm algorithm) {
     // chossing algorithm
     tlb->algorithm = algorithm;
     if (algorithm == FIFO_ALGORITHM)
@@ -16,7 +16,7 @@ void initialize_tlb(TLB *tlb, Algorithm algorithm) {
     }
     else if (algorithm == OPT_ALGORITHM)
     {
-        initialize_optimal(&tlb->algorithm_struct.optimal, TLB_ENTRIES);
+        initialize_optimal(&tlb->algorithm_struct.optimal, virtual_memory, TLB_ENTRIES);
     }
     // default value: invalid
     for(int i = 0 ;i < TLB_ENTRIES ;i++)

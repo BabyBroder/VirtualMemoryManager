@@ -35,6 +35,12 @@ int fifo_choose_page_to_replace(FIFO *structure) {
 }
 
 bool fifo_add_page(FIFO *structure, int page) {
+    if(structure->size > structure->capacity){
+        printf("size: %d\ncapacity: %d\n", structure->size, structure->capacity);
+        fprintf(stderr, "FIFO Error: Capacity exceeded\n");
+        return false;
+    }
+
     for (int i = 0; i < structure->size; i++) 
     {
         if (structure->queue[i] == page)

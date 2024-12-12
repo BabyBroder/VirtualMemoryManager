@@ -14,6 +14,7 @@
 #include <stdbool.h>
 #include "utils/constants.h"
 #include "algorithms/algorithm.h"
+#include "virtual_memory.h"
 
 /**
  * @struct Frame
@@ -42,7 +43,7 @@ typedef struct
  * @param physical_memory Pointer to the PhysicalMemory structure.
  * @param algorithm The algorithm to be used for page replacement.
  */
-void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm);
+void initialize_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, Algorithm algorithm);
 
 /**
  * @brief Adds a page to the physical memory.

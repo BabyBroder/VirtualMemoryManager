@@ -7,6 +7,23 @@
 
 // Initializes the virtual memory
 void initialize_virtual_memory(VirtualMemory *virtual_memory, char* address_file, char* backing_store_file){
+    if(virtual_memory->initialized) {
+        fprintf(stderr, "Virtual memory already initialized\n");
+        return;
+    }
+    
+    virtual_memory->address = (int*)malloc(sizeof(int) * ADDRESS_SIZE);
+    if(virtual_memory->address == NULL) {
+        perror("Error allocating memory");
+        exit(1);
+    }
+
+    virtual_memory->data = (char*)malloc(sizeof(char) * BACKING_STORE_SIZE);
+    if(virtual_memory->data == NULL) {
+        perror("Error allocating memory");
+        exit(1);
+    }
+
     FILE* fdAddress = fopen(address_file, "r");
 
     FILE* backingStore = fopen(backing_store_file, "rb");
@@ -18,6 +35,7 @@ void initialize_virtual_memory(VirtualMemory *virtual_memory, char* address_file
 
     fread(virtual_memory->address, sizeof(int), ADDRESS_SIZE, fdAddress);
     fread(virtual_memory->data, sizeof(char), BACKING_STORE_SIZE, backingStore);
+    virtual_memory->initialized = true;
 
     fclose(fdAddress);
     fclose(backingStore);

@@ -19,8 +19,9 @@
  * @brief Structure representing the virtual memory.
  */
 typedef struct {
-    char data[BACKING_STORE_SIZE]; /**< Data array representing the backing store. */
-    int *address[ADDRESS_SIZE];    /**< Array of pointers representing addresses. */
+    char *data; /**< Data array representing the backing store. */
+    int *address;    /**< Array of pointers representing addresses. */
+    bool initialized; /**< Flag indicating if the virtual memory has been initialized. */   
 } VirtualMemory;
 
 /**

@@ -46,6 +46,11 @@ int lru_choose_page_to_replace(LRU *structure) {
 }
 
 bool lru_add_page(LRU *structure, int page) {
+    if(structure->size > structure->capacity){
+        fprintf(stderr, "LRU Error: Capacity exceeded\n");
+        return false;
+    }
+    
     ++structure->time;
 
     for (int i = 0; i < structure->size; i++) 

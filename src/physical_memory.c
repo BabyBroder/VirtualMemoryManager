@@ -6,7 +6,7 @@
 #include "utils/constants.h"
 #include <stdint.h>
 
-void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm)
+void initialize_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory ,Algorithm algorithm)
 {
     physical_memory->nums_frames = TOTAL_FRAMES;
     for (int i = 0; i < TOTAL_FRAMES; i++)
@@ -24,7 +24,7 @@ void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algor
     }
     else if (algorithm == OPT_ALGORITHM)
     {
-        initialize_optimal(&physical_memory->algorithm_struct.optimal, TOTAL_FRAMES);
+        initialize_optimal(&physical_memory->algorithm_struct.optimal, virtual_memory, TOTAL_FRAMES);
     }
 }
 

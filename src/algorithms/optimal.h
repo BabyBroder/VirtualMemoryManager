@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdbool.h>
+#include "../virtual_memory.h"
 
 typedef struct
 {
@@ -23,7 +24,7 @@ typedef struct
  * @param structure Pointer to the Optimal structure to initialize.
  * @param capacity The maximum number of pages the memory can hold.
  */
-void initialize_optimal(Optimal *structure, int capacity);
+void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int capacity);
 
 /**
  * @brief Builds the future usage pattern for the optimal page replacement algorithm.
@@ -62,5 +63,12 @@ bool optimal_add_page(Optimal *structure, int page, int current_index);
  * @param structure Pointer to the Optimal structure.
  */
 void free_optimal(Optimal *structure);
+
+/**
+ * Prints the contents of the Optimal structure.
+ *
+ * @param structure Pointer to the Optimal structure.
+ */
+void print_optimal(const Optimal *structure);
 
 #endif // OPTIMAL_H
