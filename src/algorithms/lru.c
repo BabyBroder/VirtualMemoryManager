@@ -1,11 +1,5 @@
 #include "../../lib/algorithms/algorithms.h"
 
-/**
- * @brief Initializes the LRU structure with the given capacity.
- *
- * @param structure Pointer to the LRU structure to initialize.
- * @param capacity The maximum number of entries the LRU cache can hold.
- */
 void initialize_lru(LRU *structure, int capacity_value)
 {
 
@@ -38,12 +32,6 @@ void initialize_lru(LRU *structure, int capacity_value)
     }
 }
 
-/**
- * @brief Chooses a page to replace based on the LRU policy.
- *
- * @param structure Pointer to the LRU structure.
- * @return The page number to replace.
- */
 int lru_choose_page_to_replace(LRU *structure)
 {
 
@@ -73,13 +61,6 @@ int lru_choose_page_to_replace(LRU *structure)
     return index;
 }
 
-/**
- * @brief Adds a page to the LRU cache.
- *
- * @param structure Pointer to the LRU structure.
- * @param page The page number to add.
- * @return Index of page in queue if the page was replaced successfully, -1 if the queue is not full, -2 if the queue have no changed.
- */
 int lru_add_page(LRU *structure, int page)
 {
 
@@ -119,11 +100,6 @@ int lru_add_page(LRU *structure, int page)
     return -1;
 }
 
-/**
- * @brief Frees the memory allocated for the LRU structure.
- *
- * @param structure Pointer to the LRU structure to free.
- */
 void free_lru(LRU *structure)
 {
     if (structure->table)
@@ -134,11 +110,6 @@ void free_lru(LRU *structure)
     structure->capacity = structure->size = structure->time = 0;
 }
 
-/**
- * @brief Prints the current state of the LRU cache.
- *
- * @param structure Pointer to the LRU structure to print.
- */
 void print_lru(LRU *structure)
 {
     printf("LRU Table: ");

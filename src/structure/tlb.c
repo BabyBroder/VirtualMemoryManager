@@ -1,16 +1,5 @@
 #include "../../lib/structure/structure.h"
 
-/**
- * @brief Initializes the TLB with the specified virtual memory and replacement algorithm.
- *
- * This function initializes the TLB with the specified virtual memory and
- * replacement algorithm. The TLB is initialized with all entries marked as
- * invalid.
- *
- * @param tlb Pointer to the TLB structure.
- * @param virtual_memory Pointer to the VirtualMemory structure.
- * @param algorithm The replacement algorithm to use.
- */
 void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory, Algorithm algorithm)
 {
     // chossing algorithm
@@ -34,18 +23,6 @@ void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory, Algorithm algorithm
     }
 }
 
-/**
- * @brief Chooses an entry to replace in the TLB.
- *
- * This function selects an entry in the TLB to replace based on the
- * specified replacement algorithm.
- *
- * @param tlb Pointer to the TLB structure.
- * @param page_number The logical page number to replace.
- * @param frame_number The physical frame number to replace.
- * @param current_index The current index in the TLB.
- * @return The index of the entry to replace.
- */
 int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
 {
     // adding entry
@@ -65,16 +42,6 @@ int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_numbe
     return needReplace;
 }
 
-/**
- * @brief Adds an entry to the TLB.
- *
- * This function adds an entry to the TLB at the specified index.
- *
- * @param tlb Pointer to the TLB structure.
- * @param page_number The logical page number to add.
- * @param frame_number The physical frame number to add.
- * @param current_index The current index in the TLB.
- */
 void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
 {
     int goodState = -1;
@@ -108,16 +75,6 @@ void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int cu
     tlb->entries[indx].page_number = page_number;
 }
 
-/**
- * @brief Looks up the TLB for a given page number.
- *
- * This function looks up the TLB for a given page number and returns the
- * corresponding frame number if the entry is valid.
- *
- * @param tlb Pointer to the TLB structure.
- * @param page_number The page number to look up.
- * @return The frame number corresponding to the page number, or -1 if the entry is not valid.
- */
 int tlb_lookup(TLB *tlb, uint16_t page_number)
 {
     for (int i = 0; i < TLB_ENTRIES; i++)
@@ -132,13 +89,6 @@ int tlb_lookup(TLB *tlb, uint16_t page_number)
     return -1;
 }
 
-/**
- * @brief Prints the contents of the TLB.
- *
- * This function prints the contents of the TLB to the console.
- *
- * @param tlb Pointer to the TLB structure.
- */
 void print_tlb(const TLB *tlb)
 {
     // print tlb

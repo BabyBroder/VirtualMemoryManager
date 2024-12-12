@@ -1,10 +1,5 @@
 #include "../../lib/structure/structure.h"
 
-/**
- * Initializes the page table with the given number of pages.
- *
- * @param page_table A pointer to the PageTable structure.
- */
 void initialize_page_table(PageTable *page_table)
 {
     if (page_table)
@@ -28,13 +23,6 @@ void initialize_page_table(PageTable *page_table)
     }
 }
 
-/**
- * Looks up the page table for a given page number.
- *
- * @param page_table A pointer to the PageTable structure.
- * @param page_number The page number to look up.
- * @return The frame number corresponding to the page number, or -1 if the page is not found.
- */
 int page_table_lookup(PageTable *page_table, uint16_t page_number)
 {
 
@@ -56,13 +44,6 @@ int page_table_lookup(PageTable *page_table, uint16_t page_number)
     return -1;
 }
 
-/**
- * Updates the page table when a page is loaded into memory.
- *
- * @param page_table A pointer to the PageTable structure.
- * @param page_number The page number to be updated.
- * @param frame_number The frame number to be associated with the page number.
- */
 void link_page_table_to_frame(PageTable *page_table, uint16_t page_number, uint16_t frame_number)
 {
     if (!page_table)
@@ -85,10 +66,6 @@ void link_page_table_to_frame(PageTable *page_table, uint16_t page_number, uint1
     page_table->entries[page_number].frame_number = frame_number;
 }
 
-/**
- * Cleans up resources allocated for the page table.
- * @param page_table A pointer to the PageTable structure to be freed.
- */
 void free_page_table(PageTable *page_table)
 {
     free(page_table->entries);

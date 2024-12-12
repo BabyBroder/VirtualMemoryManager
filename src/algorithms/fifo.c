@@ -1,11 +1,5 @@
 #include "../../lib/algorithms/algorithms.h"
 
-/**
- * @brief Initializes a FIFO structure with a given capacity.
- *
- * @param structure Pointer to the FIFO structure to initialize.
- * @param capacity Maximum number of elements the queue can hold.
- */
 void initialize_fifo(FIFO *structure, int capacity_value)
 {
 
@@ -38,12 +32,6 @@ void initialize_fifo(FIFO *structure, int capacity_value)
     structure->front = structure->rear = structure->size = 0;
 }
 
-/**
- * @brief Chooses a page to replace based on the FIFO algorithm.
- *
- * @param structure Pointer to the FIFO structure.
- * @return The page number to be replaced.
- */
 int fifo_choose_page_to_replace(FIFO *structure)
 {
 
@@ -65,13 +53,6 @@ int fifo_choose_page_to_replace(FIFO *structure)
     return page;
 }
 
-/**
- * @brief Adds a page to the FIFO queue.
- *
- * @param structure Pointer to the FIFO structure.
- * @param page The page number to add to the queue.
- * @return Index of page in queue if the page was replaced successfully, -1 if the queue is not full, -2 if the queue have no changed.
- */
 int fifo_add_page(FIFO *structure, int page)
 {
 
@@ -101,11 +82,6 @@ int fifo_add_page(FIFO *structure, int page)
     return -1;
 }
 
-/**
- * @brief Frees the memory allocated for the FIFO structure.
- *
- * @param structure Pointer to the FIFO structure to free.
- */
 void free_fifo(FIFO *structure)
 {
     if (structure->queue)
@@ -116,11 +92,6 @@ void free_fifo(FIFO *structure)
     structure->capacity = structure->front = structure->rear = structure->size = 0;
 }
 
-/**
- * @brief Prints the current state of the FIFO queue.
- *
- * @param structure Pointer to the FIFO structure to print.
- */
 void print_fifo(FIFO *structure)
 {
     if (structure->size == 0)

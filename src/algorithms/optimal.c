@@ -1,12 +1,5 @@
 #include "../../lib/algorithms/algorithms.h"
 
-/**
- * @brief Initializes the Optimal structure.
- *
- * @param structure Pointer to the Optimal structure to initialize.
- * @param virtual_memory Pointer to the VirtualMemory structure.
- * @param capacity The capacity of the Optimal structure.
- */
 void initialize_optimal(Optimal *structure, char *fileAddress, int capacity)
 {
 
@@ -72,11 +65,6 @@ void initialize_optimal(Optimal *structure, char *fileAddress, int capacity)
     build_future_usage(structure);
 }
 
-/**
- * @brief Builds the future usage table for the Optimal structure.
- *
- * @param structure Pointer to the Optimal structure.
- */
 void build_future_usage(Optimal *structure)
 {
     int _size = 0;
@@ -99,13 +87,6 @@ void build_future_usage(Optimal *structure)
     }
 }
 
-/**
- * @brief Chooses the page to replace based on the Optimal algorithm.
- *
- * @param structure Pointer to the Optimal structure.
- * @param current_index The current index in the page reference string.
- * @return The index of the page to replace.
- */
 int optimal_choose_page_to_replace(const Optimal *structure, int current_index)
 {
 
@@ -136,14 +117,6 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index)
     return index;
 }
 
-/**
- * @brief Adds a page to the Optimal structure.
- *
- * @param structure Pointer to the Optimal structure.
- * @param page The page number to add.
- * @param current_index The current index in the page reference string.
- * @return Index of page in queue if the page was replaced successfully, -1 if the queue is not full, -2 if the queue have no changed.
- */
 int optimal_add_page(Optimal *structure, int page, int current_index)
 {
 
@@ -171,11 +144,6 @@ int optimal_add_page(Optimal *structure, int page, int current_index)
     return -1;
 }
 
-/**
- * @brief Frees the memory allocated for the Optimal structure.
- *
- * @param structure Pointer to the Optimal structure to free.
- */
 void free_optimal(Optimal *structure)
 {
     if (structure->pages)
@@ -209,11 +177,6 @@ void free_optimal(Optimal *structure)
     structure->capacity = structure->size = 0;
 }
 
-/**
- * @brief Prints the contents of the Optimal structure.
- *
- * @param structure Pointer to the Optimal structure to print.
- */
 void print_optimal(const Optimal *structure)
 {
     printf("Optimal Structure:\n");
