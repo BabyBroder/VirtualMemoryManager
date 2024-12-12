@@ -44,6 +44,6 @@ void initialize_virtual_memory(VirtualMemory *virtual_memory, char* address_file
  * @param virtual_address The virtual address to read from.
  * @return Pointer to the byte read from the backing store.
  */
-char *read_BACKINGSTORE(VirtualMemory *virtual_memory, uint32_t virtual_address);
+char *readVirtualMemory(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, uint8_t size);
 
 #endif // VIRTUAL_MEMORY_H
