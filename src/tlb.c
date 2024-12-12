@@ -25,7 +25,7 @@ void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory ,Algorithm algorithm
     }
 }
 
-int add_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
+int choose_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
 {
     // adding entry
     int needReplace = -2;
@@ -44,29 +44,11 @@ int add_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_numbe
     return needReplace;
 }
 
-int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
-{
-    // return need to be replaced index
-    int index = -1;
-    if (tlb->algorithm == FIFO_ALGORITHM)
-    {
-        index = fifo_choose_page_to_replace(&tlb->algorithm_struct.fifo);
-    }
-    else if (tlb->algorithm == LRU_ALGORITHM)
-    {
-        index = lru_choose_page_to_replace(&tlb->algorithm_struct.lru);
-    }
-    else if (tlb->algorithm == OPT_ALGORITHM)
-    {
-        index = optimal_choose_page_to_replace(&tlb->algorithm_struct.optimal,current_index);
-    }
-    return index;
-}
 
 void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index) {
     int goodState = -1;
     // finding free TLB entry to add
-    goodState = add_entry_to_replacment(tlb, page_number, frame_number, current_index); 
+    goodState = choose_entry_to_replacment(tlb, page_number, frame_number, current_index); 
     if (goodState<0){
         if(goodState==-1) 
             for(int i = 0 ;i < TLB_ENTRIES ;i++)
