@@ -58,18 +58,18 @@ typedef struct
 void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm);
 
 /**
- * @brief Chooses an entry to replace in the TLB.
+ * @brief Chooses an entry to replace in the Physical Memory.
  *
- * This function selects an entry in the TLB to replace based on the
+ * This function selects an entry in the Physical Memory to replace based on the
  * specified replacement algorithm.
  *
  * @param physical_memory Pointer to the PhysicalMemory structure.
  * @param page_number The logical page number to add.
  * @param frame_number The physical frame number to add.
- * @param current_index The current index in the TLB.
+ * @param current_index The current index in the Physical Memory.
  * @return The index of the entry to replace.
  */
-int choose_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, uint8_t frame_number, int current_index);
+int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, uint8_t frame_number, int current_index);
 
 
 /**
