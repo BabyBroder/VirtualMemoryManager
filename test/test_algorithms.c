@@ -54,7 +54,7 @@ int main()
     initialize_virtual_memory(virtual_memory, "../data/addresses.txt", "BAKING_STORE.BIN");
     printf("Virtual memory initialized\n");
     for(int i = 0; i < ADDRESS_SIZE; i++){
-        printf("%d\n", virtual_memory->address[i]);
+        //printf("%d\n", virtual_memory->address[i]);
     }
     printf("Virtual memory address printed\n");
     printf("=====================================\n");

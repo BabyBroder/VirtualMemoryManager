@@ -66,15 +66,17 @@ void build_future_usage(Optimal *structure) {
     int _size = 0;
 
     for (int i = 999; i >= 0; i--) {
-        
-        for (int j = 0; j < _size && i < 999; ++j)
-            structure->idx[j][i] = structure->idx[j][i + 1];
+        if (i < 999)
+        {
+            for (int j = 0; j < _size; ++j)
+                structure->idx[j][i] = structure->idx[j][i + 1];
+        }
         
         int optimal_page = structure->future_usage[i];
         int optimal_idx = structure->map[optimal_page];
-
+        
         if (optimal_idx == -1) 
-            structure->map[optimal_page] = _size++;
+            optimal_idx = structure->map[optimal_page] = _size++;
 
         structure->idx[optimal_idx][i] = i;
     }
@@ -96,37 +98,36 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index) 
         }
     }
 
-    printf("Replacing index: %d\n", index);
     return index;
 }
 
 
 bool optimal_add_page(Optimal *structure, int page, int current_index) {
+    //printf("Optimal Add Page: %d\n", page);
     if(structure->size > structure->capacity){
         fprintf(stderr, "Optimal Error: Capacity exceeded\n");
         return false;
     }
 
     for (int i = 0; i < structure->size; i++)
-        if (structure->pages[i] == page)
-        {
-            printf("Page %d already in memory\n", page);
+        if (structure->pages[i] == page) {
+            //print_optimal(structure);
             return true;
-        } 
+        }
 
-    if(structure->size == structure->capacity){
+    if (structure->size == structure->capacity){
         int index = optimal_choose_page_to_replace(structure, current_index);
         if (index == -1) {
             fprintf(stderr, "Optimal Error: Failed to choose page to replace\n");
             return false;
         }
         structure->pages[index] = page;
-        printf("Replacing index %d with page %d\n", index, page);
-        print_optimal(structure);
+        //print_optimal(structure);
         return false;
     }
 
     structure->pages[structure->size++] = page;
+    //print_optimal(structure);
     return true;
     
 }
@@ -161,4 +162,5 @@ void print_optimal(const Optimal *structure) {
     printf("Optimal Structure:\n");
     for (int i = 0; i < structure->size; i++)
         printf("%d ", structure->pages[i]);
+    printf("\n");
 }
