@@ -30,7 +30,7 @@ void initialize_lru(LRU *structure, int capacity_value) {
 int lru_choose_page_to_replace(LRU *structure) {
     if (structure->size == 0) {
         fprintf(stderr, "LRU Error: No pages to replace (table is empty)!\n");
-        return -1;
+        exit(EXIT_FAILURE);
     }
 
     int min_timestamp = INT_MAX;
@@ -45,11 +45,11 @@ int lru_choose_page_to_replace(LRU *structure) {
     return index;
 }
 
-bool lru_add_page(LRU *structure, int page) {
-    if(structure->size > structure->capacity){
-        fprintf(stderr, "LRU Error: Capacity exceeded\n");
-        return false;
-    }
+int lru_add_page(LRU *structure, int page) {
+    // if(structure->size > structure->capacity){
+    //     fprintf(stderr, "LRU Error: Capacity exceeded\n");
+    //     return false;
+    // }
     
     ++structure->time;
 
@@ -60,7 +60,7 @@ bool lru_add_page(LRU *structure, int page) {
             structure->table[i].timestamp = structure->time;
             //printf("LRU: Page %d already in memory\n", page);
             //print_lru(structure);
-            return true;
+            return -2;
         }
     }
 
@@ -70,7 +70,7 @@ bool lru_add_page(LRU *structure, int page) {
         structure->table[index].timestamp = structure->time;
         //printf("LRU: Replacing index %d with page %d\n", index, page);
         //print_lru(structure);
-        return false; 
+        return index; 
     }
 
     structure->table[structure->size].page = page;
@@ -78,7 +78,7 @@ bool lru_add_page(LRU *structure, int page) {
     ++structure->size;
     //printf("LRU: Adding page %d\n", page);
     //print_lru(structure);
-    return true;
+    return -1;
 }
 
 void free_lru(LRU *structure) {

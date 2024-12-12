@@ -85,7 +85,7 @@ void build_future_usage(Optimal *structure) {
 int optimal_choose_page_to_replace(const Optimal *structure, int current_index) {
     if (structure->size == 0) {
         fprintf(stderr, "Optimal Error: No pages to replace (memory is empty)!\n");
-        return -1;
+        exit(EXIT_FAILURE);
     }
 
     int index = -1, farthest = -1;
@@ -102,33 +102,30 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index) 
 }
 
 
-bool optimal_add_page(Optimal *structure, int page, int current_index) {
+int optimal_add_page(Optimal *structure, int page, int current_index) {
     //printf("Optimal Add Page: %d\n", page);
-    if(structure->size > structure->capacity){
-        fprintf(stderr, "Optimal Error: Capacity exceeded\n");
-        return false;
-    }
+    // if(structure->size > structure->capacity){
+    //     fprintf(stderr, "Optimal Error: Capacity exceeded\n");
+    //     return false;
+    // }
 
     for (int i = 0; i < structure->size; i++)
         if (structure->pages[i] == page) {
             //print_optimal(structure);
-            return true;
+            return -2;
         }
 
     if (structure->size == structure->capacity){
         int index = optimal_choose_page_to_replace(structure, current_index);
-        if (index == -1) {
-            fprintf(stderr, "Optimal Error: Failed to choose page to replace\n");
-            return false;
-        }
+       
         structure->pages[index] = page;
         //print_optimal(structure);
-        return false;
+        return index;
     }
 
     structure->pages[structure->size++] = page;
     //print_optimal(structure);
-    return true;
+    return -1;
     
 }
 

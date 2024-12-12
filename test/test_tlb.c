@@ -18,6 +18,9 @@ int main()
         test[i].page_number = i;
         test[i].frame_number = i;
     }
+
+    test[17].page_number = 10;
+    test[17].frame_number = 9;
     // Allocate memory for the TLB
     TLB *_TLB = (TLB *)malloc(sizeof(TLB));
     if (_TLB == NULL)
@@ -34,7 +37,7 @@ int main()
     }
 
     initialize_virtual_memory(_VM, "addresses.txt", "BAKING_STORE.BIN");
-    initialize_tlb(_TLB, _VM, FIFO_ALGORITHM);
+    initialize_tlb(_TLB, _VM, LRU_ALGORITHM);
     for (int i = 0; i < 17; i++)
     {
         tlb_add_entry(

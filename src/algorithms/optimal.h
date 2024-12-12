@@ -55,7 +55,7 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index);
  * @param structure Pointer to the Optimal structure.
  * @param page The page to add.
  */
-bool optimal_add_page(Optimal *structure, int page, int current_index);
+int optimal_add_page(Optimal *structure, int page, int current_index);
 
 /**
  * Frees the dynamically allocated memory used by the Optimal structure.
