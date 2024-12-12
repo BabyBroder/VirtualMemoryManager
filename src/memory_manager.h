@@ -23,7 +23,6 @@
  */
 typedef struct {
     int TLBhits; /**< Total number of TLB hits. */
-    bool TLBmiss; /**< Flag indicating if the most recent lookup was a TLB miss. */
 } TLBManager;
 
 /**
@@ -38,7 +37,6 @@ typedef struct {
  */
 typedef struct {
     int pageFaults; /**< Total number of page faults. */
-    bool pageFault; /**< Flag indicating if the most recent memory access caused a page fault. */
 } PageFaultManager;
 
 /**
@@ -59,6 +57,8 @@ void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_f
  * @param virtual_address The virtual address that caused the TLB miss.
  * @param current_index The current index in the TLB.
  */
-void handle_tlb_miss(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index);
+bool tlb_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index);
+
+bool page_table_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index);
 
 #endif // MEMORY_MANAGER_H
