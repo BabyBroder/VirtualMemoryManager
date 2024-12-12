@@ -8,7 +8,7 @@ void initialize_disk_manager(VirtualMemory *virtual_memory, PhysicalMemory *phys
     initialize_page_table(page_table);
 }
 
-void read_virutual_memory_to_frame(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, uint8_t size, char *frame_data){
+void read_virutual_memory_to_frame(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, uint16_t size, char *frame_data){
     char *data = readVirtualMemory(virtual_memory, page_number, offset, size);
     memcpy(frame_data, data, size);
     free(data);

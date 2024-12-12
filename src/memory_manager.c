@@ -27,7 +27,7 @@ bool tlb_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFau
     else return false;
 }
 
-bool page_table_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index) {
+bool page_table_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index) 
 {
     const uint16_t PAGE_OFFSET_BITS = 8;
     const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
@@ -38,6 +38,6 @@ bool page_table_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, 
         page_fault_manager->pageFaults++;
         return false;
     } 
-    else return true;
     
+    return true;
 }

@@ -12,14 +12,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "page_table.h"
-#include "tlb.h"
 #include "utils/constants.h"
 #include "algorithms/algorithm.h"
 #include "virtual_memory.h"
 #include "physical_memory.h"
 #include "memory_manager.h"
-
+#include "page_table.h"
+#include "tlb.h"
 
 
  /**
@@ -50,6 +49,6 @@ void initialize_disk_manager(VirtualMemory *virtual_memory, PhysicalMemory *phys
     * @param virtual_address The virtual address of the page to be swapped in.
     */
 
-void read_virutual_memory_to_frame(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, uint8_t size, char *frame_data);
+void read_virutual_memory_to_frame(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, uint16_t size, char *frame_data);
 
 #endif // DISK_MANAGER_H

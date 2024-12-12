@@ -1,5 +1,5 @@
 #include "physical_memory.h"
-#include "../src/utils/constants.h"
+
 void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm)
 {
     if (physical_memory != NULL)
@@ -49,7 +49,7 @@ int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, 
     return needReplace;
 }
 
-void add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, uint8_t frame_number, uint8_t page_number, Frame *frame)
+void add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, uint8_t frame_number, uint8_t page_number)
 {
     if (physical_memory == NULL)
     {

@@ -10,14 +10,19 @@
 #ifndef PHYSICAL_MEMORY_H
 #define PHYSICAL_MEMORY_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include "utils/constants.h"
 #include "algorithms/algorithm.h"
 #include "virtual_memory.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "disk_manager.h" 
+#include "memory_manager.h"
+#include "page_table.h"
+#include "tlb.h"
+
 
 
 /**

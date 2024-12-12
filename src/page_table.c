@@ -1,10 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
 #include "page_table.h"
-#include "physical_memory.h"
-#include "virtual_memory.h"
+
 
 void initialize_page_table(PageTable *page_table) {
     if (page_table) {
