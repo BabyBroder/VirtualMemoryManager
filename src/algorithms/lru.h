@@ -10,79 +10,58 @@
 #include <limits.h>
 #include <stdbool.h>
 
-
 /**
- * @struct LRUEntry
- * @brief Represents an entry in the LRU table.
- * 
- * @var LRUEntry::page
- * The page number.
- * 
- * @var LRUEntry::timestamp
- * The timestamp indicating the last access time of the page.
+ * @brief Structure representing an entry in the LRU (Least Recently Used) table.
  */
 typedef struct {
-	int page;
-	unsigned long timestamp;
+	int page;                /**< The page number. */
+	unsigned long timestamp; /**< The timestamp indicating the last access time. */
 } LRUEntry;
 
 /**
- * @struct LRU
- * @brief Represents the LRU structure.
- * 
- * @var LRU::table
- * Pointer to an array of LRUEntry representing the LRU table.
- * 
- * @var LRU::capacity
- * The maximum number of entries the LRU table can hold.
- * 
- * @var LRU::size
- * The current number of entries in the LRU table.
- * 
- * @var LRU::time
- * The current time, used for timestamping entries.
+ * @brief Structure representing the LRU (Least Recently Used) cache.
  */
 typedef struct {
-	LRUEntry *table;
-	int capacity;
-	int size;
-	unsigned long time;
+	LRUEntry *table;         /**< Pointer to the array of LRU entries. */
+	int capacity;            /**< Maximum number of entries the LRU cache can hold. */
+	int size;                /**< Current number of entries in the LRU cache. */
+	unsigned long time;      /**< Current time used for timestamping entries. */
 } LRU;
 
 /**
- * @brief Initializes the LRU structure.
+ * @brief Initializes the LRU structure with the given capacity.
  * 
  * @param structure Pointer to the LRU structure to initialize.
- * @param capacity The maximum number of entries the LRU table can hold.
+ * @param capacity The maximum number of entries the LRU cache can hold.
  */
 void initialize_lru(LRU *structure, int capacity);
 
 /**
- * @brief Chooses a page to replace based on the LRU algorithm.
+ * @brief Chooses a page to replace based on the LRU policy.
  * 
  * @param structure Pointer to the LRU structure.
- * @return The page number of the page to replace.
+ * @return The page number to replace.
  */
 int lru_choose_page_to_replace(LRU *structure);
 
 /**
- * @brief Adds a page to the LRU table.
+ * @brief Adds a page to the LRU cache.
  * 
  * @param structure Pointer to the LRU structure.
  * @param page The page number to add.
- * @return true if the page was added successfully, false otherwise.
+ * @return Index of page in queue if the page was replaced successfully, -1 if the queue is not full, -2 if the queue have no changed.
  */
 int lru_add_page(LRU *structure, int page);
 
 /**
- * @brief Frees the resources allocated for the LRU structure.
+ * @brief Frees the memory allocated for the LRU structure.
  * 
  * @param structure Pointer to the LRU structure to free.
  */
 void free_lru(LRU *structure);
 
 /**
- * @brief Prints the contents of the LRU structure.
+ * @brief Prints the current state of the LRU cache.
  * 
  * @param structure Pointer to the LRU structure to print.
  */

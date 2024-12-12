@@ -3,63 +3,106 @@
 #include "../src/algorithms/lru.h"
 #include "../src/algorithms/algorithm.h"
 
-void testFIFO(){
+void add_to_fifo(FIFO *fifo, int value)
+{
+    printf("Adding %d to FIFO\n", value);
+    fifo_add_page(fifo, value);
+    print_fifo(fifo);
+}
+
+void testFIFO(int size)
+{
+    printf("=====================================\n");
+    printf("Testing FIFO\n");
     FIFO *fifo;
     fifo = (FIFO *)malloc(sizeof(FIFO));
-    initialize_fifo(fifo, 3);
-    fifo_add_page(fifo, 1);
-    fifo_add_page(fifo, 2);
-    fifo_add_page(fifo, 3);
-    fifo_add_page(fifo, 4);
-    fifo_add_page(fifo, 5);
-    fifo_add_page(fifo, 6);
-    fifo_add_page(fifo, 7);
-    fifo_add_page(fifo, 8);
-    fifo_add_page(fifo, 9);
-    fifo_add_page(fifo, 10);
+    initialize_fifo(fifo, size);
+    printf("FIFO initialized with size: %d\n", size);
+
+    int values[] = {1, 2, 3, 2, 6, 4, 10, 8, 12, 4};
+    for (int i = 0; i < sizeof(values) / sizeof(values[0]); i++)
+    {
+        add_to_fifo(fifo, values[i]);
+    }
+
+    printf("Final FIFO state: ");
+    print_fifo(fifo);
+    printf("=====================================\n");
     free_fifo(fifo);
 }
 
-void testLRU(){
+void add_to_lru(LRU *lru, int value)
+{
+    printf("Adding %d to LRU\n", value);
+    lru_add_page(lru, value);
+    print_lru(lru);
+}
+
+void testLRU(int size)
+{
     LRU *lru;
     lru = (LRU *)malloc(sizeof(LRU));
-    initialize_lru(lru, 3);
-    lru_add_page(lru, 1);
-    lru_add_page(lru, 2);
-    lru_add_page(lru, 3);
-    lru_add_page(lru, 2);
-    lru_add_page(lru, 4);
-    lru_add_page(lru, 6);
-    lru_add_page(lru, 3);
-    lru_add_page(lru, 8);
-    lru_add_page(lru, 9);
-    lru_add_page(lru, 10);
+    printf("LRU initialized with size: %d\n", size);
+    initialize_lru(lru, size);
+
+    int values[] = {1, 2, 3, 2, 6, 4, 10, 8, 12, 4};
+    for (int i = 0; i < sizeof(values) / sizeof(values[0]); i++)
+    {
+        add_to_lru(lru, values[i]);
+    }
+
+    printf("Final LRU state: ");
+    print_lru(lru);
+    printf("=====================================\n");
     free_lru(lru);
 }
 
-void testOPT(VirtualMemory *virtual_memory){
+void add_to_OPT(Optimal* optimal, int page, int current_index)
+{
+    printf("Adding %d to OPT\n", page);
+    optimal_add_page(optimal, page, current_index);
+    print_optimal(optimal);
+}
+
+void testOPT(VirtualMemory *virtual_memory)
+{
     Optimal *optimal;
     optimal = (Optimal *)malloc(sizeof(Optimal));
-    initialize_optimal(optimal, virtual_memory, 10); // Assuming the third argument is the number of pages
-    printf("Optimal initialized\n");
-    for(int i = 0; i < ADDRESS_SIZE; i++){
-        optimal_add_page(optimal, virtual_memory->address[i], i);
+    
+    freopen("./addresses.txt", "r", stdin);
+    for (int i = 0; i < 20; i++)
+    {
+        scanf("%d", &virtual_memory->address[i]);
     }
+
+    initialize_optimal(optimal, virtual_memory, 5); // Assuming the third argument is the number of pages
+    printf("Optimal initialized\n");
+    for (int i = 0; i < 20; i++)
+    {
+        add_to_OPT(optimal, virtual_memory->address[i], i);
+        //optimal_add_page(optimal, virtual_memory->address[i], i);
+    }
+
+    printf("Final OPT state: ");
+    print_optimal(optimal);
+    printf("=====================================\n");
     free_optimal(optimal);
 }
 
 int main()
 {
+    testFIFO(3);  
+    testLRU(3);
+
     VirtualMemory *virtual_memory = (VirtualMemory *)malloc(sizeof(VirtualMemory));
     initialize_virtual_memory(virtual_memory, "../data/addresses.txt", "BAKING_STORE.BIN");
     printf("Virtual memory initialized\n");
-    for(int i = 0; i < ADDRESS_SIZE; i++){
-        //printf("%d\n", virtual_memory->address[i]);
+    for (int i = 0; i < ADDRESS_SIZE; i++)
+    {
+        // printf("%d\n", virtual_memory->address[i]);
     }
     printf("Virtual memory address printed\n");
     printf("=====================================\n");
-    //testFIFO();
-    //testLRU();
     testOPT(virtual_memory);
     return 0;
 }

@@ -14,33 +14,17 @@ void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int c
         exit(EXIT_FAILURE);
     }
     
-    structure->pages = NULL;
     structure->future_usage = NULL;
     structure->map = NULL;
     structure->idx = NULL;
+
     structure->capacity = capacity;
     structure->size = 0;
-    structure->pages = (int *)malloc(structure->capacity * sizeof(int));
-    if (!structure->pages) {
-        perror("Optimal Error: Memory allocation failed");
-        exit(EXIT_FAILURE);
-    }
 
+    structure->pages = (int *)malloc(structure->capacity * sizeof(int));
     structure->future_usage = (int *)malloc(1000 * sizeof(int));
-    if (!structure->future_usage) {
-        perror("Optimal Error: Memory allocation failed");
-        exit(EXIT_FAILURE);
-    }
     structure->map = (int *)malloc(65536 * sizeof(int));
-    if (!structure->map) {
-        perror("Optimal Error: Memory allocation failed");
-        exit(EXIT_FAILURE);
-    }
     structure->idx = (int **)malloc(1000 * sizeof(int *));
-    if (!structure->idx) {
-        perror("Optimal Error: Memory allocation failed");
-        exit(EXIT_FAILURE);
-    }
 
     for (int i = 0; i < structure->capacity; i++)
         structure->pages[i] = -1;
@@ -103,15 +87,8 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index) 
 
 
 int optimal_add_page(Optimal *structure, int page, int current_index) {
-    //printf("Optimal Add Page: %d\n", page);
-    // if(structure->size > structure->capacity){
-    //     fprintf(stderr, "Optimal Error: Capacity exceeded\n");
-    //     return false;
-    // }
-
     for (int i = 0; i < structure->size; i++)
         if (structure->pages[i] == page) {
-            //print_optimal(structure);
             return -2;
         }
 
@@ -119,12 +96,10 @@ int optimal_add_page(Optimal *structure, int page, int current_index) {
         int index = optimal_choose_page_to_replace(structure, current_index);
        
         structure->pages[index] = page;
-        //print_optimal(structure);
         return index;
     }
 
     structure->pages[structure->size++] = page;
-    //print_optimal(structure);
     return -1;
     
 }

@@ -6,19 +6,9 @@ void initialize_lru(LRU *structure, int capacity_value) {
         exit(EXIT_FAILURE);
     }
 
-    if (structure->table != NULL) {
-        fprintf(stderr, "LRU Warning: Table is already initialized.\n");
-        return;
-    }
-
     structure->capacity = capacity_value;
     structure->size = structure->time = 0;
     structure->table = (LRUEntry *)malloc(structure->capacity * sizeof(LRUEntry));
-    
-    if (!structure->table) {
-        perror("LRU Error: Memory allocation failed");
-        exit(EXIT_FAILURE);
-    }
 
     for (int i = 0; i < structure->capacity; i++) {
         structure->table[i].page = -1;
@@ -41,43 +31,36 @@ int lru_choose_page_to_replace(LRU *structure) {
             index = i;
         }
     }
-    //printf("LRU: Replacing index %d\n", index);
+
     return index;
 }
 
 int lru_add_page(LRU *structure, int page) {
-    // if(structure->size > structure->capacity){
-    //     fprintf(stderr, "LRU Error: Capacity exceeded\n");
-    //     return false;
-    // }
+    if(structure->size > structure->capacity){
+        fprintf(stderr, "LRU Error: Capacity exceeded\n");
+        return false;
+    }
     
     ++structure->time;
 
     for (int i = 0; i < structure->size; i++) 
-    {
         if (structure->table[i].page == page)
         {
             structure->table[i].timestamp = structure->time;
-            //printf("LRU: Page %d already in memory\n", page);
-            //print_lru(structure);
             return -2;
         }
-    }
 
     if (structure->size == structure->capacity) {
         int index = lru_choose_page_to_replace(structure);
         structure->table[index].page = page;
         structure->table[index].timestamp = structure->time;
-        //printf("LRU: Replacing index %d with page %d\n", index, page);
-        //print_lru(structure);
         return index; 
     }
 
     structure->table[structure->size].page = page;
     structure->table[structure->size].timestamp = structure->time;
     ++structure->size;
-    //printf("LRU: Adding page %d\n", page);
-    //print_lru(structure);
+
     return -1;
 }
 

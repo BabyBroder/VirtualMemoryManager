@@ -17,57 +17,52 @@ typedef struct
     int *map;
     int **idx;
 } Optimal;
-
 /**
- * Initializes the Optimal structure with the specified capacity.
+ * @brief Initializes the Optimal structure.
  *
  * @param structure Pointer to the Optimal structure to initialize.
- * @param capacity The maximum number of pages the memory can hold.
+ * @param virtual_memory Pointer to the VirtualMemory structure.
+ * @param capacity The capacity of the Optimal structure.
  */
 void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int capacity);
 
 /**
- * @brief Builds the future usage pattern for the optimal page replacement algorithm.
+ * @brief Builds the future usage table for the Optimal structure.
  *
- * This function analyzes the future memory access pattern and constructs the
- * necessary data structures to determine the optimal page to replace in the
- * future. It is used by the Optimal page replacement algorithm to minimize
- * page faults by always replacing the page that will not be used for the
- * longest period of time.
- *
- * @param structure A pointer to the Optimal structure that holds the data
- *                  necessary for the optimal page replacement algorithm.
+ * @param structure Pointer to the Optimal structure.
  */
 void build_future_usage(Optimal *structure);
 
 /**
- * Chooses the page to replace using the Optimal page replacement algorithm.
+ * @brief Chooses the page to replace based on the Optimal algorithm.
  *
  * @param structure Pointer to the Optimal structure.
- * @param current_index The current index in the reference string.
- * @return The index of the page to replace in the Optimal structure.
+ * @param current_index The current index in the page reference string.
+ * @return The index of the page to replace.
  */
 int optimal_choose_page_to_replace(const Optimal *structure, int current_index);
 
 /**
- * Adds a page to the Optimal structure.
+ * @brief Adds a page to the Optimal structure.
  *
  * @param structure Pointer to the Optimal structure.
- * @param page The page to add.
+ * @param page The page number to add.
+ * @param current_index The current index in the page reference string.
+ * @return Index of page in queue if the page was replaced successfully, -1 if the queue is not full, -2 if the queue have no changed.
  */
 int optimal_add_page(Optimal *structure, int page, int current_index);
 
 /**
- * Frees the dynamically allocated memory used by the Optimal structure.
+ * @brief Frees the memory allocated for the Optimal structure.
  *
- * @param structure Pointer to the Optimal structure.
+ * @param structure Pointer to the Optimal structure to free.
  */
 void free_optimal(Optimal *structure);
 
 /**
- * Prints the contents of the Optimal structure.
+ * @brief Prints the contents of the Optimal structure.
  *
- * @param structure Pointer to the Optimal structure.
+ * @param structure Pointer to the Optimal structure to print.
  */
 void print_optimal(const Optimal *structure);
 
