@@ -25,7 +25,16 @@ int main()
         printf("Error: Memory allocation for TLB failed!\n");
         return 1;
     }
-    initialize_tlb(_TLB, FIFO_ALGORITHM);
+    // Allocate memory for the Virtual Memory
+    VirtualMemory *_VM = (VirtualMemory *)malloc(sizeof(VirtualMemory));
+    if (_VM == NULL)
+    {
+        printf("Error: Memory allocation for Virtual Memory failed!\n");
+        return 1;
+    }
+
+    initialize_virtual_memory(_VM, "addresses.txt", "BAKING_STORE.BIN");
+    initialize_tlb(_TLB, _VM, FIFO_ALGORITHM);
     for (int i = 0; i < 17; i++)
     {
         tlb_add_entry(
