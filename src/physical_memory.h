@@ -93,16 +93,4 @@ void add_page_to_physical_memory(PhysicalMemory *physical_memory, uint8_t  frame
  */
 
 char* read_from_physical_memory(PhysicalMemory *physical_memory, uint8_t  frame_number, uint8_t  offset);
-
-/**
- * @brief Writes data to the physical memory.
- *
- * @param physical_memory Pointer to the PhysicalMemory structure.
- * @param physical_address The physical address to write to.
- * @param buffer Buffer containing the data to write.
- * @param size Number of bytes to write.
- * @return Number of bytes written, or -1 on error.
- */
-
-void write_to_physical_memory(PhysicalMemory *physical_memory, uint16_t  frame_number, uint16_t  page_number);
 #endif // PHYSICAL_MEMORY_H;
