@@ -1,106 +1,85 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
 #include "physical_memory.h"
-#include "utils/constants.h"
-#include <stdint.h>
 
-void initialize_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory ,Algorithm algorithm)
+
+void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm)
 {
-    physical_memory->nums_frames = TOTAL_FRAMES;
-    for (int i = 0; i < TOTAL_FRAMES; i++)
+    if(physical_memory != NULL)
     {
-        memset(physical_memory->frames[i].data, 0, FRAME_SIZE);
+        printf("Physical memory already initialized\n");
+        exit(EXIT_FAILURE);
     }
+
+    physical_memory = (PhysicalMemory *)malloc(sizeof(PhysicalMemory));
+    if(physical_memory == NULL)
+    {
+        printf("Failed to allocate memory for physical memory\n");
+        exit(EXIT_FAILURE);
+    }
+
+    physical_memory->nums_frames = 0;
     physical_memory->algorithm = algorithm;
-    if (algorithm == FIFO_ALGORITHM)
+    if(algorithm == FIFO_ALGORITHM)
     {
         initialize_fifo(&physical_memory->algorithm_struct.fifo, TOTAL_FRAMES);
     }
-    else if (algorithm == LRU_ALGORITHM)
+    else if(algorithm == LRU_ALGORITHM)
     {
         initialize_lru(&physical_memory->algorithm_struct.lru, TOTAL_FRAMES);
-    }
-    else if (algorithm == OPT_ALGORITHM)
-    {
-        initialize_optimal(&physical_memory->algorithm_struct.optimal, virtual_memory, TOTAL_FRAMES);
+    }else{
+        printf("Invalid algorithm\n");
+        exit(EXIT_FAILURE);
     }
 }
 
-void add_page_to_physical_memory(PhysicalMemory *physical_memory, int page, int current_index)
+void add_page_to_physical_memory(PhysicalMemory *physical_memory, int frame_number, Frame *frame)
 {
-    //int free_frame = find_free_frame(physical_memory, current_index);
-    
-    if (physical_memory->algorithm == FIFO_ALGORITHM)
+    if(physical_memory == NULL)
     {
-        fifo_add_page(&physical_memory->algorithm_struct.fifo, page);
+        printf("Physical memory not initialized\n");
+        exit(EXIT_FAILURE);
     }
-    else if (physical_memory->algorithm == LRU_ALGORITHM)
-    {
-        lru_add_page(&physical_memory->algorithm_struct.lru, page);
-    }
-    else if (physical_memory->algorithm == OPT_ALGORITHM)
-    {
-        optimal_add_page(&physical_memory->algorithm_struct.optimal, page, current_index);
-    }
+
+    // if(physical_memory->nums_frames == TOTAL_FRAMES)
+    // {
+    //     printf("Physical memory is full\n");
+    //     exit(EXIT_FAILURE);
+    // }
+
+    // physical_memory->frames[frame_number] = *frame;
+    // physical_memory->nums_frames++;
+    int goodState = -1;
+    goodState = find_entry_to_replacment(physical_memory, frame_number, frame, frame_number);
 }
 
-int read_from_physical_memory(PhysicalMemory *physical_memory, uint32_t physical_address, char *buffer, int size)
-{
-    uint32_t frame_number = physical_address / FRAME_SIZE;
-    uint32_t offset = physical_address % FRAME_SIZE;
-    if (frame_number >= physical_memory->nums_frames)
-    {
-        return -1;
-    }
-    if (offset + size > FRAME_SIZE)
-    {
-        return -1;
-    }
-    memcpy(buffer, physical_memory->frames[frame_number].data + offset, size);
-    return size;
-}
-
-int write_to_physical_memory(PhysicalMemory *physical_memory, uint32_t physical_address, const char *buffer, int size)
-{
-    uint32_t frame_number = physical_address / FRAME_SIZE;
-    uint32_t offset = physical_address % FRAME_SIZE;
-    if (frame_number >= physical_memory->nums_frames)
-    {
-        return -1;
-    }
-    if (offset + size > FRAME_SIZE)
-    {
-        return -1;
-    }
-    memcpy(physical_memory->frames[frame_number].data + offset, buffer, size);
-    return size;
-}
-
-int find_free_frame(PhysicalMemory *physical_memory, int current_index)
-{
-    for (int i = 0; i < TOTAL_FRAMES; i++)
-    {
-        if (physical_memory->frames[i].data[0] == 0)
-        {
-            return i;
-        }
-    }
-
-    // Page replacement algorithm
-    if (physical_memory->algorithm == FIFO_ALGORITHM)
-    {
-        return fifo_choose_page_to_replace(&physical_memory->algorithm_struct.fifo);
-    }
-    else if (physical_memory->algorithm == LRU_ALGORITHM)
-    {
-        return lru_choose_page_to_replace(&physical_memory->algorithm_struct.lru);
-    }
-    else if (physical_memory->algorithm == OPT_ALGORITHM)
-    {
-        return optimal_choose_page_to_replace(&physical_memory->algorithm_struct.optimal, current_index);
-    }
-
-    return -1;
-}
+// void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
+// {
+//     int goodState = -1;
+//     // finding free TLB entry to add
+//     goodState = find_entry_to_replacment(tlb, page_number, frame_number, current_index);
+//     if (goodState < 0)
+//     {
+//         if (goodState == -1)
+//             for (int i = 0; i < TLB_ENTRIES; i++)
+//             {
+//                 if (!tlb->entries[i].valid)
+//                 {
+//                     tlb->entries[i].valid = true;
+//                     tlb->entries[i].frame_number = frame_number;
+//                     tlb->entries[i].page_number = page_number;
+//                     return;
+//                 }
+//             }
+//         else
+//             return;
+//     }
+//     // TLB is full use page replacement
+//     // choose a page to be replaced by using tlb algorithm
+//     int indx = goodState;
+//     if (indx >= TLB_ENTRIES)
+//     { // wrong index
+//         printf("Error index replacement\n");
+//         return;
+//     }
+//     tlb->entries[indx].frame_number = frame_number;
+//     tlb->entries[indx].page_number = page_number;
+// }

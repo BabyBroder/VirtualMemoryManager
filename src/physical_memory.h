@@ -15,11 +15,14 @@
 #include "utils/constants.h"
 #include "algorithms/algorithm.h"
 #include "virtual_memory.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct 
 {
     uint16_t PhysicalAddress;
-    char *data;
+    char data[FRAME_SIZE];
 } FrameData;
 
 /**
