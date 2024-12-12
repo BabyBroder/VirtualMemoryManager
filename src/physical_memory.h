@@ -16,13 +16,19 @@
 #include "algorithms/algorithm.h"
 #include "virtual_memory.h"
 
+typedef struct 
+{
+    uint16_t PhysicalAddress;
+    char *data;
+} FrameData;
+
 /**
  * @struct Frame
  * @brief Represents a single frame in physical memory.
  */
 typedef struct
 {
-    char data[FRAME_SIZE]; /**< Data stored in the frame. */
+    FrameData frame[256]; /**< Data stored in the frame. */
 } Frame;
 
 /**
@@ -43,7 +49,7 @@ typedef struct
  * @param physical_memory Pointer to the PhysicalMemory structure.
  * @param algorithm The algorithm to be used for page replacement.
  */
-void initialize_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, Algorithm algorithm);
+void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm);
 
 /**
  * @brief Adds a page to the physical memory.
@@ -52,7 +58,8 @@ void initialize_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *
  * @param page The page number to be added.
  * @param current_index The current index in the page table.
  */
-void add_page_to_physical_memory(PhysicalMemory *physical_memory, int page, int current_index);
+
+void add_page_to_physical_memory(PhysicalMemory *physical_memory, int frame_number, Frame *frame);
 
 /**
  * @brief Reads data from the physical memory.
@@ -63,7 +70,8 @@ void add_page_to_physical_memory(PhysicalMemory *physical_memory, int page, int 
  * @param size Number of bytes to read.
  * @return Number of bytes read, or -1 on error.
  */
-int read_from_physical_memory(PhysicalMemory *physical_memory, uint32_t physical_address, char *buffer, int size);
+
+uint16_t read_from_physical_memory(PhysicalMemory *physical_memory, int frame_number, int offset, char *buffer);
 
 /**
  * @brief Writes data to the physical memory.
@@ -74,7 +82,8 @@ int read_from_physical_memory(PhysicalMemory *physical_memory, uint32_t physical
  * @param size Number of bytes to write.
  * @return Number of bytes written, or -1 on error.
  */
-int write_to_physical_memory(PhysicalMemory *physical_memory, uint32_t physical_address, const char *buffer, int size);
+
+uint16_t write_from_physical_memory(PhysicalMemory *physical_memory, int frame_number, int offset, char *buffer);
 
 /**
  * @brief Finds a free frame in the physical memory.
@@ -83,6 +92,6 @@ int write_to_physical_memory(PhysicalMemory *physical_memory, uint32_t physical_
  * @param current_index The current index in the page table.
  * @return Index of the free frame, or -1 if no free frame is available.
  */
-int find_free_frame(PhysicalMemory *physical_memory, int current_index);
+int find_free_frame(PhysicalMemory *physical_memory);
 
 #endif // PHYSICAL_MEMORY_H
