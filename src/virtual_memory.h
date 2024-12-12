@@ -13,7 +13,11 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
 #include "utils/constants.h"
+#include "utils/parser.h"
 
 /**
  * @brief Structure representing the virtual memory.
@@ -42,4 +46,4 @@ void initialize_virtual_memory(VirtualMemory *virtual_memory, char* address_file
  */
 char *read_BACKINGSTORE(VirtualMemory *virtual_memory, uint32_t virtual_address);
 
-#endif // VIRTUAL_MEMORY_C 
+#endif // VIRTUAL_MEMORY_H

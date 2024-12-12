@@ -60,8 +60,11 @@ int main()
     VirtualMemory *virtual_memory = (VirtualMemory *)malloc(sizeof(VirtualMemory));
     initialize_virtual_memory(virtual_memory, "addresses.txt", "BAKING_STORE.BIN");
     printf("Virtual memory initialized\n");
-    testFIFO();
-    testLRU();
+    for(int i = 0; i < 10; i++){
+        printf("%d\n", virtual_memory->address[i]);
+    }
+    //testFIFO();
+    //testLRU();
     testOPT(virtual_memory);
     return 0;
 }
