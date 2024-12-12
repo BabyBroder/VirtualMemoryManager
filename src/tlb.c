@@ -28,7 +28,7 @@ void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory ,Algorithm algorithm
 int add_entry_to_replacment(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
 {
     // adding entry
-    int needReplace = false;
+    int needReplace = -2;
     if (tlb->algorithm == FIFO_ALGORITHM)
     {
         needReplace = fifo_add_page(&tlb->algorithm_struct.fifo, page_number);

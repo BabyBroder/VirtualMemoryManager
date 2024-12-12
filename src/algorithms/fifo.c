@@ -13,6 +13,9 @@ void initialize_fifo(FIFO *structure, int capacity_value) {
 
     structure->capacity = capacity_value;
     structure->queue = (int *)malloc(structure->capacity * sizeof(int));
+    for (int i = 0; i < structure->capacity; i++) {
+        structure->queue[i] = -1;
+    }
     if (!structure->queue) {
         perror("FIFO Error: Memory allocation failed");
         exit(EXIT_FAILURE);
@@ -34,7 +37,7 @@ int fifo_choose_page_to_replace(FIFO *structure) {
     return page;
 }
 
-bool fifo_add_page(FIFO *structure, int page) {
+int fifo_add_page(FIFO *structure, int page) {
     if(structure->size > structure->capacity){
         printf("size: %d\ncapacity: %d\n", structure->size, structure->capacity);
         fprintf(stderr, "FIFO Error: Capacity exceeded\n");
@@ -47,12 +50,11 @@ bool fifo_add_page(FIFO *structure, int page) {
         {
             //printf("FIFO: Page %d already in memory\n", page);
             //print_fifo(structure);
-            return true;
+            return i;
         }
     }
 
     if (structure->size == structure->capacity) {
-
         int indexReplace = fifo_choose_page_to_replace(structure);
         if (indexReplace == -1) {
             fprintf(stderr, "FIFO Error: Failed to choose page to replace\n");
@@ -62,7 +64,7 @@ bool fifo_add_page(FIFO *structure, int page) {
         structure->queue[indexReplace] = page;
         //printf("FIFO: Replacing index %d with page %d\n", indexReplace, page);
         //print_fifo(structure);
-        return false;
+        return indexReplace;
     }
 
     structure->queue[structure->rear] = page;
@@ -70,7 +72,7 @@ bool fifo_add_page(FIFO *structure, int page) {
     structure->size++;
     //printf("FIFO: Adding page %d\n", page);
     //print_fifo(structure);
-    return true; 
+    return -1; 
 }
 
 void free_fifo(FIFO *structure) {

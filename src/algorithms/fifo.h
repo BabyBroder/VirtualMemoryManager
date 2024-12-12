@@ -43,7 +43,7 @@ int fifo_choose_page_to_replace(FIFO* structure);
  * @param page The page number to add to the queue.
  * @return true if the page was successfully added, false otherwise.
  */
-bool fifo_add_page(FIFO* structure, int page);
+int fifo_add_page(FIFO* structure, int page);
 
 /**
  * @brief Frees the resources allocated for the FIFO structure.
