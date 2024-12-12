@@ -49,6 +49,7 @@ void initialize_disk_manager(VirtualMemory *virtual_memory, PhysicalMemory *phys
     * @param page_table Pointer to the PageTable structure.
     * @param virtual_address The virtual address of the page to be swapped in.
     */
-void swap_in_page(VirtualMemory *virtual_memory, PhysicalMemory *physical_memory, TLB *tlb, PageTable *page_table, uint32_t virtual_address);
+
+void read_virutual_memory_to_frame(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, uint8_t size, char *frame_data);
 
 #endif // DISK_MANAGER_H

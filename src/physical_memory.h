@@ -19,22 +19,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct 
-{
-    uint16_t PhysicalAddress;
-    char data;
-} FrameData;
 
 /**
  * @struct Frame
  * @brief Represents a single frame in physical memory.
  */
 typedef struct
-{   
+{
     bool valid; /**< valid bits to tell frame is empty or not. */
-    uint16_t frame_number; 
     uint16_t page_number;
-    FrameData frame_data[256]; /**< Data stored in the frame. */
+    char frame_data[256]; /**< Data stored in the frame. */
 } Frame;
 
 /**
@@ -43,9 +37,9 @@ typedef struct
  */
 typedef struct
 {
-    Frame frames[TOTAL_FRAMES]; /**< Array of frames in physical memory. */
-    int nums_frames; /**< Number of frames currently in use. */
-    Algorithm algorithm; /**< Algorithm used for page replacement. */
+    Frame frames[TOTAL_FRAMES];       /**< Array of frames in physical memory. */
+    int nums_frames;                  /**< Number of frames currently in use. */
+    Algorithm algorithm;              /**< Algorithm used for page replacement. */
     AlgorithmStruct algorithm_struct; /**< Data structure for the algorithm. */
 } PhysicalMemory;
 
@@ -71,7 +65,6 @@ void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algor
  */
 int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, uint8_t frame_number, int current_index);
 
-
 /**
  * @brief Adds a page to the physical memory.
  *
@@ -80,7 +73,7 @@ int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, 
  * @param current_index The current index in the page table.
  */
 
-void add_page_to_physical_memory(PhysicalMemory *physical_memory, uint8_t  frame_number, uint8_t  page_number, Frame *frame);
+void add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, uint8_t frame_number, uint8_t page_number);
 
 /**
  * @brief Reads data from the physical memory.
@@ -92,5 +85,5 @@ void add_page_to_physical_memory(PhysicalMemory *physical_memory, uint8_t  frame
  * @return Number of bytes read, or -1 on error.
  */
 
-char* read_from_physical_memory(PhysicalMemory *physical_memory, uint8_t  frame_number, uint8_t  offset);
+char *read_from_physical_memory(PhysicalMemory *physical_memory, uint8_t frame_number, uint8_t offset);
 #endif // PHYSICAL_MEMORY_H;
