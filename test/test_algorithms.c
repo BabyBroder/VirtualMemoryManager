@@ -42,27 +42,22 @@ void testOPT(VirtualMemory *virtual_memory){
     optimal = (Optimal *)malloc(sizeof(Optimal));
     initialize_optimal(optimal, virtual_memory, 10); // Assuming the third argument is the number of pages
     printf("Optimal initialized\n");
-    optimal_add_page(optimal, 1, 0);
-    optimal_add_page(optimal, 2, 1);
-    optimal_add_page(optimal, 3, 2);
-    optimal_add_page(optimal, 4, 3);
-    optimal_add_page(optimal, 5, 4);
-    optimal_add_page(optimal, 6, 5);
-    optimal_add_page(optimal, 7, 6);
-    optimal_add_page(optimal, 8, 7);
-    optimal_add_page(optimal, 9, 8);
-    optimal_add_page(optimal, 10, 9);
+    for(int i = 0; i < ADDRESS_SIZE; i++){
+        optimal_add_page(optimal, virtual_memory->address[i], i);
+    }
     free_optimal(optimal);
 }
 
 int main()
 {
     VirtualMemory *virtual_memory = (VirtualMemory *)malloc(sizeof(VirtualMemory));
-    initialize_virtual_memory(virtual_memory, "addresses.txt", "BAKING_STORE.BIN");
+    initialize_virtual_memory(virtual_memory, "../data/addresses.txt", "BAKING_STORE.BIN");
     printf("Virtual memory initialized\n");
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < ADDRESS_SIZE; i++){
         printf("%d\n", virtual_memory->address[i]);
     }
+    printf("Virtual memory address printed\n");
+    printf("=====================================\n");
     //testFIFO();
     //testLRU();
     testOPT(virtual_memory);
