@@ -1,6 +1,13 @@
 #include "lru.h"
 
 void initialize_lru(LRU *structure, int capacity_value) {
+    
+    if (structure)
+    {
+        fprintf(stderr, "Error: LRU already initialized.\n");
+        exit(EXIT_FAILURE);
+    }
+    
     if (capacity_value <= 0) {
         fprintf(stderr, "LRU Error: Invalid capacity value!\n");
         exit(EXIT_FAILURE);
@@ -9,6 +16,11 @@ void initialize_lru(LRU *structure, int capacity_value) {
     structure->capacity = capacity_value;
     structure->size = structure->time = 0;
     structure->table = (LRUEntry *)malloc(structure->capacity * sizeof(LRUEntry));
+    
+    if (!structure->table) {
+        fprintf(stderr, "Error: Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
 
     for (int i = 0; i < structure->capacity; i++) {
         structure->table[i].page = -1;
@@ -18,6 +30,13 @@ void initialize_lru(LRU *structure, int capacity_value) {
 
 
 int lru_choose_page_to_replace(LRU *structure) {
+
+    if (!structure)
+    {
+        fprintf(stderr, "Error: LRU not initialized.\n");
+        exit(EXIT_FAILURE);
+    }
+
     if (structure->size == 0) {
         fprintf(stderr, "LRU Error: No pages to replace (table is empty)!\n");
         exit(EXIT_FAILURE);
@@ -36,9 +55,16 @@ int lru_choose_page_to_replace(LRU *structure) {
 }
 
 int lru_add_page(LRU *structure, int page) {
+    
+    if (!structure)
+    {
+        fprintf(stderr, "Error: LRU not initialized.\n");
+        exit(EXIT_FAILURE);
+    }
+    
     if(structure->size > structure->capacity){
         fprintf(stderr, "LRU Error: Capacity exceeded\n");
-        return false;
+        exit(EXIT_FAILURE);
     }
     
     ++structure->time;

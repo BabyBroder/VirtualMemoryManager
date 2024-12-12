@@ -4,6 +4,13 @@
 #include <stdbool.h>
 
 void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int capacity) {
+    
+    if (structure)
+    {
+        fprintf(stderr, "Error: LRU already initialized.\n");
+        exit(EXIT_FAILURE);
+    }
+
     if(!virtual_memory->initialized){
         fprintf(stderr, "Optimal Error: Virtual memory not initialized!\n");
         exit(EXIT_FAILURE);
@@ -13,10 +20,6 @@ void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int c
         fprintf(stderr, "Optimal Error: Invalid capacity value!\n");
         exit(EXIT_FAILURE);
     }
-    
-    structure->future_usage = NULL;
-    structure->map = NULL;
-    structure->idx = NULL;
 
     structure->capacity = capacity;
     structure->size = 0;
@@ -26,6 +29,12 @@ void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int c
     structure->map = (int *)malloc(65536 * sizeof(int));
     structure->idx = (int **)malloc(1000 * sizeof(int *));
 
+    if (!structure->pages || !structure->future_usage || !structure->map || !structure->idx)
+    {
+            perror("Optimal Error: Memory allocation failed");
+            exit(EXIT_FAILURE);
+    }
+    
     for (int i = 0; i < structure->capacity; i++)
         structure->pages[i] = -1;
     for (int i = 0; i < 1000; i++)
@@ -67,6 +76,13 @@ void build_future_usage(Optimal *structure) {
 }
 
 int optimal_choose_page_to_replace(const Optimal *structure, int current_index) {
+
+    if (!structure)
+    {
+        fprintf(stderr, "Error: OPT not initialized.\n");
+        exit(EXIT_FAILURE);
+    }
+
     if (structure->size == 0) {
         fprintf(stderr, "Optimal Error: No pages to replace (memory is empty)!\n");
         exit(EXIT_FAILURE);
@@ -87,6 +103,13 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index) 
 
 
 int optimal_add_page(Optimal *structure, int page, int current_index) {
+
+    if (!structure)
+    {
+        fprintf(stderr, "Error: OPT not initialized.\n");
+        exit(EXIT_FAILURE);
+    }
+
     for (int i = 0; i < structure->size; i++)
         if (structure->pages[i] == page) {
             return -2;

@@ -72,12 +72,10 @@ int page_table_lookup(PageTable *page_table, uint16_t page_number);
  * @param page_number The page number to be updated.
  * @param frame_number The frame number to be associated with the page number.
  */
-void page_table_add_entry(PageTable *page_table, uint16_t page_number, uint16_t frame_number);
+void link_page_table_to_frame(PageTable *page_table, uint16_t page_number, uint16_t frame_number);
 
 /**
  * Cleans up resources allocated for the page table.
- *
- * @param physical_memory A pointer to the PhysicalMemory structure associated with the page table.
  * @param page_table A pointer to the PageTable structure to be freed.
  */
 void free_page_table(PageTable *page_table) ;

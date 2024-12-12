@@ -1,6 +1,13 @@
 #include "fifo.h"
 
 void initialize_fifo(FIFO *structure, int capacity_value) {
+    
+    if (structure)
+    {
+        fprintf(stderr, "Error: FIFO already initialized.\n");
+        exit(EXIT_FAILURE);
+    }
+
     if (capacity_value <= 0) {
         fprintf(stderr, "FIFO Error: Invalid capacity value!\n");
         exit(EXIT_FAILURE);
@@ -9,6 +16,11 @@ void initialize_fifo(FIFO *structure, int capacity_value) {
     structure->capacity = capacity_value;
     structure->queue = (int *)malloc(structure->capacity * sizeof(int));
 
+    if (!structure->queue) {
+        fprintf(stderr, "Error: Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    
     for (int i = 0; i < structure->capacity; i++) {
         structure->queue[i] = -1;
     }
@@ -17,10 +29,18 @@ void initialize_fifo(FIFO *structure, int capacity_value) {
 }
 
 int fifo_choose_page_to_replace(FIFO *structure) {
+    
+    if (!structure)
+    {
+        fprintf(stderr, "Error: FIFO not initialized.\n");
+        exit(EXIT_FAILURE);
+    }
+
     if (structure->size == 0) {
         fprintf(stderr, "FIFO Error: No pages to replace (queue is empty)!\n");
         exit(EXIT_FAILURE);
     }
+
     int page = structure->front;
     structure->front = (structure->front + 1) % structure->capacity; 
 
@@ -28,6 +48,13 @@ int fifo_choose_page_to_replace(FIFO *structure) {
 }
 
 int fifo_add_page(FIFO *structure, int page) {
+
+    if (!structure)
+    {
+        fprintf(stderr, "Error: FIFO not initialized.\n");
+        exit(EXIT_FAILURE);
+    }
+
     for (int i = 0; i < structure->size; i++) 
         if (structure->queue[i] == page)
             return -2;
