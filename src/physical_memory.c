@@ -91,5 +91,8 @@ void add_page_to_physical_memory(PhysicalMemory *physical_memory, uint8_t  frame
 
 char* read_from_physical_memory(PhysicalMemory *physical_memory, uint8_t  frame_number, uint8_t  offset)
 {
-    if(physical_memory->frames[frame_number].frame_data[offset].data);
+
+    if(physical_memory->frames[frame_number].valid)
+        return physical_memory->frames[frame_number].frame_data[offset].data;
+    else return NULL; 
 }
