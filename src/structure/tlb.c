@@ -14,7 +14,8 @@ void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory, Algorithm algorithm
     }
     else if (algorithm == OPT_ALGORITHM)
     {
-        initialize_optimal(&tlb->algorithm_struct.optimal, virtual_memory, TLB_ENTRIES);
+        char *file_addresses = {"../../data/addresses.txt"};
+        initialize_optimal(&tlb->algorithm_struct.optimal, file_addresses, TLB_ENTRIES);
     }
     // default value: invalid
     for (int i = 0; i < TLB_ENTRIES; i++)
