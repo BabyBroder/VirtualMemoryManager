@@ -1,5 +1,5 @@
 #include "../../lib/memory/memory.h"
-
+#include "../utils/parser.c"
 void initialize_virtual_memory(VirtualMemory *virtual_memory, char *address_file, char *backing_store_file)
 {
     if (virtual_memory->initialized)
@@ -28,7 +28,7 @@ void initialize_virtual_memory(VirtualMemory *virtual_memory, char *address_file
     virtual_memory->initialized = true;
 }
 
-char *readVirtualMemory(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, uint8_t size)
+char *readVirtualMemory(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, int size)
 {
     char *result = (char *)malloc(sizeof(char) * size);
 

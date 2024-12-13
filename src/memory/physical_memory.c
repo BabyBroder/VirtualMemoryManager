@@ -69,8 +69,7 @@ void add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory 
                 {
                     physical_memory->frames[i].valid = true;
                     physical_memory->frames[i].page_number = page_number;
-                    char *framedata = (char *)malloc(sizeof(char) * FRAME_SIZE);
-                    read_virutual_memory_to_frame(virtual_memory, page_number, 0, 256, framedata);
+                    char *framedata = readVirtualMemory(virtual_memory, page_number, 0, FRAME_SIZE);
                     memcpy(physical_memory->frames[i].frame_data, framedata, FRAME_SIZE);
                     free(framedata);
                     return;

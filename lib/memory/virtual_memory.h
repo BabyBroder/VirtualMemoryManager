@@ -49,6 +49,6 @@ void initialize_virtual_memory(VirtualMemory *virtual_memory, char *address_file
  * @param size The number of bytes to read.
  * @return A pointer to the data read from the virtual memory.
  */
-char *readVirtualMemory(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, uint8_t size);
+char *readVirtualMemory(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, int size);
 
 #endif // VIRTUAL_MEMORY_H
