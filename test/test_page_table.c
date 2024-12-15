@@ -11,4 +11,6 @@ int main()
 
     printf("Page table lookup for page 1: %d\n", page_table_lookup(page_table, 1));
     printf("Page table lookup for page 2: %d\n", page_table_lookup(page_table, 2));
+
+    free(page_table);
 }
