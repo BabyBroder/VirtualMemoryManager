@@ -1,4 +1,6 @@
 #include "../lib/structure/tlb.h"
+#include "../lib/utils/parser.h"
+#include "../lib/memory/virtual_memory.h"
 #include <stdio.h>
 #include <stdlib.h>
 typedef struct

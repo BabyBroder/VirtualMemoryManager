@@ -1,5 +1,5 @@
 #include "../../lib/memory/memory.h"
-#include "../utils/parser.c"
+
 void initialize_virtual_memory(VirtualMemory *virtual_memory, char *address_file, char *backing_store_file)
 {
     if (virtual_memory->initialized)
