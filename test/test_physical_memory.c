@@ -16,7 +16,7 @@ int main() {
     add_page_to_physical_memory(physicalMemoryFiFo, virtualMemory, 1, 1);
     add_page_to_physical_memory(physicalMemoryFiFo, virtualMemory, 2, 2);
     
-    printf(read_from_physical_memory(physicalMemoryFiFo, 0, 0));
+    printf("%s\n", read_from_physical_memory(physicalMemoryFiFo, 0, 0));
 
     return 0;
 }
