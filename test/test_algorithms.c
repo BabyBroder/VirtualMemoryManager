@@ -92,7 +92,7 @@ int main()
     testLRU(3);
 
     VirtualMemory *virtual_memory = (VirtualMemory *)malloc(sizeof(VirtualMemory));
-    initialize_virtual_memory(virtual_memory, "./addresses.txt", "./BAKING_STORE.BIN");
+    initialize_virtual_memory(virtual_memory, "./addresses.txt", "./BACKING_STORE.BIN");
     printf("Virtual memory initialized\n");
     for (int i = 0; i < ADDRESS_SIZE; i++)
     {
