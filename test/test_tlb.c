@@ -1,4 +1,4 @@
-#include "../src/tlb.h"
+#include "../lib/structure/tlb.h"
 #include <stdio.h>
 #include <stdlib.h>
 typedef struct
