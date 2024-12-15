@@ -2,7 +2,7 @@
 
 void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm)
 {
-    if (physical_memory -> initialized)
+    if (physical_memory->initialized)
     {
         printf("Physical memory already initialized\n");
         exit(EXIT_FAILURE);

@@ -27,7 +27,7 @@ typedef struct
  * @struct PhysicalMemory
  * @brief Represents the physical memory.
  */
-typedef struct PhysicalMemory
+typedef struct 
 {
     Frame frames[TOTAL_FRAMES];
     int nums_frames;
