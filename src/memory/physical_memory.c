@@ -2,13 +2,13 @@
 
 void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm)
 {
-    if (physical_memory->initialized)
-    {
-        printf("Physical memory already initialized\n");
-        exit(EXIT_FAILURE);
-    }
+    // if (physical_memory->initialized)
+    // {
+    //     printf("Physical memory already initialized\n");
+    //     exit(EXIT_FAILURE);
+    // }
 
-    physical_memory = (PhysicalMemory *)malloc(sizeof(PhysicalMemory));
+    // physical_memory = (PhysicalMemory *)malloc(sizeof(PhysicalMemory));
     if (physical_memory == NULL)
     {
         printf("Failed to allocate memory for physical memory\n");
