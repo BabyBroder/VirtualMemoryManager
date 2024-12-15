@@ -4,7 +4,7 @@ int main()
 {
     PageTable *page_table;
     initialize_page_table(page_table);
-
+    
     link_page_table_to_frame(page_table, 1, 2);
     link_page_table_to_frame(page_table, 2, 3);
 

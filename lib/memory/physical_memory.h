@@ -33,6 +33,7 @@ typedef struct PhysicalMemory
     int nums_frames;
     Algorithm algorithm;
     AlgorithmStruct algorithm_struct;
+    bool initialized;
 } PhysicalMemory;
 
 /**
