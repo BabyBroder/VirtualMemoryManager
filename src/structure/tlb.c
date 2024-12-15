@@ -50,7 +50,7 @@ int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_numbe
     return needReplace;
 }
 
-void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
+void add_entry_to_tlb(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
 {
     int goodState = -1;
     // finding free TLB entry to add

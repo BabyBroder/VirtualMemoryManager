@@ -78,7 +78,7 @@ int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_numbe
  * @param frame_number The physical frame number to add.
  * @param current_index The current index in the TLB.
  */
-void tlb_add_entry(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index);
+void add_entry_to_tlb(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index);
 
 /**
  * @brief Looks up the TLB for a given page number.
