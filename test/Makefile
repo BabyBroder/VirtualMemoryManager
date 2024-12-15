@@ -4,7 +4,7 @@ CFLAGS = -Wall -g -I ../lib -I ../lib/algorithms -I ../lib/manager -I ../lib/mem
 LDFLAGS =
 
 # Test binaries
-TESTS = test_memory_manager test_page_table test_disk_manager test_algorithms test_tlb
+TESTS = test_memory_manager test_page_table test_disk_manager test_algorithms test_tlb test_physical_memory test_virtual_memory
 
 # Core sources
 SRC = ../src/manager/memory_manager.c ../src/structure/page_table.c ../src/manager/disk_manager.c \
