@@ -37,6 +37,7 @@ typedef struct
     int *future_usage; // Array to track future usage of pages
     int *map;
     int **idx;
+    int initialized; // Flag to check if the structure is initialized
 } Optimal;
 
 /**

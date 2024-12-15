@@ -108,6 +108,7 @@ void free_lru(LRU *structure)
         structure->table = NULL;
     }
     structure->capacity = structure->size = structure->time = 0;
+    free(structure);
 }
 
 void print_lru(LRU *structure)

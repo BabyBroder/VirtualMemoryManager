@@ -3,9 +3,8 @@
 void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int capacity)
 {
 
-    if (structure->capacity > 0)
+    if (structure->initialized == 0xdeafbeef)
     {
-        printf("capacity: %d\n", capacity);
         fprintf(stderr, "Error: Optimal already initialized.\n");
         exit(EXIT_FAILURE);
     }
@@ -23,6 +22,7 @@ void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int c
     structure->future_usage = (int *)malloc(1000 * sizeof(int));
     structure->map = (int *)malloc(65536 * sizeof(int));
     structure->idx = (int **)malloc(1000 * sizeof(int *));
+    structure->initialized = 0xdeafbeef;
 
     if (!structure->pages || !structure->future_usage || !structure->map || !structure->idx)
     {

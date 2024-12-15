@@ -90,6 +90,7 @@ void free_fifo(FIFO *structure)
         structure->queue = NULL;
     }
     structure->capacity = structure->front = structure->rear = structure->size = 0;
+    free(structure);
 }
 
 void print_fifo(FIFO *structure)
