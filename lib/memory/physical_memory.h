@@ -10,7 +10,7 @@
 #ifndef PHYSICAL_MEMORY_H
 #define PHYSICAL_MEMORY_H
 
-#include "virtual_memory.h"
+#include "../algorithms/algorithms.h"
 
 /**
  * @struct Frame

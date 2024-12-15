@@ -38,6 +38,7 @@ typedef struct
     int replacement;                  /**< Index for replacement (FIFO = 0, LRU = 1, OPT = 2) */
     Algorithm algorithm;              /**< Algorithm used for replacement */
     AlgorithmStruct algorithm_struct; /**< Structure for the algorithm */
+    bool initialized;                 /**< Flag to indicate if the TLB is initialized */
 } TLB;
 
 /**

@@ -3,7 +3,7 @@
 void initialize_lru(LRU *structure, int capacity_value)
 {
 
-    if (structure)
+    if (structure->capacity > 0)
     {
         fprintf(stderr, "Error: LRU already initialized.\n");
         exit(EXIT_FAILURE);

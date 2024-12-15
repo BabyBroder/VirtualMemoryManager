@@ -40,6 +40,7 @@ typedef struct
 {
     PageTableEntry *entries; /**< Array of page table entries. */
     size_t num_pages;        /**< Total number of pages. */
+    bool initialized;        /**< Flag to indicate if the page table is initialized. */
 } PageTable;
 
 /**

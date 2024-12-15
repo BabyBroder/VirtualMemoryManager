@@ -2,6 +2,14 @@
 
 void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory, Algorithm algorithm)
 {
+    //check if tlb is already initialized
+    if(tlb->initialized)
+    {
+        fprintf(stderr, "Error: TLB already initialized.\n");
+        exit(EXIT_FAILURE);
+    }
+    tlb->initialized = true;
+    
     // chossing algorithm
     tlb->algorithm = algorithm;
     if (algorithm == FIFO_ALGORITHM)
@@ -14,8 +22,7 @@ void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory, Algorithm algorithm
     }
     else if (algorithm == OPT_ALGORITHM)
     {
-        char *file_addresses = {"../../data/addresses.txt"};
-        initialize_optimal(&tlb->algorithm_struct.optimal, file_addresses, TLB_ENTRIES);
+        initialize_optimal(&tlb->algorithm_struct.optimal, virtual_memory, TLB_ENTRIES);
     }
     // default value: invalid
     for (int i = 0; i < TLB_ENTRIES; i++)

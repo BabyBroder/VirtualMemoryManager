@@ -2,6 +2,8 @@
 #define OPTIMAL_H
 
 #include "../necessary.h"
+// For init address to OPT (Optimal) in build_future_usage
+#include "../memory/virtual_memory.h"
 
 /**
  * @struct Optimal
@@ -44,7 +46,7 @@ typedef struct
  * @param virtual_memory Pointer to the VirtualMemory structure.
  * @param capacity The capacity of the Optimal structure.
  */
-void initialize_optimal(Optimal *structure, char *fileAddress, int capacity);
+void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int capacity);
 
 /**
  * @brief Builds the future usage table for the Optimal structure.

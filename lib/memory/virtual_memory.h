@@ -9,8 +9,6 @@
 #ifndef VIRTUAL_MEMORY_H
 #define VIRTUAL_MEMORY_H
 
-#include "../algorithms/algorithms.h"
-
 /**
  * @struct VirtualMemory
  * @brief Represents the virtual memory.

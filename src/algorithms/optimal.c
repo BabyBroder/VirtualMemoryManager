@@ -1,11 +1,12 @@
 #include "../../lib/algorithms/algorithms.h"
 
-void initialize_optimal(Optimal *structure, char *fileAddress, int capacity)
+void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int capacity)
 {
 
-    if (structure)
+    if (structure->capacity > 0)
     {
-        fprintf(stderr, "Error: LRU already initialized.\n");
+        printf("capacity: %d\n", capacity);
+        fprintf(stderr, "Error: Optimal already initialized.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -32,16 +33,11 @@ void initialize_optimal(Optimal *structure, char *fileAddress, int capacity)
     for (int i = 0; i < structure->capacity; i++)
         structure->pages[i] = -1;
 
-    // open file fileAddress and save each line to future_usage
-    FILE *file = fopen(fileAddress, "r");
-    if (!file)
+    // Write address to future_usage
+    for (int i = 0; i < ADDRESS_SIZE; i++)
     {
-        perror("Error: File not found");
-        exit(EXIT_FAILURE);
+        structure->future_usage[i] = virtual_memory->address[i];
     }
-    for (int i = 0; i < 1000; i++)
-        fscanf(file, "%d", &structure->future_usage[i]);
-    fclose(file);
 
     // check later
     for (int i = 0; i < 1000; i++)

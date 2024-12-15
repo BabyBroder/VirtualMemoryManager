@@ -3,6 +3,9 @@
 #include "../lib/algorithms/lru.h"
 #include "../lib/algorithms/algorithms.h"
 #include "../lib/memory/virtual_memory.h"
+
+//  Different size for address
+#define ADDRESS_SIZE 20
 void add_to_fifo(FIFO *fifo, int value)
 {
     printf("Adding %d to FIFO\n", value);
@@ -69,18 +72,13 @@ void testOPT(VirtualMemory *virtual_memory)
     Optimal *optimal;
     optimal = (Optimal *)malloc(sizeof(Optimal));
     
-    freopen("./addresses.txt", "r", stdin);
-    for (int i = 0; i < 20; i++)
-    {
-        scanf("%d", &virtual_memory->address[i]);
-    }
-
     initialize_optimal(optimal, virtual_memory, 5); // Assuming the third argument is the number of pages
     printf("Optimal initialized\n");
-    for (int i = 0; i < 20; i++)
+
+    int values[] = {1, 2, 3, 2, 6, 4, 10, 8, 12, 4};
+    for (int i = 0; i < sizeof(values) / sizeof(values[0]); i++)
     {
-        add_to_OPT(optimal, virtual_memory->address[i], i);
-        //optimal_add_page(optimal, virtual_memory->address[i], i);
+        add_to_OPT(optimal, values[i], i);
     }
 
     printf("Final OPT state: ");
@@ -95,12 +93,13 @@ int main()
     testLRU(3);
 
     VirtualMemory *virtual_memory = (VirtualMemory *)malloc(sizeof(VirtualMemory));
-    initialize_virtual_memory(virtual_memory, "../data/addresses.txt", "BAKING_STORE.BIN");
+    initialize_virtual_memory(virtual_memory, "./addresses.txt", "./BAKING_STORE.BIN");
     printf("Virtual memory initialized\n");
     for (int i = 0; i < ADDRESS_SIZE; i++)
     {
-        // printf("%d\n", virtual_memory->address[i]);
+        printf("%d ", virtual_memory->address[i]);
     }
+    printf("\n");
     printf("Virtual memory address printed\n");
     printf("=====================================\n");
     testOPT(virtual_memory);

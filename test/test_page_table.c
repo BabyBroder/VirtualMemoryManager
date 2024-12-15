@@ -3,7 +3,6 @@
 int main()
 {
     PageTable *page_table;
-    page_table = (PageTable *)malloc(sizeof(PageTable));
     initialize_page_table(page_table);
 
     link_page_table_to_frame(page_table, 1, 2);

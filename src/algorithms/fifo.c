@@ -3,7 +3,7 @@
 void initialize_fifo(FIFO *structure, int capacity_value)
 {
 
-    if (structure)
+    if (structure->capacity > 0)
     {
         fprintf(stderr, "Error: FIFO already initialized.\n");
         exit(EXIT_FAILURE);

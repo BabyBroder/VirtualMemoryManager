@@ -2,11 +2,12 @@
 
 void initialize_page_table(PageTable *page_table)
 {
-    if (page_table)
+    if(page_table->initialized)
     {
         fprintf(stderr, "Error: Page table already initialized.\n");
         exit(EXIT_FAILURE);
     }
+
     page_table->entries = (PageTableEntry *)malloc(sizeof(PageTableEntry) * PAGE_TABLE_ENTRIES);
 
     if (!page_table->entries)
