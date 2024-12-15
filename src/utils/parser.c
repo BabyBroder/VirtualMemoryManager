@@ -1,6 +1,6 @@
 #include "../../lib/utils/utils.h"
 
-void parser_input_file_int(const char *filename, int lines[], int capacity)
+void parser_input_file_int(const char *filename, int* lines, int capacity)
 {
     FILE *file = fopen(filename, "r");
     if (file == NULL)
