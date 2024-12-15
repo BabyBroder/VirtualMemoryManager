@@ -69,8 +69,10 @@ void add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory 
                 {
                     physical_memory->frames[i].valid = true;
                     physical_memory->frames[i].page_number = page_number;
+                    printf("Page %d added to frame %d\n", page_number, i);
                     char *framedata = readVirtualMemory(virtual_memory, page_number, 0, FRAME_SIZE);
                     memcpy(physical_memory->frames[i].frame_data, framedata, FRAME_SIZE);
+                    physical_memory->nums_frames++;
                     free(framedata);
                     return;
                 }

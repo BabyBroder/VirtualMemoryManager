@@ -1,8 +1,4 @@
-#include "../lib/algorithms/optimal.h"
-#include "../lib/algorithms/fifo.h"
-#include "../lib/algorithms/lru.h"
-#include "../lib/algorithms/algorithms.h"
-#include "../lib/memory/virtual_memory.h"
+#include "../src/main.h"
 
 //  Different size for address
 #define ADDRESS_SIZE 20

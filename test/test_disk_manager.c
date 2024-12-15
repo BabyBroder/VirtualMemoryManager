@@ -1,6 +1,4 @@
-#include "../lib/manager/disk_manager.h"
-#include "../lib/algorithms/algorithms.h"
-#include "../lib/memory/physical_memory.h"
+#include "../src/main.h"
 
 int main()
 {

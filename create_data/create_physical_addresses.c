@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-const int TOTAL_FRAME = 3;
+const int TOTAL_FRAME = 10;
 const char* file_test = "../test/BACKING_STORE.bin";
 const char* file_data = "../data/BACKING_STORE.bin";
 

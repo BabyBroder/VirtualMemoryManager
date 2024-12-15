@@ -38,3 +38,7 @@ data/*.bin
 
 # Ignore Makefile backups
 Makefile~
+
+# Ignore other file
+.py
+.gdb_history

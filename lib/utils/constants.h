@@ -41,7 +41,7 @@
 #define FRAME_SIZE 256
 
 // 256 frames
-#define TOTAL_FRAMES 256
+#define TOTAL_FRAMES 3
 
 // Total physical memory size in bytes
 // Physical memory of 65,536 bytes (256 frames × 256-byte frame size)

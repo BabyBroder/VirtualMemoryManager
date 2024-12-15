@@ -1,4 +1,4 @@
-#include "../lib/structure/page_table.h"
+#include "../src/main.h"
 
 int main()
 {
