@@ -1,8 +1,4 @@
-#include "../lib/structure/tlb.h"
-#include "../lib/utils/parser.h"
-#include "../lib/memory/virtual_memory.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "../src/main.h"
 typedef struct
 {
     uint16_t page_number;
@@ -13,7 +9,7 @@ int main()
 {
     TLB_input test[18];
     test[0].page_number = 10;
-    test[0].frame_number = 9;
+    test[0].frame_number = 10;
 
     for (uint16_t i = 1; i < 18; i++)
     {
@@ -22,7 +18,7 @@ int main()
     }
 
     test[17].page_number = 10;
-    test[17].frame_number = 9;
+    test[17].frame_number = 10;
     // Allocate memory for the TLB
     TLB *_TLB = (TLB *)malloc(sizeof(TLB));
     if (_TLB == NULL)
@@ -39,10 +35,10 @@ int main()
     }
 
     initialize_virtual_memory(_VM, "addresses.txt", "BAKING_STORE.BIN");
-    initialize_tlb(_TLB, _VM, LRU_ALGORITHM);
+    initialize_tlb(_TLB, _VM, FIFO_ALGORITHM);
     for (int i = 0; i < 17; i++)
     {
-        tlb_add_entry(
+        add_entry_to_tlb(
             _TLB,
             test[i].page_number,
             test[i].frame_number,
@@ -50,19 +46,19 @@ int main()
     }
     print_tlb(_TLB);
     printf("Page number: %d\nFrame number: %d\n", test[17].page_number, test[17].frame_number);
-    tlb_add_entry(_TLB, test[17].page_number, test[17].frame_number, 17);
+    add_entry_to_tlb(_TLB, test[17].page_number, test[17].frame_number, 17);
 
     print_tlb(_TLB);
 
     printf("Page number: %d\nFrame number: %d\n",
-            test[13].page_number, test[13].frame_number);
+            19, 19);
 
-    tlb_add_entry( _TLB, test[13].page_number, test[13].frame_number, 18);
+    add_entry_to_tlb( _TLB, 19, 19, 19);
     print_tlb(_TLB);
     
     printf("Page number: %d\nFrame number: %d\n",
             18, 18);
 
-    tlb_add_entry(_TLB, 18, 18, 18);
+    add_entry_to_tlb(_TLB, 18, 18, 18);
     print_tlb(_TLB);
 }
