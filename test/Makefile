@@ -20,6 +20,12 @@ TEST_SRC = test_memory_manager.c test_page_table.c \
 all: $(TESTS)
 
 # Compile each test binary
+test_physical_memory: test_physical_memory.c $(SRC)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	
+test_virtual_memory: test_virtual_memory.c $(SRC)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
 test_memory_manager: test_memory_manager.c $(SRC)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
