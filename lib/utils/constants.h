@@ -21,12 +21,14 @@
 
 
 #define ADDRESS_SIZE 1000
-#define BACKING_STORE_SIZE 65536
+#define BACKING_STORE_SIZE 256 * 256
+
+#define OFFSET_BITS 8
 
 // Index for algorithm
 // Number of entries in the page table 2^8 entries in the page table
 // 2^8 entries in the page table
-#define PAGE_TABLE_ENTRIES 256
+#define PAGE_TABLE_ENTRIES 128
 
 // Page size in bytes
 // Page size of 2^8 bytes
@@ -41,7 +43,7 @@
 #define FRAME_SIZE 256
 
 // 256 frames
-#define TOTAL_FRAMES 3
+#define TOTAL_FRAMES 128
 
 // Total physical memory size in bytes
 // Physical memory of 65,536 bytes (256 frames × 256-byte frame size)

@@ -31,7 +31,7 @@ void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory, Algorithm algorithm
     }
 }
 
-int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
+int choose_entry_to_replace(TLB *tlb, uint8_t page_number, uint8_t frame_number, int current_index)
 {
     // adding entry
     int needReplace = -2;
@@ -50,7 +50,7 @@ int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_numbe
     return needReplace;
 }
 
-void add_entry_to_tlb(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index)
+void add_entry_to_tlb(TLB *tlb, uint8_t page_number, uint8_t frame_number, int current_index)
 {
     int goodState = -1;
     // finding free TLB entry to add
@@ -83,7 +83,7 @@ void add_entry_to_tlb(TLB *tlb, uint16_t page_number, uint16_t frame_number, int
     tlb->entries[indx].page_number = page_number;
 }
 
-int tlb_lookup(TLB *tlb, uint16_t page_number)
+int tlb_lookup(TLB *tlb, uint8_t page_number)
 {
     for (int i = 0; i < TLB_ENTRIES; i++)
     {

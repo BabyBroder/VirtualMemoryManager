@@ -30,6 +30,18 @@ void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algor
     }
 }
 
+int find_free_frame(PhysicalMemory *physical_memory)
+{
+    for (int i = 0; i < FRAME_SIZE; i++)
+    {
+        if (!physical_memory->frames[i].valid)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
 int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, uint8_t frame_number, int current_index)
 {
     // find suitable entry

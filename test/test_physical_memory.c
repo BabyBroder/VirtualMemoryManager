@@ -1,5 +1,8 @@
 #include "../src/main.h"
 
+#undef FRAME_SIZE
+#define FRAME_SIZE 10
+
 typedef struct
 {
     uint16_t frame_number;

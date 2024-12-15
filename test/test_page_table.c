@@ -3,6 +3,12 @@
 int main()
 {
     PageTable *page_table;
+    page_table = (PageTable *)malloc(sizeof(PageTable));
+    if(page_table == NULL)
+    {
+        perror("Error allocating memory");
+        exit(1);
+    }
     initialize_page_table(page_table);
     
     link_page_table_to_frame(page_table, 1, 2);

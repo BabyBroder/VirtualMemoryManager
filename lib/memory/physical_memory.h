@@ -44,6 +44,18 @@ typedef struct
  */
 void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm);
 
+
+/**
+ * @brief Finds a free frame in the Physical Memory.
+ *
+ * This function searches for a free frame in the Physical Memory.
+ *
+ * @param physical_memory Pointer to the PhysicalMemory structure.
+ * @return The index of the free frame, or -1 if no free frame is found.
+ */
+int find_free_frame(PhysicalMemory *physical_memory);
+
+
 /**
  * @brief Chooses an entry to replace in the Physical Memory.
  *

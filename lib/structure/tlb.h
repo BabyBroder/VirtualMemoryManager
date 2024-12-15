@@ -66,7 +66,7 @@ void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory, Algorithm algorithm
  * @param current_index The current index in the TLB.
  * @return The index of the entry to replace.
  */
-int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index);
+int choose_entry_to_replace(TLB *tlb, uint8_t page_number, uint8_t frame_number, int current_index);
 
 /**
  * @brief Adds an entry to the TLB.
@@ -78,7 +78,7 @@ int choose_entry_to_replace(TLB *tlb, uint16_t page_number, uint16_t frame_numbe
  * @param frame_number The physical frame number to add.
  * @param current_index The current index in the TLB.
  */
-void add_entry_to_tlb(TLB *tlb, uint16_t page_number, uint16_t frame_number, int current_index);
+void add_entry_to_tlb(TLB *tlb, uint8_t page_number, uint8_t frame_number, int current_index);
 
 /**
  * @brief Looks up the TLB for a given page number.
@@ -90,7 +90,7 @@ void add_entry_to_tlb(TLB *tlb, uint16_t page_number, uint16_t frame_number, int
  * @param page_number The page number to look up.
  * @return The frame number corresponding to the page number, or -1 if the entry is not valid.
  */
-int tlb_lookup(TLB *tlb, uint16_t page_number);
+int tlb_lookup(TLB *tlb, uint8_t page_number);
 
 /**
  * @brief Prints the contents of the TLB.

@@ -54,7 +54,7 @@ void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_f
  * @param current_index The current index in the TLB.
  * @return True if the virtual address is in the TLB, false otherwise.
  */
-bool tlb_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index);
+bool tlb_check(TLB *tlb, TLBManager *tlb_manager, uint32_t virtual_address, int current_index);
 
 /**
  * @brief Checks if the virtual address is in the page table.
@@ -67,6 +67,6 @@ bool tlb_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFau
  * @param current_index The current index in the TLB.
  * @return True if the virtual address is in the page table, false otherwise.
  */
-bool page_table_check(TLB *tlb, PageTable *page_table, TLBManager *tlb_manager, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index);
+bool page_table_check(PageTable *page_table, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index);
 
 #endif // MEMORY_MANAGER_H

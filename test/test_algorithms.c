@@ -1,6 +1,7 @@
 #include "../src/main.h"
 
 //  Different size for address
+#undef ADDRESS_SIZE
 #define ADDRESS_SIZE 20
 void add_to_fifo(FIFO *fifo, int value)
 {

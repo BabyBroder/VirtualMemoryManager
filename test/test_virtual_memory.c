@@ -2,7 +2,7 @@
 
 void print_virtual_memory(VirtualMemory *virtual_memory)
 {
-    for (int i = 0; i < 256; i++)
+    for (int i = 0; i < 256 * 10; i++)
     {
         printf("%02x ", (unsigned char)virtual_memory->data[i]);
         if ((i + 1) % 16 == 0)
