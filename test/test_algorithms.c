@@ -1,8 +1,8 @@
-#include "../src/algorithms/optimal.h"
-#include "../src/algorithms/fifo.h"
-#include "../src/algorithms/lru.h"
-#include "../src/algorithms/algorithm.h"
-
+#include "../lib/algorithms/optimal.h"
+#include "../lib/algorithms/fifo.h"
+#include "../lib/algorithms/lru.h"
+#include "../lib/algorithms/algorithms.h"
+#include "../lib/memory/virtual_memory.h"
 void add_to_fifo(FIFO *fifo, int value)
 {
     printf("Adding %d to FIFO\n", value);
