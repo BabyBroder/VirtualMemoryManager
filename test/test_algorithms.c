@@ -75,10 +75,9 @@ void testOPT(VirtualMemory *virtual_memory)
     initialize_optimal(optimal, virtual_memory, 5); // Assuming the third argument is the number of pages
     printf("Optimal initialized\n");
 
-    int values[] = {1, 2, 3, 2, 6, 4, 10, 8, 12, 4};
-    for (int i = 0; i < sizeof(values) / sizeof(values[0]); i++)
+    for(int i = 0; i < ADDRESS_SIZE; i++)
     {
-        add_to_OPT(optimal, values[i], i);
+        add_to_OPT(optimal, virtual_memory->address[i], i);
     }
 
     printf("Final OPT state: ");
