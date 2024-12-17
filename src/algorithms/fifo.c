@@ -64,7 +64,7 @@ int fifo_add_page(FIFO *structure, int page)
 
     for (int i = 0; i < structure->size; i++)
         if (structure->queue[i] == page)
-            return -2;
+            return i;
 
     if (structure->size == structure->capacity)
     {
