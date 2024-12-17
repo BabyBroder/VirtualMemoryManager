@@ -19,9 +19,11 @@ void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int c
     structure->size = 0;
 
     structure->pages = (int *)malloc(structure->capacity * sizeof(int));
-    structure->future_usage = (int *)malloc(1000 * sizeof(int));
+    structure->future_usage = (int *)malloc(ADDRESS_SIZE * sizeof(int))
+    
+    ;
     structure->map = (int *)malloc(65536 * sizeof(int));
-    structure->idx = (int **)malloc(1000 * sizeof(int *));
+    structure->idx = (int **)malloc(ADDRESS_SIZE * sizeof(int *));
     structure->initialized = 0xdeafbeef;
 
     if (!structure->pages || !structure->future_usage || !structure->map || !structure->idx)
@@ -40,21 +42,21 @@ void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int c
     }
 
     // check later
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < ADDRESS_SIZE; i++)
         structure->future_usage[i] = structure->future_usage[i] & 0xFFFF;
 
     for (int i = 0; i < 65536; i++)
         structure->map[i] = -1;
 
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < ADDRESS_SIZE; i++)
     {
-        structure->idx[i] = (int *)malloc(1000 * sizeof(int));
+        structure->idx[i] = (int *)malloc(ADDRESS_SIZE * sizeof(int));
         if (!structure->idx[i])
         {
             perror("Optimal Error: Memory allocation failed");
             exit(EXIT_FAILURE);
         }
-        for (int j = 0; j < 1000; j++)
+        for (int j = 0; j < ADDRESS_SIZE; j++)
             structure->idx[i][j] = -1;
     }
 
@@ -125,7 +127,7 @@ int optimal_add_page(Optimal *structure, int page, int current_index)
     for (int i = 0; i < structure->size; i++)
         if (structure->pages[i] == page)
         {
-            return i;
+            return -2;
         }
 
     if (structure->size == structure->capacity)
@@ -159,7 +161,7 @@ void free_optimal(Optimal *structure)
     }
     if (structure->idx)
     {
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < ADDRESS_SIZE; i++)
         {
             if (structure->idx[i])
             {
