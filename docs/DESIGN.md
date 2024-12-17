@@ -1,4 +1,4 @@
-Here's a structured **`design.md`** for **Virtual Memory Manager** project.
+File **`design.md`** is describing overall structure for **Virtual Memory Manager** project.
 
 ---
 
