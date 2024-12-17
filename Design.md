@@ -37,6 +37,12 @@ The **Virtual Memory Manager** project simulates the translation of logical addr
    - **LRU** (Least Recently Used)  
    - **OPT** (Optimal Page Replacement)  
 
+The project operates with the following memory specifications:  
+- **Physical Memory**: 128 bytes.
+- **Physical Memory**: 128 bytes.  
+- **Virtual Memory**: 256 bytes.  
+- **Backing Store**: 65,536 bytes (256 pages × 256-byte page size), simulating secondary storage for all virtual pages.
+
 The system reads logical addresses from an input file, translates them into physical addresses, retrieves byte values, and outputs the results. Performance statistics, such as **TLB hit rate** and **page fault rate**, are tracked and reported.
 
 ---
