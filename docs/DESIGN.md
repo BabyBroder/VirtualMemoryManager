@@ -214,8 +214,7 @@ TLB Hit Rate: XX%, Page-Fault Rate: YY%
 4. **Edge Cases**: Invalid addresses, large input files, etc.
 
 ### Tools:
-- Input Address File Generator  
-- Unit Testing for each component (TLB, Page Table, etc.).
+- Make File 
 
 ---
 
