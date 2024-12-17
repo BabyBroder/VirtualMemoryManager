@@ -27,6 +27,6 @@ void parser_input_file_int(const char *filename, int line[], int capacity);
 void parser_input_file_data(const char *filename, char *data, int capacity);
 
 
-void write_physical_address(const char *filename, uint16_t physical_address);
+void write_physical_address(const char *filename, int physical_address);
 
 #endif // PARSER_H

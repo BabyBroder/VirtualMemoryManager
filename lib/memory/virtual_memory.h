@@ -36,7 +36,7 @@ typedef struct VirtualMemory
  * @param address_file The address file to read from.
  * @param backing_store_file The backing store file to read from.
  */
-void initialize_virtual_memory(VirtualMemory *virtual_memory, char *address_file, char *backing_store_file);
+void initialize_virtual_memory(VirtualMemory *virtual_memory, const char *address_file, const char *backing_store_file);
 
 /**
  * @brief Reads data from the virtual memory.
@@ -47,6 +47,6 @@ void initialize_virtual_memory(VirtualMemory *virtual_memory, char *address_file
  * @param size The number of bytes to read.
  * @return A pointer to the data read from the virtual memory.
  */
-char *readVirtualMemory(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, int size);
+char *readVirtualMemory(VirtualMemory *virtual_memory, int page_number, int offset, int size);
 
 #endif // VIRTUAL_MEMORY_H

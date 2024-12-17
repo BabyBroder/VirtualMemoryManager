@@ -1,18 +1,18 @@
 #include "main.h"
 
-uint16_t get_physical_address(uint8_t frame_number, uint8_t offset)
+int get_physical_address(int frame_number, int offset)
 {
-    return (uint16_t)frame_number * FRAME_SIZE + offset;
+    return (int)frame_number * FRAME_SIZE + offset;
 }
 
-uint8_t get_offset(int virtual_address)
+int get_offset(int virtual_address)
 {
-    return (uint8_t)virtual_address & ((1 << OFFSET_BITS) - 1);
+    return (int)virtual_address & ((1 << OFFSET_BITS) - 1);
 }
 
-uint8_t get_page_number(int virtual_address)
+int get_page_number(int virtual_address)
 {
-    return (uint8_t)(virtual_address >> OFFSET_BITS) & (PAGE_SIZE - 1);
+    return (int)(virtual_address >> OFFSET_BITS) & (PAGE_SIZE - 1);
 }
 
 void init()
@@ -28,7 +28,7 @@ void init()
         exit(EXIT_FAILURE);
     }
 
-    initialize_virtual_memory(virtual_memory, BACKING_STORE_FILE, INPUT_FILE);
+    initialize_virtual_memory(virtual_memory, INPUT_FILE, BACKING_STORE_FILE);
     initialize_physical_memory(physical_memory, algorithm);
     initialize_tlb(tlb, virtual_memory, algorithm);
     initialize_page_table(page_table);
@@ -43,11 +43,14 @@ void init()
     }
 }
 
-uint8_t get_frame_number(int virtual_address, int current_index)
+int get_frame_number(int virtual_address, int current_index)
 {
-    uint8_t page_number;
-    uint8_t offset;
-    uint8_t frame_number;
+    int page_number;
+    int offset;
+    int frame_number;
+
+    page_number = get_page_number(virtual_address);
+    offset = get_offset(virtual_address);
 
     frame_number = tlb_check(tlb, tlb_manager, virtual_address, current_index);
 
@@ -61,11 +64,7 @@ uint8_t get_frame_number(int virtual_address, int current_index)
         // If Page table miss
         if (frame_number == -1)
         {
-            int *page_number_and_offset = get_page_number_and_offset(virtual_address);
-            page_number = page_number_and_offset[0];
-            offset = page_number_and_offset[1];
-            //char *frame_data = readVirtualMemory(virtual_memory, page_number, offset, PAGE_SIZE);
-
+            // char *frame_data = readVirtualMemory(virtual_memory, page_number, offset, PAGE_SIZE);
             frame_number = add_page_to_physical_memory(physical_memory, virtual_memory, frame_number, page_number);
             link_page_table_to_frame(page_table, page_number, frame_number);
         }
@@ -77,22 +76,27 @@ uint8_t get_frame_number(int virtual_address, int current_index)
 
 void run(PhysicalMemory *physical_memory, int current_index)
 {
-    uint16_t virtual_address = virtual_memory->address[current_index];
-    
-    uint8_t page_number = get_page_number(virtual_address);
-    uint8_t offset = get_offset(virtual_address);
+    int virtual_address = virtual_memory->address[current_index];
 
-    uint8_t frame_number = get_frame_number(virtual_address, current_index);
-    uint16_t physical_address = get_physical_address(frame_number, offset);
+    int page_number = get_page_number(virtual_address);
+    int offset = get_offset(virtual_address);
 
-    signed char *data = read_from_physical_memory(physical_memory, frame_number, offset);
-    
-    printf("Virtual address: %d Physical address: %d Value: %d\n", virtual_address, physical_address, data[0]);
+    int frame_number = get_frame_number(virtual_address, current_index);
+    // print fame_number and offset
+    printf("Frame number: %d Offset: %d\n", frame_number, offset);
+    int physical_address = get_physical_address(frame_number, offset);
+
+    char data = (read_from_physical_memory(physical_memory, frame_number, offset)[0]);
+
+    printf("Virtual address: %d Physical address: %d Value: %d\n", virtual_address, physical_address, data);
 }
 
 int main()
 {
     init();
-    run(physical_memory, 0);
+    for(int i = 0; i < 10; i++)
+    {
+        run(physical_memory, i);
+    }
     return 0;
 }

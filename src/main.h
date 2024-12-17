@@ -13,6 +13,6 @@ Algorithm algorithm = FIFO_ALGORITHM;
 TLBManager *tlb_manager;
 PageFaultManager *page_fault_manager;
 
-const char *BACKING_STORE_FILE = "../date/BACKING_STORE.bin";
-const char *INPUT_FILE = "../data/addresses.txt";
-const char *OUTPUT_FILE = "../data/corrected.txt";
+const char *BACKING_STORE_FILE = "./data/BACKING_STORE.bin";
+const char *INPUT_FILE = "./data/addresses.txt";
+const char *OUTPUT_FILE = "./data/corrected.txt";

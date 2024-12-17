@@ -1,8 +1,8 @@
 #include "../src/main.h"
 typedef struct
 {
-    uint16_t page_number;
-    uint16_t frame_number;
+    int page_number;
+    int frame_number;
 } TLB_input;
 
 int main()
@@ -11,7 +11,7 @@ int main()
     test[0].page_number = 10;
     test[0].frame_number = 10;
 
-    for (uint16_t i = 1; i < 18; i++)
+    for (int i = 1; i < 18; i++)
     {
         test[i].page_number = i;
         test[i].frame_number = i;

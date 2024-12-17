@@ -19,7 +19,7 @@
 typedef struct
 {
     bool valid; /**< valid bits to tell frame is empty or not. */
-    uint16_t page_number;
+    int page_number;
     char frame_data[256]; /**< Data stored in the frame. */
 } Frame;
 

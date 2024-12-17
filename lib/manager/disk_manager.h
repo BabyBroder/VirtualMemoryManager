@@ -31,6 +31,6 @@ void initialize_disk_manager(VirtualMemory *virtual_memory, PhysicalMemory *phys
  * @param size The number of bytes to read.
  * @param frame_data Pointer to the buffer where the frame data will be stored.
  */
-void read_virutual_memory_to_frame(VirtualMemory *virtual_memory, uint8_t page_number, uint8_t offset, uint16_t size, char *frame_data);
+void read_virutual_memory_to_frame(VirtualMemory *virtual_memory, int page_number, int offset, int size, char *frame_data);
 
 #endif // DISK_MANAGER_H

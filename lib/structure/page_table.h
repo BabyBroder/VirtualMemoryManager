@@ -20,7 +20,7 @@
  */
 typedef struct
 {
-    uint16_t frame_number; /**< Frame number in physical memory. */
+    int frame_number; /**< Frame number in physical memory. */
     bool valid;            /**< Valid bit to indicate if the page is in memory. */
 } PageTableEntry;
 
@@ -57,7 +57,7 @@ void initialize_page_table(PageTable *page_table);
  * @param page_number The page number to look up.
  * @return The frame number corresponding to the page number, or -1 if the page is not found.
  */
-int page_table_lookup(PageTable *page_table, uint16_t page_number);
+int page_table_lookup(PageTable *page_table, int page_number);
 
 /**
  * Updates the page table when a page is loaded into memory.
@@ -66,7 +66,7 @@ int page_table_lookup(PageTable *page_table, uint16_t page_number);
  * @param page_number The page number to be updated.
  * @param frame_number The frame number to be associated with the page number.
  */
-void link_page_table_to_frame(PageTable *page_table, uint16_t page_number, uint16_t frame_number);
+void link_page_table_to_frame(PageTable *page_table, int page_number, int frame_number);
 
 /**
  * Cleans up resources allocated for the page table.

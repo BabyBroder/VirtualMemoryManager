@@ -28,7 +28,7 @@
 // Index for algorithm
 // Number of entries in the page table 2^8 entries in the page table
 // 2^8 entries in the page table
-#define PAGE_TABLE_ENTRIES 128
+#define PAGE_TABLE_ENTRIES 256
 
 // Page size in bytes
 // Page size of 2^8 bytes

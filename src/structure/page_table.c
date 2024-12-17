@@ -24,7 +24,7 @@ void initialize_page_table(PageTable *page_table)
     }
 }
 
-int page_table_lookup(PageTable *page_table, uint16_t page_number)
+int page_table_lookup(PageTable *page_table, int page_number)
 {
 
     if (!page_table)
@@ -45,7 +45,7 @@ int page_table_lookup(PageTable *page_table, uint16_t page_number)
     return -1;
 }
 
-void link_page_table_to_frame(PageTable *page_table, uint16_t page_number, uint16_t frame_number)
+void link_page_table_to_frame(PageTable *page_table, int page_number, int frame_number)
 {
     if (!page_table)
     {

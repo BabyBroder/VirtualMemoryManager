@@ -5,8 +5,8 @@
 
 typedef struct
 {
-    uint16_t frame_number;
-    uint16_t page_number;
+    int frame_number;
+    int page_number;
 } PhysicalMemoryInput;
 
 void print_physical_memory_data(PhysicalMemory *physical_memory)
@@ -42,7 +42,7 @@ void add_page(PhysicalMemory *physical_memory, VirtualMemory *virtualMemory, Phy
     printf("=====================================\n");
     printf("Physical Memory INPUT\n\n");
     print_physical_memory_input(test);
-    for (uint16_t i = 0; i < 18; i++)
+    for (int i = 0; i < 18; i++)
     {
         add_page_to_physical_memory(physical_memory, virtualMemory, test[i].frame_number, test[i].page_number);
 
@@ -60,7 +60,7 @@ int main()
     PhysicalMemoryInput test[18];
     test[0].frame_number = 10;
     test[0].page_number = 10;
-    for (uint16_t i = 1; i < 18; i++)
+    for (int i = 1; i < 18; i++)
     {
         test[i].frame_number = i;
         test[i].page_number = i;

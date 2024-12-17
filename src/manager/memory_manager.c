@@ -8,9 +8,9 @@ void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_f
 
 int tlb_check(TLB *tlb, TLBManager *tlb_manager, uint32_t virtual_address, int current_index)
 {
-    const uint16_t PAGE_OFFSET_BITS = 8;
-    const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
-    uint16_t page_number = (virtual_address >> PAGE_OFFSET_BITS) & ((1 << PAGE_NUMBER_BITS) - 1);
+    const int PAGE_OFFSET_BITS = 8;
+    const int PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
+    int page_number = (virtual_address >> PAGE_OFFSET_BITS) & ((1 << PAGE_NUMBER_BITS) - 1);
 
     // Check if the page is in the TLB
     int frame_number = tlb_lookup(tlb, page_number);
@@ -25,9 +25,9 @@ int tlb_check(TLB *tlb, TLBManager *tlb_manager, uint32_t virtual_address, int c
 
 int page_table_check(PageTable *page_table, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index)
 {
-    const uint16_t PAGE_OFFSET_BITS = 8;
-    const uint16_t PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
-    uint16_t page_number = (virtual_address >> PAGE_OFFSET_BITS) & ((1 << PAGE_NUMBER_BITS) - 1);
+    const int PAGE_OFFSET_BITS = 8;
+    const int PAGE_NUMBER_BITS = 16 - PAGE_OFFSET_BITS;
+    int page_number = (virtual_address >> PAGE_OFFSET_BITS) & ((1 << PAGE_NUMBER_BITS) - 1);
 
     int frame_number = page_table_lookup(page_table, page_number);
     if (frame_number == -1)
