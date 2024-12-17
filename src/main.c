@@ -184,9 +184,9 @@ int main()
     printf("Algorithm (Memory):   %-20s\n", algorithm_physicalmemory == FIFO_ALGORITHM ? "FIFO" : "LRU");
     printf("Algorithm (TLB):      %-20s\n", algorithm_tlb == FIFO_ALGORITHM ? "FIFO" : algorithm_tlb == LRU_ALGORITHM ? "LRU" : "OPTIMAL");
     printf("TLB hit rate:         %.2f%%\n",
-           (tlb_manager->TLBhits / (float)ADDRESS_SIZE) * 100);
+           (tlb_manager->TLBhits / (float)ADDRESS_SIZE));
     printf("Page-fault rate:      %.2f%%\n",
-           (page_fault_manager->pageFaults / (float)ADDRESS_SIZE) * 100);
+           (page_fault_manager->pageFaults / (float)ADDRESS_SIZE));
 
 
     _free();
