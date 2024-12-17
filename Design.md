@@ -11,7 +11,8 @@ Here's a structured **`design.md`** for **Virtual Memory Manager** project.
 3. [System Design](#system-design)  
    - [High-Level Architecture](#high-level-architecture)  
    - [Key Components](#key-components)  
-4. [Workflow](#workflow)  
+4. [Workflow](#workflow)
+   - [Flow chart](#flow-chart)
    - [Logical Address Translation](#logical-address-translation)  
    - [Page Fault Handling](#page-fault-handling)  
    - [TLB and Page Table Operations](#tlb-and-page-table-operations)  
@@ -26,12 +27,17 @@ Here's a structured **`design.md`** for **Virtual Memory Manager** project.
 
 ## 1. Overview
 
-The Virtual Memory Manager project implements a translation process from logical to physical memory using:  
-- **Translation Lookaside Buffer (TLB)**  
-- **Page Tables**  
-- **Backing Store** (to handle page faults).  
+The **Virtual Memory Manager** project simulates the translation of logical addresses to physical addresses using the following mechanisms:  
+- **Translation Lookaside Buffer (TLB)** for fast page-to-frame lookups.  
+- **Page Tables** to map logical pages to physical frames.  
+- **Backing Store** to handle **page faults** when a page is not in memory.  
+- **Demand Paging**: Pages are loaded into memory **only when they are needed**, optimizing memory usage.  
+- **Page Replacement Strategies**: When physical memory is full, the project uses replacement algorithms to determine which page to evict, including:  
+   - **FIFO** (First-In, First-Out)  
+   - **LRU** (Least Recently Used)  
+   - **OPT** (Optimal Page Replacement)  
 
-The project reads logical addresses from a file, translates them into physical addresses, retrieves values, and outputs the results while updating data structures as needed.
+The system reads logical addresses from an input file, translates them into physical addresses, retrieves byte values, and outputs the results. Performance statistics, such as **TLB hit rate** and **page fault rate**, are tracked and reported.
 
 ---
 
@@ -95,10 +101,26 @@ The system follows a step-by-step process:
 5. Retrieve the Byte Value from Physical Memory.
 
 ### Page Fault Handling
-1. Access the **Backing Store** to load the required page.  
+
+<!-- 1. Access the **Backing Store** to load the required page.  
 2. Store the page in **Physical Memory**.  
 3. Update both the **Page Table** and **TLB**.  
-4. Retry the address translation.
+4. Retry the address translation. -->
+
+
+We implement **demand paging**, where pages are loaded into physical memory only when they are needed (i.e., on a **page fault**). This ensures efficient use of memory and avoids preloading unnecessary pages.
+
+When physical memory is full and a new page needs to be loaded, we use **page replacement strategies** to determine which page to evict. The following strategies are supported:
+
+1. **FIFO (First-In, First-Out)**:  
+   - Evicts the oldest page that was loaded into memory.  
+   - Simple to implement and efficient for sequential access patterns.
+
+2. **LRU (Least Recently Used)**:  
+   - Evicts the page that has not been used for the longest time.  
+   - Tracks page access history to approximate optimal performance.
+
+The chosen page replacement strategy can be configured during runtime or testing.
 
 ### TLB and Page Table Operations
 - **TLB Update**: Use a **FIFO** or **LRU** replacement policy for TLB entries.  
