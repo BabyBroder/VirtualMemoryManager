@@ -61,7 +61,7 @@ int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, 
     return needReplace;
 }
 
-void add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, uint8_t frame_number, uint8_t page_number)
+uint8_t add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, uint8_t frame_number, uint8_t page_number)
 {
     if (physical_memory == NULL)
     {
@@ -71,36 +71,36 @@ void add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory 
 
     int goodState = -1;
     goodState = find_entry_to_replace(physical_memory, page_number, frame_number, -1);
-    if (goodState < 0)
+
+    if (goodState == -1)
     {
-        if (goodState == -1)
-            // finding free frame to add page
-            for (int i = 0; i < FRAME_SIZE; i++)
+        // finding free frame to add page
+        for (int i = 0; i < FRAME_SIZE; i++)
+        {
+            if (!physical_memory->frames[i].valid)
             {
-                if (!physical_memory->frames[i].valid)
-                {
-                    physical_memory->frames[i].valid = true;
-                    physical_memory->frames[i].page_number = page_number;
-                    printf("Page %d added to frame %d\n", page_number, i);
-                    char *framedata = readVirtualMemory(virtual_memory, page_number, 0, FRAME_SIZE);
-                    memcpy(physical_memory->frames[i].frame_data, framedata, FRAME_SIZE);
-                    physical_memory->nums_frames++;
-                    free(framedata);
-                    return;
-                }
+                physical_memory->frames[i].valid = true;
+                physical_memory->frames[i].page_number = page_number;
+                printf("Page %d added to frame %d\n", page_number, i);
+                char *framedata = readVirtualMemory(virtual_memory, page_number, 0, FRAME_SIZE);
+                memcpy(physical_memory->frames[i].frame_data, framedata, FRAME_SIZE);
+                physical_memory->nums_frames++;
+                free(framedata);
+                return physical_memory->nums_frames - 1;
             }
-        else
-            return; // that page has already in physical memory
+        }
     }
 
-    // Replace found page by current page
+    // indx = frame number exist in physical memory or need to replace
     int indx = goodState;
     if (indx >= TLB_ENTRIES)
     { // wrong index
         printf("Error index replacement\n");
-        return;
+        exit(EXIT_FAILURE);
+        return -1;
     }
     physical_memory->frames[indx].page_number = page_number;
+    return indx;
 }
 
 char *read_from_physical_memory(PhysicalMemory *physical_memory, uint8_t frame_number, uint8_t offset)

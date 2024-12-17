@@ -80,7 +80,7 @@ int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, 
  * @param frame_number The frame number to add the page to.
  * @param page_number The page number to add.
  */
-void add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, uint8_t frame_number, uint8_t page_number);
+uint8_t add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, uint8_t frame_number, uint8_t page_number);
 
 /**
  * @brief Reads data from physical memory.

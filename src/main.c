@@ -61,13 +61,12 @@ uint8_t get_frame_number(int virtual_address, int current_index)
         // If Page table miss
         if (frame_number == -1)
         {
-
             int *page_number_and_offset = get_page_number_and_offset(virtual_address);
             page_number = page_number_and_offset[0];
             offset = page_number_and_offset[1];
-            char *frame_data = readVirtualMemory(virtual_memory, page_number, offset, PAGE_SIZE);
+            //char *frame_data = readVirtualMemory(virtual_memory, page_number, offset, PAGE_SIZE);
 
-            frame_number = find_free_frame(physical_memory);
+            frame_number = add_page_to_physical_memory(physical_memory, virtual_memory, frame_number, page_number);
             link_page_table_to_frame(page_table, page_number, frame_number);
         }
     }
@@ -76,22 +75,24 @@ uint8_t get_frame_number(int virtual_address, int current_index)
     return frame_number;
 }
 
-void write_to_physical_memory(PhysicalMemory *physical_memory, int current_index)
+void run(PhysicalMemory *physical_memory, int current_index)
 {
-    uint16_t virutal_address = virtual_memory->address[current_index];
+    uint16_t virtual_address = virtual_memory->address[current_index];
     
-    uint8_t page_number = get_page_number(virutal_address);
-    uint8_t offset = get_offset(virutal_address);
+    uint8_t page_number = get_page_number(virtual_address);
+    uint8_t offset = get_offset(virtual_address);
 
-    uint8_t frame_number = get_frame_number(virutal_address, current_index);
+    uint8_t frame_number = get_frame_number(virtual_address, current_index);
     uint16_t physical_address = get_physical_address(frame_number, offset);
 
-    // Add data from the specific page number into frame number
-    add_page_to_physical_memory(physical_memory, virtual_memory, frame_number, page_number);
+    signed char *data = read_from_physical_memory(physical_memory, frame_number, offset);
+    
+    printf("Virtual address: %d Physical address: %d Value: %d\n", virtual_address, physical_address, data[0]);
 }
 
 int main()
 {
-
+    init();
+    run(physical_memory, 0);
     return 0;
 }
