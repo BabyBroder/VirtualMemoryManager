@@ -23,7 +23,7 @@ The **FIFO (First-In-First-Out)** algorithm is applied when **TLB hits** or **pa
 
 ## FIFO FLowChart When Adding The Page
 
-![FIFO Flowchart](../images/FIFO.png)
+![FIFO Flowchart](../images/Algorithms/FIFO.png)
 
 ## Example of FIFO Algorithm:
 In a virtual memory system with FIFO page replacement:
@@ -61,7 +61,7 @@ The **LRU (Least Recently Used)** algorithm is applied when **TLB hits** or **pa
 
 ## LRU FLowChart When Adding The Page
 
-![LRU Flowchart](../images/LRU.png)
+![LRU Flowchart](../images/Algorithms/LRU.png)
 
 ## Example of LRU Algorithm:
 In a virtual memory system with LRU page replacement:

@@ -36,3 +36,30 @@ When a page fault occurs, our program will read in a 256-byte page from the file
 ## Page Replacement
 In this project, the virtual address space consists of 256 pages, while the physical memory contains only 128 page frames. Therefore, a page replacement algorithm must be implemented to allocate free page frames for the pages. 
 We will use either FIFO or LRU to resolve page faults when there is no free memory.
+
+## Usage
+
+To build the vm_manager executable, use the following command in the project's root directory:
+```
+make 
+```
+
+### Options
+
+| Option                              | Description                                                      |
+| ----------------------------------- | ---------------------------------------------------------------- |
+| `-h`, `--help`                      | Display the help message and usage information.                  |
+| `-d`, `--default`                   | Use default values for all configurations.                       |
+| `-p`, `--physical-memory-algorithm` | Set the algorithm for physical memory management: `FIFO`, `LRU`. |
+| `-t`, `--tlb-algorithm`             | Set the algorithm for TLB management: `FIFO`, `LRU`, `OPTIMAL`.  |
+| `-b`, `--backing-store`             | Specify the path to the backing store file.                      |
+| `-i`, `--input-file`                | Specify the path to the input file.                              |
+| `-o`, `--output-file`               | Specify the path to the output file.                             |
+| `-l`, `--log-file`                  | Specify the path to the log file.                                |
+
+
+
+To quickly clean the project and remove intermediate files, use the following command:
+```
+make clean
+```

@@ -128,7 +128,7 @@ The **Translation Lookaside Buffer (TLB)** stores recently accessed page-to-fram
 ## 4. Workflow
 ### Flow chart
 
-![Flow chart](../images/flow_chart.png)
+![Flow chart](../images/Design/flow_chart.png)
 
 
 ### Logical Address Translation
