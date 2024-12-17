@@ -65,10 +65,6 @@ The system reads logical addresses from an **addresses.txt**, translates them in
 
 ---
 
-Here’s the updated **System Design** section (Part 3) with the inclusion of **Physical Memory**, **Virtual Memory**, and **Backing Store** sizes, as well as the mention of **demand paging** and **page replacement strategies**:
-
----
-
 ## 3. System Design
 
 ### High-Level Architecture
