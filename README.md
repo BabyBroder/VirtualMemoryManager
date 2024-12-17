@@ -18,7 +18,7 @@ Logical addresses will be translated into physical addresses using a TLB and a p
 
 A visual representation of the address translation process is: 
 ![image](images/address-translation_process.png)
-## BACKING_STORE
+## BACKING STORE
 * Before handling page faults, it's important to understand the **BACKING STORE**. This is a binary file of size *65,536 bytes* that stores data at the offsets of each page. It will be used when a page fault occurs. In this project, the BACKING STORE will be represented by the file **BACKING_STORE.bin**. 
 * **BACKING_STORE.bin** will be treated as a random-access file order to we can randomly seek to certain positions of the file for reading.
 ## Handling Page Faults
