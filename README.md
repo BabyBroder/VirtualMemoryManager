@@ -23,6 +23,7 @@ A visual representation of the address translation process is:
 * **BACKING_STORE.bin** will be treated as a random-access file order to we can randomly seek to certain positions of the file for reading.
 ## Handling Page Faults
 When a page fault occurs, our program will read in a 256-byte page from the file *BACKING STORE* and store it in anavailable page frame in physical memory.
+
 **Example:** 
 * If a logical address with page number 15 resulted in a page fault program would read in page 15 from *BACKING STORE* and store it in a page frame in physical memory.
 * Once this frame is stored (and the page table and TLB are updated), subsequent accesses to page 15 will be resolved by either the TLB or the page table.
