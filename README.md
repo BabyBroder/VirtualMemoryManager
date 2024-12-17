@@ -4,10 +4,10 @@ This project involves writing a program that translates logical addresses to phy
 Our program will read a file containing 10,000 32-bit integer values, each representing a logical address. Each logical address will then be split into two halves (16 bits each), but only the latter half will be used. This 16-bit value is further divided into two parts: (1) an 8-bit page number and (2) an 8-bit page offset. The structure of the addresses is as follows:
 ![image](images/input_address.png)
  Other specifics include the following:
-*  2^8 entries in the page table
-*  Pagesize of 2^8 bytes
+*  $2^8$ entries in the page table
+*  Pagesize of $2^8$ bytes
 *  16 entries in the TLB
-*  Frame size of 2^8 bytes
+*  Frame size of $2^8$ bytes
 *  128 frames
 *  Physical memory of 65,536 bytes (128 frames × 256-byte frame size)
 ## Address Translation
