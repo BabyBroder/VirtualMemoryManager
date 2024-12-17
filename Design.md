@@ -1,4 +1,4 @@
-Here's a structured **`design.md`** document template for your **Virtual Memory Manager** project based on the provided flowchart.
+Here's a structured **`design.md`** for **Virtual Memory Manager** project.
 
 ---
 
@@ -78,6 +78,10 @@ The system follows a step-by-step process:
 ---
 
 ## 4. Workflow
+### Flow chart
+
+![Flow chart](images/flow_chart.png)
+
 
 ### Logical Address Translation
 1. **Extract Page Number and Offset** from the logical address.  
