@@ -1,7 +1,13 @@
 #include "../../lib/utils/utils.h"
 
-void log_event(char *fileLog, const char *message)
+void log_event(const char *fileLog, const char *message)
 {
-    freopen(fileLog, "a", stdout);
-    printf("%s\n", message);
+    FILE *file = fopen(fileLog, "a");
+    if (file == NULL)
+    {
+        printf("Error: Could not open file %s\n", fileLog);
+        exit(EXIT_FAILURE);
+    }
+    fprintf(file, "%s\n", message);
+    fclose(file);
 }

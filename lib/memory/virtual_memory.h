@@ -49,4 +49,11 @@ void initialize_virtual_memory(VirtualMemory *virtual_memory, const char *addres
  */
 char *readVirtualMemory(VirtualMemory *virtual_memory, int page_number, int offset, int size);
 
+/**
+ * @brief Frees the virtual memory.
+ *
+ * @param virtual_memory Pointer to the VirtualMemory structure.
+ */
+void free_virtual_memory(VirtualMemory *virtual_memory);
+
 #endif // VIRTUAL_MEMORY_H

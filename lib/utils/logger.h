@@ -18,6 +18,6 @@
  * @param fileLog The file to log the event or message to.
  * @param message The message to log.
  */
-void log_event(char *fileLog, const char *message);
+void log_event(const char *fileLog, const char *message);
 
 #endif // LOGGER_H

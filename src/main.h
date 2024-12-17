@@ -8,11 +8,12 @@ VirtualMemory *virtual_memory;
 PhysicalMemory *physical_memory;
 TLB *tlb;
 PageTable *page_table;
-Algorithm algorithm = FIFO_ALGORITHM;
-
+Algorithm algorithm_physicalmemory = FIFO_ALGORITHM;
+Algorithm algorithm_tlb = FIFO_ALGORITHM;
 TLBManager *tlb_manager;
 PageFaultManager *page_fault_manager;
 
 const char *BACKING_STORE_FILE = "./data/BACKING_STORE.bin";
 const char *INPUT_FILE = "./data/addresses.txt";
-const char *OUTPUT_FILE = "./data/output.txt";
+const char *OUTPUT_FILE = "./data/outputFIFO.txt";
+const char *LOG_FILE = "./data/output.log";

@@ -41,3 +41,13 @@ char *readVirtualMemory(VirtualMemory *virtual_memory, int page_number, int offs
     memcpy(result, &virtual_memory->data[page_number * 256 + offset], sizeof(char) * size);
     return result;
 }
+
+void free_virtual_memory(VirtualMemory *virtual_memory)
+{
+    if (virtual_memory->initialized)
+    {
+        free(virtual_memory->address);
+        free(virtual_memory->data);
+        virtual_memory->initialized = false;
+    }
+}
