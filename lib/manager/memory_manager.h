@@ -41,7 +41,7 @@ typedef struct
  * @param tlb_manager Pointer to TLBManager structure.
  * @param page_fault_manager Pointer to PageFaultManager structure.
  */
-int initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_fault_manager);
+void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_fault_manager);
 
 /**
  * @brief Checks if the virtual address is in the TLB.
