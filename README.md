@@ -46,6 +46,9 @@ make
 
 ### Options
 
+```
+./vm_manager [OPTIONS]
+```
 | Option                              | Description                                                      |
 | ----------------------------------- | ---------------------------------------------------------------- |
 | `-h`, `--help`                      | Display the help message and usage information.                  |
@@ -57,8 +60,27 @@ make
 | `-o`, `--output-file`               | Specify the path to the output file.                             |
 | `-l`, `--log-file`                  | Specify the path to the log file.                                |
 
+#### Default Configuration
+
+If no options are provided, the program uses the following default values:
+
+    Physical Memory Algorithm: FIFO
+    TLB Algorithm: FIFO
+    Backing Store File: ./data/BACKING_STORE.bin
+    Input File: ./data/addresses.txt
+    Output File: ./data/outputFIFO.txt
+    Log File: ./data/output.log
 
 
+#### Example
+To run the program with the default configuration:
+```
+./vm_manager -d
+```
+To specify algorithms and file paths:
+```
+./vm_manager -p LRU -t OPTIMAL -b ./data/custom_store.bin -i ./data/custom_addresses.txt -o ./data/custom_output.txt -l ./data/custom_log.txt
+```
 To quickly clean the project and remove intermediate files, use the following command:
 ```
 make clean
