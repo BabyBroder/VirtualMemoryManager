@@ -6,22 +6,31 @@ Here's a structured **`design.md`** for **Virtual Memory Manager** project.
 
 ## Table of Contents
 
-1. [Overview](#overview)  
-2. [Goals and Scope](#goals-and-scope)  
-3. [System Design](#system-design)  
-   - [High-Level Architecture](#high-level-architecture)  
-   - [Key Components](#key-components)  
-4. [Workflow](#workflow)
-   - [Flow chart](#flow-chart)
-   - [Logical Address Translation](#logical-address-translation)  
-   - [Page Fault Handling](#page-fault-handling)  
-   - [TLB and Page Table Operations](#tlb-and-page-table-operations)  
-5. [Data Structures](#data-structures)  
-6. [Error Handling](#error-handling)  
-7. [Performance Considerations](#performance-considerations)  
-8. [Statistics and Output](#statistics-and-output)  
-9. [Testing Plan](#testing-plan)  
-10. [Future Improvements](#future-improvements)  
+- [Virtual Memory Manager - Design Document](#virtual-memory-manager---design-document)
+  - [Table of Contents](#table-of-contents)
+  - [1. Overview](#1-overview)
+  - [2. Goals and Scope](#2-goals-and-scope)
+    - [Goals:](#goals)
+    - [Scope:](#scope)
+  - [3. System Design](#3-system-design)
+    - [High-Level Architecture](#high-level-architecture)
+    - [TLB Replacement Strategy](#tlb-replacement-strategy)
+    - [Key Components](#key-components)
+  - [4. Workflow](#4-workflow)
+    - [Flow chart](#flow-chart)
+    - [Logical Address Translation](#logical-address-translation)
+    - [Page Fault Handling](#page-fault-handling)
+    - [TLB and Page Table Operations](#tlb-and-page-table-operations)
+  - [5. Data Structures](#5-data-structures)
+  - [6. Error Handling](#6-error-handling)
+  - [7. Performance Considerations](#7-performance-considerations)
+  - [8. Statistics and Output](#8-statistics-and-output)
+    - [Metrics:](#metrics)
+    - [Output Format:](#output-format)
+  - [9. Testing Plan](#9-testing-plan)
+    - [Test Scenarios:](#test-scenarios)
+    - [Tools:](#tools)
+  - [10. Future Improvements](#10-future-improvements)
 
 ---
 
@@ -200,7 +209,14 @@ Logical Address: X Physical Address: Y Value: Z
 
 At the end, report:  
 ```
-TLB Hit Rate: XX%, Page-Fault Rate: YY%
+Input file:           INPUTFILE
+Output file:          OUTPUTFILE
+Log file:             OUTPUT.LOG
+Backing store file:   BACKING_STORE.bin
+Algorithm (Memory):   A
+Algorithm (TLB):      B
+TLB hit rate:         XX%
+Page-fault rate:      YY%
 ```
 
 ---
@@ -214,7 +230,8 @@ TLB Hit Rate: XX%, Page-Fault Rate: YY%
 4. **Edge Cases**: Invalid addresses, large input files, etc.
 
 ### Tools:
-- Make File 
+- Input Address File Generator  
+- Unit Testing for each component (TLB, Page Table, etc.).
 
 ---
 
