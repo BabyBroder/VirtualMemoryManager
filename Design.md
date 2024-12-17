@@ -1,143 +1,173 @@
-# **Design Document: Virtual Memory Manager**
-
-## **1. Introduction**
-- **Purpose**:
-  - Describe what the Virtual Memory Manager (VMM) does and structure of its components.
-- **Scope**:
-  - This system is a lightweight educational implementation of paging, supporting basic memory access, page faults, demanding page, and replacement policies likes FIFO, LRU, OPT.
+Here's a structured **`design.md`** document template for your **Virtual Memory Manager** project based on the provided flowchart.
 
 ---
 
-## **2. Architecture Overview**
-### **2.1 System Components**
-- **Virtual Memory**:
-  - Define what virtual memory is and how it is abstracted.
-  - Example: "Virtual memory provides an abstraction of large, contiguous memory to processes while using a limited physical memory."
-- **Page Table**:
-  - Describe the page table and its role.
-  - Example: "A page table maps virtual page numbers to physical frames and stores metadata like valid bits and permissions."
-- **Physical Memory**:
-  - Define the simulated physical memory.
-  - Example: "Physical memory is represented as an array of fixed-size frames."
+# Virtual Memory Manager - Design Document
 
-### **2.2 Key Processes**
-- **Address Translation**:
-  - Explain how virtual addresses are translated into physical addresses.
-  - Example: "Each virtual address is split into a virtual page number (VPN) and an offset. The VPN is used to index the page table, and the offset is added to the frame address."
-- **Page Fault Handling**:
-  - Describe what happens when a page is not in memory.
-  - Example: "If a page is not in physical memory, a page fault occurs, triggering the system to load the page from disk into a free frame or replace an existing page."
-- **Page Replacement Policy**:
-  - Outline the replacement policy, e.g., FIFO, LRU, or Random.
-  - Example: "This implementation uses the Least Recently Used (LRU) policy for page replacement."
+## Table of Contents
+
+1. [Overview](#overview)  
+2. [Goals and Scope](#goals-and-scope)  
+3. [System Design](#system-design)  
+   - [High-Level Architecture](#high-level-architecture)  
+   - [Key Components](#key-components)  
+4. [Workflow](#workflow)  
+   - [Logical Address Translation](#logical-address-translation)  
+   - [Page Fault Handling](#page-fault-handling)  
+   - [TLB and Page Table Operations](#tlb-and-page-table-operations)  
+5. [Data Structures](#data-structures)  
+6. [Error Handling](#error-handling)  
+7. [Performance Considerations](#performance-considerations)  
+8. [Statistics and Output](#statistics-and-output)  
+9. [Testing Plan](#testing-plan)  
+10. [Future Improvements](#future-improvements)  
 
 ---
 
-## **3. Functional Requirements**
-### **3.1 Address Translation**
-- **Input**: Virtual address
-- **Output**: Corresponding physical address or page fault.
-- **Steps**:
-  1. Split the virtual address into VPN and offset.
-  2. Check the page table for the frame number.
-  3. If valid, construct the physical address; otherwise, trigger a page fault.
+## 1. Overview
 
-### **3.2 Page Fault Handling**
-- **Input**: VPN that caused the fault.
-- **Output**: Updated page table and physical memory.
-- **Steps**:
-  1. Identify a free frame or select a frame to replace.
-  2. Load the page from disk into the frame.
-  3. Update the page table.
+The Virtual Memory Manager project implements a translation process from logical to physical memory using:  
+- **Translation Lookaside Buffer (TLB)**  
+- **Page Tables**  
+- **Backing Store** (to handle page faults).  
+
+The project reads logical addresses from a file, translates them into physical addresses, retrieves values, and outputs the results while updating data structures as needed.
 
 ---
 
-## **4. Implementation Details**
-### **4.1 Data Structures**
-- **Page Table**:
-  - Example:
-    ```c
-    typedef struct {
-        int frame_number;    // Physical frame number
-        bool valid;          // Indicates if the page is in memory
-        bool referenced;     // Used for replacement policy
-    } PageTableEntry;
-    ```
-- **Physical Memory**:
-  - Example:
-    ```c
-    typedef struct {
-        int frame_id;        // Frame identifier
-        bool is_free;        // Indicates if the frame is free
-    } Frame;
-    ```
-- **Queue for Replacement Policy (e.g., FIFO)**:
-  - Example:
-    ```c
-    typedef struct {
-        int frame_id;
-        struct Node *next;
-    } ReplacementQueue;
-    ```
+## 2. Goals and Scope
 
-### **4.2 Key Algorithms**
-- **Address Translation**:
-  - Describe the logic of how virtual addresses are converted.
-- **Page Fault Handling**:
-  - Step-by-step description of how page faults are resolved.
-- **Replacement Policy**:
-  - Example pseudocode for LRU:
-    ```c
-    void lru_replace(PageTable *pt, PhysicalMemory *pm) {
-        // Find least recently used frame
-        int lru_frame = find_lru_frame(pm);
-        // Replace page in the frame
-        replace_page(pt, lru_frame);
-    }
-    ```
+### Goals:
+- Simulate virtual memory address translation.
+- Implement TLB and Page Table lookup mechanisms.
+- Handle page faults by accessing the **Backing Store**.
+- Output results: logical address, physical address, and byte value.
+- Generate performance statistics like TLB hit/miss rate and page fault rate.
+
+### Scope:
+- Assume a simple **Paging System** with fixed page size.
+- Support sequential address lookup from an input file.
+- Store pages in a simulated **Physical Memory**.
 
 ---
 
-## **5. System Interfaces**
-- **Inputs**:
-  - Virtual address requests (read/write operations).
-- **Outputs**:
-  - Physical addresses or page fault signals.
-- **System Calls/Commands**:
-  - Example:
-    ```bash
-    ./vmm <input_file>
-    ```
-  - Input file format: List of memory access requests (`read 0x1234`, `write 0x5678`).
+## 3. System Design
+
+### High-Level Architecture
+The system follows a step-by-step process:  
+
+1. **Input Handling**: Read logical addresses from a file.  
+2. **Address Translation**:  
+   - Check TLB for frame number.  
+   - If a miss occurs, check the Page Table.  
+3. **Page Fault Handling**: Retrieve missing pages from the Backing Store.  
+4. **Output Generation**: Report logical address, physical address, and byte value.  
+5. **Statistics Collection**: Track page faults, TLB hits/misses, and report at the end.
+
+### Key Components
+
+| Component               | Description                                           |
+|-------------------------|-------------------------------------------------------|
+| **Logical Address File**| Input file containing logical addresses.              |
+| **TLB**                 | A small cache to store recent page-to-frame mappings. |
+| **Page Table**          | Data structure mapping pages to frames in memory.     |
+| **Backing Store**       | Simulated storage for pages not currently in memory.  |
+| **Physical Memory**     | Fixed-size memory storing loaded pages.               |
+| **Statistics Generator**| Tracks and reports TLB hits, misses, and page faults. |
 
 ---
 
-## **6. Testing Plan**
-- **Test Cases**:
-  - Address translation with valid and invalid VPNs.
-  - Page fault handling with and without free frames.
-  - Page replacement correctness under different policies.
-- **Metrics**:
-  - Page fault rate.
-  - Average memory access time.
+## 4. Workflow
+
+### Logical Address Translation
+1. **Extract Page Number and Offset** from the logical address.  
+2. **Check TLB**:  
+   - If the page is in TLB → **TLB Hit** → Retrieve Frame Number.  
+   - If the page is not in TLB → **TLB Miss** → Check Page Table.  
+3. **Check Page Table**:  
+   - If page is found → Retrieve Frame Number.  
+   - If not → **Page Fault** → Handle Page Fault.  
+4. **Translate to Physical Address**: Combine Frame Number and Offset.  
+5. Retrieve the Byte Value from Physical Memory.
+
+### Page Fault Handling
+1. Access the **Backing Store** to load the required page.  
+2. Store the page in **Physical Memory**.  
+3. Update both the **Page Table** and **TLB**.  
+4. Retry the address translation.
+
+### TLB and Page Table Operations
+- **TLB Update**: Use a **FIFO** or **LRU** replacement policy for TLB entries.  
+- **Page Table Update**: Add mappings for pages loaded during a page fault.
 
 ---
 
-## **7. Assumptions and Limitations**
-- **Assumptions**:
-  - Fixed page size, e.g., 4 KB.
-  - Physical memory has a limited number of frames.
-- **Limitations**:
-  - No multithreading support.
-  - Disk I/O is simulated and not real.
+## 5. Data Structures
+
+| Data Structure           | Description                                              |
+|--------------------------|----------------------------------------------------------|
+| **TLB**                  | Small, fixed-size array storing recent page-to-frame mappings. |
+| **Page Table**           | Array mapping logical page numbers to physical frames.   |
+| **Backing Store**        | Simulated disk holding all pages (e.g., binary file).    |
+| **Physical Memory**      | Array representing the fixed-size memory.               |
 
 ---
 
-## **8. Future Enhancements**
-- Add support for multilevel page tables.
-- Implement demand paging with prefetching.
-- Introduce support for additional replacement policies (e.g., LFU, Clock).
+## 6. Error Handling
+- **Invalid Logical Address**: Skip the address and log a warning.  
+- **Backing Store Access Failure**: Report and exit gracefully.  
+- **Memory Overflow**: Replace pages using a simple replacement policy (e.g., FIFO).
 
 ---
 
-By following this structure, you ensure the `design.md` file is clear, comprehensive, and easy to understand for both developers and reviewers.
+## 7. Performance Considerations
+- **TLB Hit Rate**: Minimize TLB misses using effective replacement policies.  
+- **Page Fault Rate**: Efficiently handle page faults to minimize overhead.  
+- **Memory Management**: Limit physical memory usage with a replacement strategy.
+
+---
+
+## 8. Statistics and Output
+### Metrics:
+- TLB Hit Count / TLB Miss Count  
+- Page Fault Count  
+- Overall Address Translations  
+
+### Output Format:
+For each logical address, output:  
+```
+Logical Address: X, Physical Address: Y, Value: Z
+```
+
+At the end, report:  
+```
+TLB Hit Rate: XX%, Page Fault Rate: YY%
+```
+
+---
+
+## 9. Testing Plan
+
+### Test Scenarios:
+1. **Basic Translation**: Logical addresses without page faults.  
+2. **Page Fault Handling**: Simulate addresses causing page faults.  
+3. **TLB Operations**: Validate TLB updates and replacement.  
+4. **Edge Cases**: Invalid addresses, large input files, etc.
+
+### Tools:
+- Input Address File Generator  
+- Unit Testing for each component (TLB, Page Table, etc.).
+
+---
+
+## 10. Future Improvements
+- Implement **LRU** replacement policy for TLB.  
+- Optimize Backing Store access time.  
+- Extend to multi-threaded virtual memory management.  
+- Simulate demand paging algorithms (e.g., **FIFO**, **LRU**).  
+
+---
+
+### End of Document
+
+This structure will guide your project's design, ensuring clarity and completeness. Let me know if you'd like further refinements or additional details!
