@@ -83,8 +83,7 @@ The system follows a step-by-step process to simulate virtual memory management:
    - If a page fault occurs (i.e., the page is not in physical memory), the system will load the missing page from the **Backing Store**.  
    - If physical memory is full, a **page replacement strategy** will be used to decide which page to evict. Supported page replacement strategies include:  
      - **FIFO (First-In, First-Out)**  
-     - **LRU (Least Recently Used)**  
-     - **OPT (Optimal Page Replacement)**  
+     - **LRU (Least Recently Used)**    
 4. **Translation and Data Retrieval**:  
    - Translate the logical address to a physical address using the frame number and the offset.  
    - Retrieve the byte value from physical memory.  
@@ -101,10 +100,11 @@ The **Translation Lookaside Buffer (TLB)** stores recently accessed page-to-fram
 - **LRU (Least Recently Used)**: The least recently used entry in the TLB is replaced when a new entry needs to be loaded.  
   - **Advantages**: Good performance for many workloads, as it approximates optimal behavior by assuming recently accessed pages are likely to be accessed again soon.
   - **Disadvantages**: Requires tracking access order, which can add overhead.
-  
-- **Random Replacement**: A random entry in the TLB is evicted when a new entry needs to be loaded.  
-  - **Advantages**: Simple to implement and requires minimal bookkeeping.
-  - **Disadvantages**: Unpredictable performance, as evictions may not match access patterns.
+
+- **OPT (Optimal Replacement)**: The TLB entry that will not be used for the longest time in the future is replaced.  
+  - **Advantages**: Theoretically provides the best performance by evicting the page that will be needed furthest in the future.
+  - **Disadvantages**: Requires knowledge of future memory accesses, which is not available in most real systems. In practical terms, this strategy is often used for simulation or performance testing rather than real-world implementation.
+
 
 ### Key Components
 
