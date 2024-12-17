@@ -89,19 +89,19 @@ void run(PhysicalMemory *physical_memory, int current_index)
 
     char data = (read_from_physical_memory(physical_memory, frame_number, offset)[0]);
 
-    char output[100]; 
-    sprintf(output ,"Virtual address: %d Physical address: %d Value: %d", virtual_address, physical_address, data);
+    char output[100];
+    sprintf(output, "Virtual address: %d Physical address: %d Value: %d", virtual_address, physical_address, data);
     write_to_output_file(OUTPUT_FILE, output);
 }
 
 int main()
 {
     init();
-    for(int i = 0; i < ADDRESS_SIZE; i++)
+    for (int i = 0; i < ADDRESS_SIZE; i++)
     {
         run(physical_memory, i);
     }
-    
+
     printf("TLB hits: %d Page faults: %d\n", tlb_manager->TLBhits, page_fault_manager->pageFaults);
     return 0;
 }

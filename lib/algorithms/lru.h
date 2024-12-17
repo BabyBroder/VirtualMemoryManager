@@ -9,6 +9,15 @@
 
 /**
  * @brief Structure representing an entry in the LRU (Least Recently Used) table.
+ *
+ * This structure is used to keep track of pages in memory and their last access times.
+ * It helps in implementing the LRU page replacement algorithm by storing the page number
+ * and the timestamp of the last access.
+ *
+ * @var LRUEntry::page
+ * The page number.
+ * @var LRUEntry::timestamp
+ * The timestamp indicating the last access time.
  */
 typedef struct
 {
@@ -18,6 +27,22 @@ typedef struct
 
 /**
  * @brief Structure representing the LRU (Least Recently Used) cache.
+ *
+ * This structure is used to manage a cache using the Least Recently Used (LRU) algorithm.
+ * It keeps track of the entries in the cache, the maximum capacity of the cache, the current
+ * number of entries, and a timestamp to manage the order of usage.
+ *
+ * @var LRU::table
+ * Pointer to the array of LRU entries.
+ *
+ * @var LRU::capacity
+ * Maximum number of entries the LRU cache can hold.
+ *
+ * @var LRU::size
+ * Current number of entries in the LRU cache.
+ *
+ * @var LRU::time
+ * Current time used for timestamping entries.
  */
 typedef struct
 {
@@ -48,7 +73,7 @@ int lru_choose_page_to_replace(LRU *structure);
  *
  * @param structure Pointer to the LRU structure.
  * @param page The page number to add.
- * @return Index of page in queue if the page was replaced successfully, -1 if the queue is not full, -2 if the queue have no changed.
+ * @return Index of the page in the queue if the page was replaced successfully or already exists, -1 if the queue is not full
  */
 int lru_add_page(LRU *structure, int page);
 

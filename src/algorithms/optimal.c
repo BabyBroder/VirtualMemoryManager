@@ -125,7 +125,7 @@ int optimal_add_page(Optimal *structure, int page, int current_index)
     for (int i = 0; i < structure->size; i++)
         if (structure->pages[i] == page)
         {
-            return -2;
+            return i;
         }
 
     if (structure->size == structure->capacity)

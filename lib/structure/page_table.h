@@ -13,7 +13,7 @@
  * @brief Represents an entry in the page table.
  *
  * @var PageTableEntry::frame_number
- * Frame number in physical memory.
+ * The frame number in physical memory.
  *
  * @var PageTableEntry::valid
  * Valid bit to indicate if the page is in memory.
@@ -21,7 +21,7 @@
 typedef struct
 {
     int frame_number; /**< Frame number in physical memory. */
-    bool valid;            /**< Valid bit to indicate if the page is in memory. */
+    bool valid;       /**< Valid bit to indicate if the page is in memory. */
 } PageTableEntry;
 
 /**
@@ -33,9 +33,10 @@ typedef struct
  *
  * @var PageTable::num_pages
  * Total number of pages.
+ *
+ * @var PageTable::initialized
+ * Flag to indicate if the page table is initialized.
  */
-// Structure for a page table entry
-
 typedef struct
 {
     PageTableEntry *entries; /**< Array of page table entries. */

@@ -2,14 +2,14 @@
 
 void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory, Algorithm algorithm)
 {
-    //check if tlb is already initialized
-    if(tlb->initialized)
+    // check if tlb is already initialized
+    if (tlb->initialized)
     {
         fprintf(stderr, "Error: TLB already initialized.\n");
         exit(EXIT_FAILURE);
     }
     tlb->initialized = true;
-    
+
     // chossing algorithm
     tlb->algorithm = algorithm;
     if (algorithm == FIFO_ALGORITHM)
@@ -50,26 +50,24 @@ int choose_entry_to_replace(TLB *tlb, int page_number, int frame_number, int cur
     return needReplace;
 }
 
-void add_entry_to_tlb(TLB *tlb, int page_number, int frame_number, int current_index)
+int add_entry_to_tlb(TLB *tlb, int page_number, int frame_number, int current_index)
 {
     int goodState = -1;
     // finding free TLB entry to add
     goodState = choose_entry_to_replace(tlb, page_number, frame_number, current_index);
-    if (goodState < 0)
+    if (goodState == -1)
     {
-        if (goodState == -1)
-            for (int i = 0; i < TLB_ENTRIES; i++)
+
+        for (int i = 0; i < TLB_ENTRIES; i++)
+        {
+            if (!tlb->entries[i].valid)
             {
-                if (!tlb->entries[i].valid)
-                {
-                    tlb->entries[i].valid = true;
-                    tlb->entries[i].frame_number = frame_number;
-                    tlb->entries[i].page_number = page_number;
-                    return;
-                }
+                tlb->entries[i].valid = true;
+                tlb->entries[i].frame_number = frame_number;
+                tlb->entries[i].page_number = page_number;
+                return i;
             }
-        else
-            return;
+        }
     }
     // TLB is full use page replacement
     // choose a page to be replaced by using tlb algorithm
@@ -77,10 +75,11 @@ void add_entry_to_tlb(TLB *tlb, int page_number, int frame_number, int current_i
     if (indx >= TLB_ENTRIES)
     { // wrong index
         printf("Error index replacement\n");
-        return;
+        return -1;
     }
     tlb->entries[indx].frame_number = frame_number;
     tlb->entries[indx].page_number = page_number;
+    return indx;
 }
 
 int tlb_lookup(TLB *tlb, int page_number)

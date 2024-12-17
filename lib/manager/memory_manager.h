@@ -8,9 +8,6 @@
 
 #include "../structure/structure.h"
 
-// #include "page_table.h"
-// #include "tlb.h"
-
 /**
  * @struct TLBManager
  * @brief Structure to manage TLB hits.
@@ -47,9 +44,7 @@ void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_f
  * @brief Checks if the virtual address is in the TLB.
  *
  * @param tlb Pointer to the TLB structure.
- * @param page_table Pointer to the PageTable structure.
  * @param tlb_manager Pointer to the TLBManager structure.
- * @param page_fault_manager Pointer to the PageFaultManager structure.
  * @param virtual_address The virtual address to check.
  * @param current_index The current index in the TLB.
  * @return True if the virtual address is in the TLB, false otherwise.
@@ -59,12 +54,10 @@ int tlb_check(TLB *tlb, TLBManager *tlb_manager, uint32_t virtual_address, int c
 /**
  * @brief Checks if the virtual address is in the page table.
  *
- * @param tlb Pointer to the TLB structure.
  * @param page_table Pointer to the PageTable structure.
- * @param tlb_manager Pointer to the TLBManager structure.
  * @param page_fault_manager Pointer to the PageFaultManager structure.
  * @param virtual_address The virtual address to check.
- * @param current_index The current index in the TLB.
+ * @param current_index The current index in the page table.
  * @return True if the virtual address is in the page table, false otherwise.
  */
 int page_table_check(PageTable *page_table, PageFaultManager *page_fault_manager, uint32_t virtual_address, int current_index);

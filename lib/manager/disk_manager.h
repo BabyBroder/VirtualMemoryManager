@@ -6,10 +6,6 @@
 #define DISK_MANAGER_H
 
 #include "../structure/structure.h"
-/**
- * @struct PhysicalMemory
- * @brief Represents the physical memory structure.
- */
 
 /**
  * @brief Initializes the disk manager with the provided virtual memory, physical memory, TLB, page table, and algorithm.

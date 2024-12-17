@@ -2,7 +2,7 @@
 
 void initialize_page_table(PageTable *page_table)
 {
-    if(page_table->initialized)
+    if (page_table->initialized)
     {
         fprintf(stderr, "Error: Page table already initialized.\n");
         exit(EXIT_FAILURE);

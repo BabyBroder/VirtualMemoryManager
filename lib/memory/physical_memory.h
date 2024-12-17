@@ -14,7 +14,20 @@
 
 /**
  * @struct Frame
- * @brief Represents a single frame in physical memory.
+ * @brief Represents a frame in the physical memory.
+ *
+ * This structure is used to represent a frame in the physical memory. It contains
+ * information about the validity of the frame, the page number associated with the
+ * frame, and the data stored in the frame.
+ *
+ * @var Frame::valid
+ * Indicates whether the frame is valid (true) or not (false).
+ *
+ * @var Frame::page_number
+ * The page number associated with this frame.
+ *
+ * @var Frame::frame_data
+ * An array of characters representing the data stored in the frame.
  */
 typedef struct
 {
@@ -26,8 +39,27 @@ typedef struct
 /**
  * @struct PhysicalMemory
  * @brief Represents the physical memory.
+ *
+ * This structure holds the physical memory frames, the number of frames,
+ * the algorithm used for memory management, the algorithm-specific data,
+ * and a flag indicating whether the physical memory has been initialized.
+ *
+ * @var PhysicalMemory::frames
+ * Array of frames representing the physical memory.
+ *
+ * @var PhysicalMemory::nums_frames
+ * The number of frames in the physical memory.
+ *
+ * @var PhysicalMemory::algorithm
+ * The algorithm used for memory management.
+ *
+ * @var PhysicalMemory::algorithm_struct
+ * The structure containing algorithm-specific data.
+ *
+ * @var PhysicalMemory::initialized
+ * A flag indicating whether the physical memory has been initialized.
  */
-typedef struct 
+typedef struct
 {
     Frame frames[TOTAL_FRAMES];
     int nums_frames;
@@ -44,7 +76,6 @@ typedef struct
  */
 void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm);
 
-
 /**
  * @brief Finds a free frame in the Physical Memory.
  *
@@ -54,7 +85,6 @@ void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algor
  * @return The index of the free frame, or -1 if no free frame is found.
  */
 int find_free_frame(PhysicalMemory *physical_memory);
-
 
 /**
  * @brief Chooses an entry to replace in the Physical Memory.

@@ -13,24 +13,47 @@
 
 /**
  * @struct TLBEntry
- * @brief Represents an entry in the TLB.
+ * @brief Represents an entry in the Translation Lookaside Buffer (TLB).
  *
- * This structure represents an entry in the TLB, containing the logical
- * page number, physical frame number, and a valid bit.
+ * This structure is used to map a logical page number to a physical frame number
+ * and includes a valid bit to indicate if the entry is currently valid.
+ *
+ * @var TLBEntry::page_number
+ * Logical page number.
+ *
+ * @var TLBEntry::frame_number
+ * Physical frame number.
+ *
+ * @var TLBEntry::valid
+ * Valid bit to indicate if the entry is valid.
  */
 typedef struct
 {
     int page_number;  /**< Logical page number */
     int frame_number; /**< Physical frame number */
-    bool valid;            /**< Valid bit to indicate if the entry is valid */
+    bool valid;       /**< Valid bit to indicate if the entry is valid */
 } TLBEntry;
 
 /**
  * @struct TLB
- * @brief Represents the Translation Lookaside Buffer.
+ * @brief Represents a Translation Lookaside Buffer (TLB).
  *
- * This structure represents the TLB, containing an array of TLB entries
- * and the replacement algorithm used.
+ * This structure defines a TLB which is used to improve the speed of virtual address translation.
+ *
+ * @var TLB::entries
+ * Array of TLB entries.
+ *
+ * @var TLB::replacement
+ * Index for replacement policy (FIFO = 0, LRU = 1, OPT = 2).
+ *
+ * @var TLB::algorithm
+ * Algorithm used for replacement.
+ *
+ * @var TLB::algorithm_struct
+ * Structure for the algorithm.
+ *
+ * @var TLB::initialized
+ * Flag to indicate if the TLB is initialized.
  */
 typedef struct
 {
@@ -78,7 +101,7 @@ int choose_entry_to_replace(TLB *tlb, int page_number, int frame_number, int cur
  * @param frame_number The physical frame number to add.
  * @param current_index The current index in the TLB.
  */
-void add_entry_to_tlb(TLB *tlb, int page_number, int frame_number, int current_index);
+int add_entry_to_tlb(TLB *tlb, int page_number, int frame_number, int current_index);
 
 /**
  * @brief Looks up the TLB for a given page number.

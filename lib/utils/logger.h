@@ -9,14 +9,14 @@
 #define LOGGER_H
 
 #include "../necessary.h"
+
 /**
- * @brief Logs an event or message.
+ * @brief Logs an event or message to a file.
  *
- * This function takes a message as input and logs it. The implementation of
- * this function is responsible for determining how and where the message is
- * logged (e.g., to a file, console, etc.).
+ * This function logs an event or message to a file.
  *
- * @param message The message to be logged.
+ * @param fileLog The file to log the event or message to.
+ * @param message The message to log.
  */
 void log_event(char *fileLog, const char *message);
 

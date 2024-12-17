@@ -2,13 +2,12 @@
 
 void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm)
 {
-    // if (physical_memory->initialized)
-    // {
-    //     printf("Physical memory already initialized\n");
-    //     exit(EXIT_FAILURE);
-    // }
+    if (physical_memory->initialized)
+    {
+        printf("Physical memory already initialized\n");
+        exit(EXIT_FAILURE);
+    }
 
-    // physical_memory = (PhysicalMemory *)malloc(sizeof(PhysicalMemory));
     if (physical_memory == NULL)
     {
         printf("Failed to allocate memory for physical memory\n");
@@ -17,6 +16,7 @@ void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algor
 
     physical_memory->nums_frames = 0;
     physical_memory->algorithm = algorithm;
+    physical_memory->initialized = true;
 
     if (algorithm == FIFO_ALGORITHM)
         initialize_fifo(&physical_memory->algorithm_struct.fifo, TOTAL_FRAMES);
@@ -81,7 +81,7 @@ uint8_t add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemo
             {
                 physical_memory->frames[i].valid = true;
                 physical_memory->frames[i].page_number = page_number;
-                //printf("Page %d added to frame %d\n", page_number, i);
+                // printf("Page %d added to frame %d\n", page_number, i);
                 char *framedata = readVirtualMemory(virtual_memory, page_number, 0, FRAME_SIZE);
                 memcpy(physical_memory->frames[i].frame_data, framedata, FRAME_SIZE);
                 physical_memory->nums_frames++;
@@ -93,9 +93,8 @@ uint8_t add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemo
 
     // indx = frame number exist in physical memory or need to replace
     int indx = goodState;
-    if (indx >= TLB_ENTRIES)
+    if (indx >= TOTAL_FRAMES || indx < 0)
     { // wrong index
-        printf("%d\n", indx);
         printf("Error index replacement\n");
         exit(EXIT_FAILURE);
         return -1;
