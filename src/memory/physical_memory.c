@@ -1,4 +1,4 @@
-#include "../../lib/memory/memory.h"
+#include "memory/memory.h"
 
 void initialize_physical_memory(PhysicalMemory *physical_memory, Algorithm algorithm)
 {

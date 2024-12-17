@@ -1,4 +1,4 @@
-#include "../../lib/structure/structure.h"
+#include "structure/structure.h"
 
 void initialize_tlb(TLB *tlb, VirtualMemory *virtual_memory, Algorithm algorithm)
 {

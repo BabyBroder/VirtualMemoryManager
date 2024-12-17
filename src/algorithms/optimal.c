@@ -1,4 +1,4 @@
-#include "../../lib/algorithms/algorithms.h"
+#include "algorithms/algorithms.h"
 
 void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int capacity)
 {

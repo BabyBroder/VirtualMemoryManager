@@ -1,4 +1,4 @@
-#include "../../lib/algorithms/algorithms.h"
+#include "algorithms/algorithms.h"
 
 void initialize_lru(LRU *structure, int capacity_value)
 {

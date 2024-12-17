@@ -12,7 +12,7 @@
  * @param line An array to store the parsed integer values.
  * @param capacity The maximum number of integers to store in the array.
  */
-void parser_input_file_int(const char *filename, int line[], int capacity);
+void parser_input_file_int(char *filename, int line[], int capacity);
 
 /**
  * @brief Parses the input file data and stores it in the provided buffer.
@@ -24,7 +24,7 @@ void parser_input_file_int(const char *filename, int line[], int capacity);
  * @param data A pointer to the buffer where the file data will be stored.
  * @param capacity The maximum number of bytes to read from the file.
  */
-void parser_input_file_data(const char *filename, char *data, int capacity);
+void parser_input_file_data(char *filename, char *data, int capacity);
 
 /**
  * @brief Writes data to the specified output file.
@@ -36,6 +36,6 @@ void parser_input_file_data(const char *filename, char *data, int capacity);
  * @param filename The name of the file to write to.
  * @param data The data to be written to the file.
  */
-void write_to_output_file(const char *filename, char *data);
+void write_to_output_file(char *filename, char *data);
 
 #endif // PARSER_H

@@ -1,6 +1,6 @@
-#include "../../lib/utils/utils.h"
+#include "utils/utils.h"
 
-void parser_input_file_int(const char *filename, int *lines, int capacity)
+void parser_input_file_int(char *filename, int *lines, int capacity)
 {
     FILE *file = fopen(filename, "r");
     if (file == NULL)
@@ -19,7 +19,7 @@ void parser_input_file_int(const char *filename, int *lines, int capacity)
     fclose(file);
 }
 
-void parser_input_file_data(const char *filename, char *data, int capacity)
+void parser_input_file_data(char *filename, char *data, int capacity)
 {
     FILE *file = fopen(filename, "rb");
     if (file == NULL)
@@ -32,7 +32,7 @@ void parser_input_file_data(const char *filename, char *data, int capacity)
     fclose(file);
 }
 
-void write_to_output_file(const char *filename, char *data)
+void write_to_output_file(char *filename, char *data)
 {
     FILE *file = fopen(filename, "a");
     if (file == NULL)

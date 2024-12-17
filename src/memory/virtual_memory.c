@@ -1,6 +1,6 @@
-#include "../../lib/memory/memory.h"
+#include "memory/memory.h"
 
-void initialize_virtual_memory(VirtualMemory *virtual_memory, const char *address_file, const char *backing_store_file)
+void initialize_virtual_memory(VirtualMemory *virtual_memory, char *address_file, char *backing_store_file)
 {
     if (virtual_memory->initialized)
     {

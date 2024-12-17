@@ -42,3 +42,9 @@ Makefile~
 # Ignore other file
 .py
 .gdb_history
+
+# Ignore output files
+outputFIFO.txt
+outputLRU.txt
+output.txt
+output.log

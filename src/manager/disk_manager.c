@@ -1,4 +1,4 @@
-#include "../../lib/manager/manager.h"
+#include "manager/manager.h"
 
 void initialize_disk_manager(VirtualMemory *virtual_memory, PhysicalMemory *physical_memory, TLB *tlb, PageTable *page_table, Algorithm algorithm)
 {

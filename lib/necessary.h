@@ -8,4 +8,5 @@
 #include <unistd.h>
 #include <limits.h>
 #include <stddef.h>
+#include <getopt.h>
 #include <sys/types.h>

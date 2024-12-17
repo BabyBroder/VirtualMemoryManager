@@ -1,4 +1,4 @@
-#include "../../lib/manager/manager.h"
+#include "manager/manager.h"
 
 void initialize_memory_manager(TLBManager *tlb_manager, PageFaultManager *page_fault_manager)
 {
