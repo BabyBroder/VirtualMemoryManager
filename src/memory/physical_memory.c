@@ -95,6 +95,7 @@ uint8_t add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemo
     int indx = goodState;
     if (indx >= TLB_ENTRIES)
     { // wrong index
+        printf("%d\n", indx);
         printf("Error index replacement\n");
         exit(EXIT_FAILURE);
         return -1;

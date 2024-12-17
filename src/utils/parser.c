@@ -1,6 +1,6 @@
 #include "../../lib/utils/utils.h"
 
-void parser_input_file_int(const char *filename, int* lines, int capacity)
+void parser_input_file_int(const char *filename, int *lines, int capacity)
 {
     FILE *file = fopen(filename, "r");
     if (file == NULL)
@@ -29,5 +29,17 @@ void parser_input_file_data(const char *filename, char *data, int capacity)
     }
 
     fread(data, sizeof(char), capacity, file);
+    fclose(file);
+}
+
+void write_to_output_file(const char *filename, char *data)
+{
+    FILE *file = fopen(filename, "a");
+    if (file == NULL)
+    {
+        printf("Error: Could not open file %s\n", filename);
+        return;
+    }
+    fprintf(file, "%s\n", data);
     fclose(file);
 }

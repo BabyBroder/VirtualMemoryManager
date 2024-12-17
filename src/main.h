@@ -15,4 +15,4 @@ PageFaultManager *page_fault_manager;
 
 const char *BACKING_STORE_FILE = "./data/BACKING_STORE.bin";
 const char *INPUT_FILE = "./data/addresses.txt";
-const char *OUTPUT_FILE = "./data/corrected.txt";
+const char *OUTPUT_FILE = "./data/output.txt";

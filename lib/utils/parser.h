@@ -27,6 +27,17 @@ void parser_input_file_int(const char *filename, int line[], int capacity);
 void parser_input_file_data(const char *filename, char *data, int capacity);
 
 
-void write_physical_address(const char *filename, int physical_address);
+
+/**
+ * @brief Writes data to the specified output file.
+ *
+ * This function opens the file specified by `filename` in write mode and writes
+ * the provided `data` to it. If the file does not exist, it will be created.
+ * If the file already exists, its contents will be overwritten.
+ *
+ * @param filename The name of the file to write to.
+ * @param data The data to be written to the file.
+ */
+void write_to_output_file(const char *filename, char* data);
 
 #endif // PARSER_H

@@ -41,6 +41,8 @@ void init()
         printf("Failed to allocate memory for TLB manager or page fault manager\n");
         exit(EXIT_FAILURE);
     }
+
+    initialize_memory_manager(tlb_manager, page_fault_manager);
 }
 
 int get_frame_number(int virtual_address, int current_index)
@@ -64,7 +66,6 @@ int get_frame_number(int virtual_address, int current_index)
         // If Page table miss
         if (frame_number == -1)
         {
-            // char *frame_data = readVirtualMemory(virtual_memory, page_number, offset, PAGE_SIZE);
             frame_number = add_page_to_physical_memory(physical_memory, virtual_memory, frame_number, page_number);
             link_page_table_to_frame(page_table, page_number, frame_number);
         }
@@ -88,15 +89,19 @@ void run(PhysicalMemory *physical_memory, int current_index)
 
     char data = (read_from_physical_memory(physical_memory, frame_number, offset)[0]);
 
-    printf("Virtual address: %d Physical address: %d Value: %d\n", virtual_address, physical_address, data);
+    char output[100]; 
+    sprintf(output ,"Virtual address: %d Physical address: %d Value: %d", virtual_address, physical_address, data);
+    write_to_output_file(OUTPUT_FILE, output);
 }
 
 int main()
 {
     init();
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < ADDRESS_SIZE; i++)
     {
         run(physical_memory, i);
     }
+    
+    printf("TLB hits: %d Page faults: %d\n", tlb_manager->TLBhits, page_fault_manager->pageFaults);
     return 0;
 }
