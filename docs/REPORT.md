@@ -227,7 +227,7 @@ The **Optimal Page Replacement** algorithm minimizes the number of page faults b
 6. **Replace page**: If the memory is full, replace the page that will not be used for the longest period in the future.
 
 #### OPT Flowchart When Adding a Page:
-![OPT Flowchart](../images/Algorithms/OPT_init.png)
+![OPT Flowchart](../images/Algorithms/OPT.png)
 
 #### OPT Structure:
 - **int page[]**:  
