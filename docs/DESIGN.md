@@ -1,5 +1,3 @@
-File **`design.md`** is describing overall structure for **Virtual Memory Manager** project.
-
 ---
 
 # Virtual Memory Manager - Design Document
