@@ -6,7 +6,7 @@
 
 int main() {
     // Open the file in binary write mode
-    FILE *file = fopen("BACKINGSTORE.bin", "wb");
+    FILE *file = fopen("BACKING_STORE.bin", "wb");
     if (file == NULL) {
         perror("Error opening file");
         return EXIT_FAILURE;
@@ -25,7 +25,7 @@ int main() {
         }
     }
 
-    printf("Successfully wrote %d random bytes to BACKINGSTORE.bin\n", NUMBER_BYTE);
+    printf("Successfully wrote %d random bytes to BACKING_STORE.bin\n", NUMBER_BYTE);
 
     // Close the file
     fclose(file);

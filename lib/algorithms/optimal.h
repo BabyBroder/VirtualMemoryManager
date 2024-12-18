@@ -35,7 +35,7 @@ typedef struct
     int capacity;      // Maximum number of pages the memory can hold
     int size;          // Current number of pages in memory
     int *future_usage; // Array to track future usage of pages
-    int initialized; // Flag to check if the structure is initialized
+    bool initialized; // Flag to check if the structure is initialized
 } Optimal;
 
 /**

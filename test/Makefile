@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -g -I ../lib -I ../lib/algorithms -I ../lib/manager -I ../lib/memory -I ../lib/structure -I ../lib/utils
+CFLAGS = -DTEST -Wall -g -I ../lib -I ../lib/algorithms -I ../lib/manager -I ../lib/memory -I ../lib/structure -I ../lib/utils
 LDFLAGS =
 
 # Test binaries
@@ -15,7 +15,7 @@ SRC_VIRTUAL_MEMORY = ../src/memory/virtual_memory.c $(SRC_LOGGER) $(SRC_PARSER)
 SRC_ALGORITHMS =    ../src/algorithms/fifo.c ../src/algorithms/lru.c ../src/algorithms/optimal.c \
 					$(SRC_VIRTUAL_MEMORY)
 
-SRC_PHYSICAL_MEMORY = ../src/memory/physical_memory.c 
+SRC_PHYSICAL_MEMORY = ../src/memory/physical_memory.c $(SRC_ALGORITHMS)
 
 SRC_MEMORY_MANAGER = ../src/manager/memory_manager.c
 

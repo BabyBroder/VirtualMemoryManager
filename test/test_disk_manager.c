@@ -1,4 +1,4 @@
-#include "../src/main.h"
+#include "manager/disk_manager.h"
 
 int main()
 {

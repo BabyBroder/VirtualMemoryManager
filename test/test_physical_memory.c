@@ -1,8 +1,6 @@
-#include "../src/main.h"
+#include "memory/physical_memory.h"
 
-#undef FRAME_SIZE
-#define FRAME_SIZE 10
-
+PhysicalMemory *physicalMemoryFiFo;
 typedef struct
 {
     int frame_number;
@@ -54,6 +52,8 @@ void add_page(PhysicalMemory *physical_memory, VirtualMemory *virtualMemory, Phy
 
 int main()
 {
+    physicalMemoryFiFo = (PhysicalMemory *)malloc(sizeof(PhysicalMemory));
+    initialize_physical_memory(physicalMemoryFiFo, FIFO_ALGORITHM);
     VirtualMemory *virtualMemory = (VirtualMemory *)malloc(sizeof(VirtualMemory));
     initialize_virtual_memory(virtualMemory, "addresses.txt", "BACKING_STORE.bin");
 
@@ -67,12 +67,6 @@ int main()
     }
     test[17].frame_number = 10;
     test[17].page_number = 10;
-
-    PhysicalMemory *physicalMemoryFiFo = (PhysicalMemory *)malloc(sizeof(PhysicalMemory));
-    PhysicalMemory *physicalMemoryLRU = (PhysicalMemory *)malloc(sizeof(PhysicalMemory));
-
-    initialize_physical_memory(physicalMemoryFiFo, FIFO_ALGORITHM);
-    initialize_physical_memory(physicalMemoryLRU, LRU_ALGORITHM);
 
     add_page(physicalMemoryFiFo, virtualMemory, test);
 

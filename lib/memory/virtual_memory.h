@@ -9,6 +9,8 @@
 #ifndef VIRTUAL_MEMORY_H
 #define VIRTUAL_MEMORY_H
 
+#include "../necessary.h"
+
 /**
  * @struct VirtualMemory
  * @brief Represents the virtual memory.

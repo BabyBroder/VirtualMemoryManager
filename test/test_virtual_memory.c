@@ -1,4 +1,4 @@
-#include "../src/main.h"
+#include "memory/virtual_memory.h"
 
 void print_virtual_memory(VirtualMemory *virtual_memory)
 {
