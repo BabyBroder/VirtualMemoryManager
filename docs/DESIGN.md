@@ -21,17 +21,14 @@ File **`design.md`** is describing overall structure for **Virtual Memory Manage
     - [Logical Address Translation](#logical-address-translation)
     - [Page Fault Handling](#page-fault-handling)
     - [TLB and Page Table Operations](#tlb-and-page-table-operations)
-  - [5. Data Structures](#5-data-structures)
-  - [6. Error Handling](#6-error-handling)
-  - [7. Performance Considerations](#7-performance-considerations)
-  - [8. Statistics and Output](#8-statistics-and-output)
+  - [5. Components Structures](#5-components-structures)
+  - [6. Statistics and Output](#8-statistics-and-output)
     - [Metrics:](#metrics)
     - [Output Format:](#output-format)
-  - [9. Testing Plan](#9-testing-plan)
+  - [7. Testing Plan](#9-testing-plan)
     - [Test Scenarios:](#test-scenarios)
     - [Tools:](#tools)
-  - [10. Future Improvements](#10-future-improvements)
-
+  
 ---
 
 ## 1. Overview
