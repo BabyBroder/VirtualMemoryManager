@@ -10,6 +10,8 @@
 *.dSYM/
 
 # Ignore compiled binaries
+test_virtual_memory
+test_physical_memory
 test_memory_manager
 test_page_table
 test_disk_manager
