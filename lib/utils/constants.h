@@ -24,6 +24,9 @@
 
 #define OFFSET_BITS 8
 
+// Max value of page_number
+#define MAX_PAGE_NUMBER 255
+
 // Number of entries in the page table (2^8)
 #define PAGE_TABLE_ENTRIES 256
 
