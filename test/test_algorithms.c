@@ -2,7 +2,7 @@
 
 //  Different size for address
 #undef ADDRESS_SIZE
-#define ADDRESS_SIZE 20
+#define ADDRESS_SIZE 30
 
 void add_to_fifo(FIFO *fifo, int value)
 {
@@ -58,22 +58,88 @@ void testLRU(int size)
     free_lru(lru);
 }
 
-void add_to_OPT(Optimal* optimal, int page, int current_index)
+void add_to_OPT(Optimal *optimal, int page, int current_index)
 {
     printf("Adding %d to OPT\n", page);
     optimal_add_page(optimal, page, current_index);
     print_optimal(optimal);
 }
 
+void init_OPT(Optimal *structure, VirtualMemory *virtual_memory, int capacity)
+{
+
+    if (structure->initialized == 0xdeafbeef)
+    {
+        free_optimal(structure);
+        structure = (Optimal *)malloc(sizeof(Optimal));
+        fprintf(stderr, "Error: Optimal already initialized.\n");
+        //exit(EXIT_FAILURE);
+    }
+
+    if (capacity <= 0)
+    {
+        fprintf(stderr, "Optimal Error: Invalid capacity value!\n");
+        exit(EXIT_FAILURE);
+    }
+
+    structure->capacity = capacity;
+    structure->size = 0;
+
+    structure->page_number = (int *)malloc(structure->capacity * sizeof(int));
+    structure->future_usage = (int *)malloc(ADDRESS_SIZE * sizeof(int));
+    structure->map = (int *)malloc((MAX_PAGE_NUMBER + 1) * sizeof(int));
+    structure->idx = (int **)malloc(ADDRESS_SIZE * sizeof(int *));
+    structure->initialized = 0xdeafbeef;
+
+    if (!structure->page_number || !structure->future_usage || !structure->map || !structure->idx)
+    {
+        perror("Optimal Error: Memory allocation failed");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < structure->capacity; i++)
+        structure->page_number[i] = -1;
+
+    // Write address to future_usage
+    for (int i = 0; i < ADDRESS_SIZE; i++)
+    {
+        // CONFIRM THIS LOGIC
+        int page_number = virtual_memory->address[i];
+        structure->future_usage[i] = page_number;
+    }
+
+    for (int i = 0; i < (MAX_PAGE_NUMBER + 1); i++)
+        structure->map[i] = -1;
+
+    for (int i = 0; i < ADDRESS_SIZE; i++)
+    {
+        structure->idx[i] = (int *)malloc(ADDRESS_SIZE * sizeof(int));
+        if (!structure->idx[i])
+        {
+            perror("Optimal Error: Memory allocation failed");
+            exit(EXIT_FAILURE);
+        }
+        for (int j = 0; j < ADDRESS_SIZE; j++)
+            structure->idx[i][j] = -1;
+    }
+
+    build_future_usage(structure);
+}
+
+
 void testOPT(VirtualMemory *virtual_memory)
 {
     Optimal *optimal;
     optimal = (Optimal *)malloc(sizeof(Optimal));
-    
+
+    // True implementation
     initialize_optimal(optimal, virtual_memory, 5); // Assuming the third argument is the number of pages
+    
+    //  In test_algorithms.c, we will assume the address in addresses.txt as a page_number for checking the optimal algorithm not for logic implementation
+    init_OPT(optimal, virtual_memory, 5);
     printf("Optimal initialized\n");
 
-    for(int i = 0; i < ADDRESS_SIZE; i++)
+    for (int i = 0; i < ADDRESS_SIZE; i++)
     {
         add_to_OPT(optimal, virtual_memory->address[i], i);
     }
@@ -88,7 +154,7 @@ int main()
 {
     printf("=====================================\n");
     printf("Address size: %d\n", ADDRESS_SIZE);
-    testFIFO(3);  
+    testFIFO(3);
     testLRU(3);
 
     VirtualMemory *virtual_memory = (VirtualMemory *)malloc(sizeof(VirtualMemory));

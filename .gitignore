@@ -18,6 +18,7 @@ test_disk_manager
 test_algorithms
 test_tlb
 vm_manager
+createData
 
 # Ignore temporary and backup files
 *.~*
