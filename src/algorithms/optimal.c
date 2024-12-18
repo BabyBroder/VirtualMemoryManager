@@ -19,9 +19,7 @@ void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int c
     structure->size = 0;
 
     structure->pages = (int *)malloc(structure->capacity * sizeof(int));
-    structure->future_usage = (int *)malloc(ADDRESS_SIZE * sizeof(int))
-
-        ;
+    structure->future_usage = (int *)malloc(ADDRESS_SIZE * sizeof(int));
     structure->map = (int *)malloc(65536 * sizeof(int));
     structure->idx = (int **)malloc(ADDRESS_SIZE * sizeof(int *));
     structure->initialized = 0xdeafbeef;
