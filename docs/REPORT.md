@@ -1,6 +1,6 @@
-# Virtual Memory Manager - Design Document
-
-### Group Members:
+# Virtual Memory Manager - Group 4
+> A project of group 4 
+## Group 4 Members:
 ```
 Member 1: Phạm Thanh An     MSSV: 23520027
 Member 2: Đoàn Đức Anh      MSSV: 23520041
