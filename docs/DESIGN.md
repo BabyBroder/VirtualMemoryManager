@@ -78,38 +78,49 @@ The system reads logical addresses from an **addresses.txt**, translates them in
 
 ### High-Level Architecture
 The system follows a step-by-step process to simulate virtual memory management:  
+1. **Input Handling**  
+   Read logical addresses from an input file to initiate the simulation.
 
-1. **Input Handling**: Read logical addresses from an input file.  
-2. **Address Translation**:  
-   - Extract the **page number** and **offset** from the logical address.  
-   - Check the **TLB** for a quick frame lookup.  
-   - If a TLB miss occurs, check the **Page Table** for the frame number.  
-3. **Page Fault Handling**:  
-   - If a page fault occurs (i.e., the page is not in physical memory), the system will load the missing page from the **Backing Store**.  
-   - If physical memory is full, a **page replacement strategy** will be used to decide which page to evict. Supported page replacement strategies include:  
+2. **Address Translation**  
+   - Extract the page number and offset from the logical address.  
+   - Check the TLB for a quick frame lookup.  
+   - If a TLB miss occurs:  
+     - Check the Page Table for the frame number.  
+     - If the page is not in memory, handle the page fault as described below.
+
+3. **Page Fault Handling**  
+   - If a page is missing from physical memory, load it from the Backing Store.  
+   - If physical memory is full, decide which page to evict using one of the supported **Page Replacement Strategies**:  
      - **FIFO (First-In, First-Out)**  
-     - **LRU (Least Recently Used)**    
-4. **Translation and Data Retrieval**:  
-   - Translate the logical address to a physical address using the frame number and the offset.  
+     - **LRU (Least Recently Used)**  
+
+4. **Translation and Data Retrieval**  
+   - Translate the logical address to a physical address using the frame number and offset.  
    - Retrieve the byte value from physical memory.  
-5. **Output Generation**: Output the logical address, physical address, and byte value for each address translation.  
-6. **Statistics**: Track and report **TLB hit rates**, **page fault rates**, and other performance metrics at the end of the simulation.
 
-### TLB Replacement Strategy
-The **Translation Lookaside Buffer (TLB)** stores recently accessed page-to-frame mappings to speed up address translation. The following TLB replacement strategies are supported:
+5. **TLB Replacement Strategy**  
+   The **Translation Lookaside Buffer (TLB)** stores recently accessed page-to-frame mappings to speed up address translation. TLB replacement occurs when the TLB is full, and a new entry must be added. Supported strategies include:  
 
-- **FIFO (First-In, First-Out)**: The first TLB entry added is the first one evicted when a new entry is added.  
-  - **Advantages**: Simple and easy to implement.
-  - **Disadvantages**: May result in suboptimal performance, especially if the access pattern doesn’t exhibit locality.
-  
-- **LRU (Least Recently Used)**: The least recently used entry in the TLB is replaced when a new entry needs to be loaded.  
-  - **Advantages**: Good performance for many workloads, as it approximates optimal behavior by assuming recently accessed pages are likely to be accessed again soon.
-  - **Disadvantages**: Requires tracking access order, which can add overhead.
+   - **FIFO (First-In, First-Out)**: Evicts the earliest added entry when a new one is added.  
+     - *Advantages*: Simple and easy to implement.  
+     - *Disadvantages*: May be suboptimal if the access pattern lacks locality.  
 
-- **OPT (Optimal Replacement)**: The TLB entry that will not be used for the longest time in the future is replaced.  
-  - **Advantages**: Theoretically provides the best performance by evicting the page that will be needed furthest in the future.
-  - **Disadvantages**: Requires knowledge of future memory accesses, which is not available in most real systems. In practical terms, this strategy is often used for simulation or performance testing rather than real-world implementation.
+   - **LRU (Least Recently Used)**: Replaces the least recently used entry.  
+     - *Advantages*: Performs well for workloads exhibiting locality, approximating optimal behavior.  
+     - *Disadvantages*: Tracking access order can add computational overhead.  
 
+   - **OPT (Optimal Replacement)**: Replaces the entry that will not be used for the longest time in the future.  
+     - *Advantages*: Provides theoretically optimal performance.  
+     - *Disadvantages*: Requires knowledge of future memory accesses, making it suitable only for simulation or performance testing.  
+
+6. **Output Generation**  
+   - For each address translation, output the logical address, physical address, and byte value.
+
+7. **Statistics Reporting**  
+   - At the end of the simulation, report key performance metrics such as:  
+     - **TLB hit rate**  
+     - **Page fault rate**  
+     - Other relevant statistics to evaluate the system's efficiency.  
 
 ### Key Components
 
@@ -130,72 +141,159 @@ The **Translation Lookaside Buffer (TLB)** stores recently accessed page-to-fram
 
 ![Flow chart](../images/Design/flow_chart.png)
 
+---
 
-### Logical Address Translation
-1. **Extract Page Number and Offset** from the logical address.  
-2. **Check TLB**:  
-   - If the page is in TLB → **TLB Hit** → Retrieve Frame Number.  
-   - If the page is not in TLB → **TLB Miss** → Check Page Table.  
-3. **Check Page Table**:  
-   - If page is found → Retrieve Frame Number.  
-   - If not → **Page Fault** → Handle Page Fault.  
-4. **Translate to Physical Address**: Combine Frame Number and Offset.  
-5. Retrieve the Byte Value from Physical Memory.
+## 5. Components Structures
 
-### Page Fault Handling
+### **Structure: `VirtualMemory`**
 
-<!-- 1. Access the **Backing Store** to load the required page.  
-2. Store the page in **Physical Memory**.  
-3. Update both the **Page Table** and **TLB**.  
-4. Retry the address translation. -->
+The `VirtualMemory` structure is a core representation of virtual memory in the system. It contains the following fields:
 
+1. **`data`**  
+   - **Type**: `char *`  
+   - **Use**: Represents the backing store, serving as storage for pages of virtual memory not currently in physical memory.  
 
-We implement **demand paging**, where pages are loaded into physical memory only when they are needed (i.e., on a **page fault**). This ensures efficient use of memory and avoids preloading unnecessary pages.
+2. **`address`**  
+   - **Type**: `int *`  
+   - **Use**: Holds pointers to logical addresses, allowing mapping and management of virtual memory locations.  
 
-When physical memory is full and a new page needs to be loaded, we use **page replacement strategies** to determine which page to evict. The following strategies are supported:
+3. **`initialized`**  
+   - **Type**: `bool`  
+   - **Use**: A flag indicating whether the virtual memory system has been properly initialized, ensuring operations occur only after setup.--- 
+---
+### **Structure: `PageTable`**
 
-1. **FIFO (First-In, First-Out)**:  
-   - Evicts the oldest page that was loaded into memory.  
-   - Simple to implement and efficient for sequential access patterns.
+The `PageTable` structure represents the page table in a virtual memory system and includes the following components:
 
-2. **LRU (Least Recently Used)**:  
-   - Evicts the page that has not been used for the longest time.  
-   - Tracks page access history to approximate optimal performance.
+1. **`entries`**  
+   - **Type**: `PageTableEntry *`  
+   - **Use**: Points to an array of `PageTableEntry` structures, where each entry maps a page to a frame in physical memory.  
 
-The chosen page replacement strategy can be configured during runtime or testing.
+2. **`num_pages`**  
+   - **Type**: `size_t`  
+   - **Use**: Specifies the total number of pages the page table can manage.  
 
-### TLB and Page Table Operations
-- **TLB Update**: Use a **FIFO** or **LRU** replacement policy for TLB entries.  
-- **Page Table Update**: Add mappings for pages loaded during a page fault.
+3. **`initialized`**  
+   - **Type**: `bool`  
+   - **Use**: A flag indicating whether the page table has been properly initialized and is ready for use.  
 
 ---
 
-## 5. Data Structures
+### **Structure: `PageTableEntry`**
 
-| Data Structure           | Description                                              |
-|--------------------------|----------------------------------------------------------|
-| **TLB**                  | Small, fixed-size array storing recent page-to-frame mappings. |
-| **Page Table**           | Array mapping logical page numbers to physical frames.   |
-| **Backing Store**        | Simulated disk holding all pages (e.g., binary file).    |
-| **Physical Memory**      | Array representing the fixed-size memory.               |
+The `PageTableEntry` structure is part of the `PageTable` and represents a single entry in the table. It includes:
 
----
+1. **`frame_number`**  
+   - **Type**: `int`  
+   - **Use**: Stores the frame number in physical memory where the corresponding page resides.  
 
-## 6. Error Handling
-- **Invalid Logical Address**: Skip the address and log a warning.  
-- **Backing Store Access Failure**: Report and exit gracefully.  
-- **Memory Overflow**: Replace pages using a simple replacement policy (e.g., FIFO).
+2. **`valid`**  
+   - **Type**: `bool`  
+   - **Use**: Indicates whether the page is currently loaded in physical memory (`true`) or not (`false`).  
 
 ---
 
-## 7. Performance Considerations
-- **TLB Hit Rate**: Minimize TLB misses using effective replacement policies.  
-- **Page Fault Rate**: Efficiently handle page faults to minimize overhead.  
-- **Memory Management**: Limit physical memory usage with a replacement strategy.
+### **Relationship**
+The `PageTable` structure is a collection of `PageTableEntry` structures, each mapping a page to a specific frame in physical memory. Together, they enable efficient address translation by determining whether a page is in memory and, if so, providing its frame number.
+
+---
+### **Structure: `TLB`**
+
+The `TLB` (Translation Lookaside Buffer) structure represents a hardware cache used to improve the speed of virtual-to-physical address translation. It includes the following components:
+
+1. **`entries`**  
+   - **Type**: `TLBEntry[TLB_ENTRIES]`  
+   - **Use**: An array of `TLBEntry` structures, each mapping a logical page number to a physical frame number.  
+
+2. **`replacement`**  
+   - **Type**: `int`  
+   - **Use**: Indicates the index or type of replacement policy being used (e.g., FIFO = 0, LRU = 1, OPT = 2).  
+
+3. **`algorithm`**  
+   - **Type**: `Algorithm`  
+   - **Use**: Specifies the page replacement algorithm employed in the TLB (e.g., FIFO, LRU, OPT).  
+
+4. **`algorithm_struct`**  
+   - **Type**: `AlgorithmStruct`  
+   - **Use**: Stores data and metadata specific to the replacement algorithm used.  
+
+5. **`initialized`**  
+   - **Type**: `bool`  
+   - **Use**: A flag indicating whether the TLB has been properly initialized and is operational.  
 
 ---
 
-## 8. Statistics and Output
+### **Structure: `TLBEntry`**
+
+The `TLBEntry` structure represents a single entry in the TLB. It includes:
+
+1. **`page_number`**  
+   - **Type**: `int`  
+   - **Use**: Stores the logical page number being mapped.  
+
+2. **`frame_number`**  
+   - **Type**: `int`  
+   - **Use**: Stores the physical frame number corresponding to the logical page.  
+
+3. **`valid`**  
+   - **Type**: `bool`  
+   - **Use**: Indicates whether the entry is valid (`true`) or invalid (`false`).  
+
+---
+
+### **Relationship**
+The `TLB` structure acts as a container for multiple `TLBEntry` instances, enabling rapid lookups for logical-to-physical address translations. The `replacement` field and associated algorithm components (`algorithm` and `algorithm_struct`) determine how entries are managed and replaced, ensuring optimal performance in a virtual memory system.
+
+---
+### **Structure: `PhysicalMemory`**
+
+The `PhysicalMemory` structure represents the entire physical memory system and includes the following components:
+
+1. **`frames`**  
+   - **Type**: `Frame[TOTAL_FRAMES]`  
+   - **Use**: An array of `Frame` structures, each representing a unit of storage in physical memory. Each `Frame` contains data and metadata for efficient memory management.
+
+2. **`nums_frames`**  
+   - **Type**: `int`  
+   - **Use**: Stores the total number of frames available in the physical memory.  
+
+3. **`algorithm`**  
+   - **Type**: `Algorithm`  
+   - **Use**: Specifies the page replacement algorithm (e.g., FIFO, LRU) being used for memory management.  
+
+4. **`algorithm_struct`**  
+   - **Type**: `AlgorithmStruct`  
+   - **Use**: Holds data and metadata specific to the selected page replacement algorithm.  
+
+5. **`initialized`**  
+   - **Type**: `bool`  
+   - **Use**: A flag indicating whether the physical memory has been properly initialized and is ready for use.  
+
+---
+### **Structure: `Frame`**
+
+The `Frame` structure is an integral part of `PhysicalMemory`, representing a single storage unit within it. It includes:
+
+1. **`valid`**  
+   - **Type**: `bool`  
+   - **Use**: Indicates whether the frame is in use (valid) or available (invalid).  
+
+2. **`page_number`**  
+   - **Type**: `int`  
+   - **Use**: Stores the logical page number mapped to this frame.  
+
+3. **`frame_data`**  
+   - **Type**: `char[256]`  
+   - **Use**: An array holding the actual data stored in this frame of physical memory.  
+
+---
+
+### **Relationship**
+The `PhysicalMemory` structure uses the `frames` field to store and manage multiple `Frame` structures. Each `Frame` acts as a container for page data and provides metadata (e.g., validity and mapping) to facilitate efficient memory operations. Together, they represent and manage the physical memory in a virtual memory management system.
+
+---
+
+## 6. Statistics and Output
 ### Metrics:
 - TLB Hit Count  
 - Page Fault Count  
@@ -221,7 +319,7 @@ Page-fault rate:      YY%
 
 ---
 
-## 9. Testing Plan
+## 7. Testing Plan
 
 ### Test Scenarios:
 1. **Basic Translation**: Logical addresses without page faults.  
@@ -230,15 +328,6 @@ Page-fault rate:      YY%
 4. **Edge Cases**: Invalid addresses, large input files, etc.
 
 ### Tools:
-- Input Address File Generator  
-- Unit Testing for each component (TLB, Page Table, etc.).
-
----
-
-## 10. Future Improvements
-- Implement **LRU** replacement policy for page replacement.  
-- Optimize Backing Store access time.  
-- Extend to multi-threaded virtual memory management.  
-- Simulate demand paging algorithms (e.g., **FIFO**, **LRU**).  
+- Make file  
 
 ---
