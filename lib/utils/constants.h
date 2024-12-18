@@ -33,13 +33,13 @@
 #define MAX_PAGE_NUMBER 255
 
 // Number of entries in the page table (2^8)
-#define PAGE_TABLE_ENTRIES 256
+#define PAGE_TABLE_ENTRIES 16
 
 // Page size of 2^8 bytes
 #define PAGE_SIZE 256
 
 // Number of entries in the TLB (Translation Lookaside Buffer)
-#define TLB_ENTRIES 16
+#define TLB_ENTRIES 8
 
 // Frame size of 2^8 bytes
 #define FRAME_SIZE 256

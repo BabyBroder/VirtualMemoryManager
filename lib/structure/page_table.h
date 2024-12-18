@@ -6,7 +6,7 @@
 #ifndef PAGE_TABLE_H
 #define PAGE_TABLE_H
 
-#include "../memory/memory.h"
+#include "../algorithms/algorithms.h"
 
 /**
  * @struct PageTableEntry

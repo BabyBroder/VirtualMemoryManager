@@ -6,6 +6,7 @@
 #define DISK_MANAGER_H
 
 #include "../structure/structure.h"
+#include "../memory/memory.h"
 
 /**
  * @brief Initializes the disk manager with the provided virtual memory, physical memory, TLB, page table, and algorithm.

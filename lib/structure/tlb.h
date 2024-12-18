@@ -9,7 +9,7 @@
 #ifndef TLB_H
 #define TLB_H
 
-#include "../memory/memory.h"
+#include "../algorithms/algorithms.h"
 
 /**
  * @struct TLBEntry

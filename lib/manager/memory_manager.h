@@ -7,6 +7,7 @@
 #define MEMORY_MANAGER_H
 
 #include "../structure/structure.h"
+#include "../memory/memory.h"
 
 /**
  * @struct TLBManager
