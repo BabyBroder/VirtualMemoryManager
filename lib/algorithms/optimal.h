@@ -31,12 +31,10 @@
  */
 typedef struct
 {
-    int *page_number;        // Array to store the pages currently in memory
+    int *pages;        // Array to store the pages currently in memory
     int capacity;      // Maximum number of pages the memory can hold
     int size;          // Current number of pages in memory
     int *future_usage; // Array to track future usage of pages
-    int *map;
-    int **idx;
     int initialized; // Flag to check if the structure is initialized
 } Optimal;
 
@@ -48,13 +46,6 @@ typedef struct
  * @param capacity The capacity of the Optimal structure.
  */
 void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int capacity);
-
-/**
- * @brief Builds the future usage table for the Optimal structure.
- *
- * @param structure Pointer to the Optimal structure.
- */
-void build_future_usage(Optimal *structure);
 
 /**
  * @brief Chooses the page to replace based on the Optimal algorithm.
