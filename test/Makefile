@@ -7,8 +7,10 @@ LDFLAGS =
 TESTS = test_memory_manager test_page_table test_disk_manager test_algorithms test_tlb test_physical_memory test_virtual_memory
 
 # Core sources
-SRC = ../src/manager/memory_manager.c ../src/structure/page_table.c ../src/manager/disk_manager.c \
-      ../src/structure/tlb.c ../src/memory/physical_memory.c ../src/memory/virtual_memory.c \
+SRC = ../src/main.c \
+      ../src/manager/memory_manager.c ../src/manager/disk_manager.c \
+      ../src/structure/page_table.c ../src/structure/tlb.c \
+      ../src/memory/physical_memory.c ../src/memory/virtual_memory.c \
       ../src/utils/logger.c ../src/utils/parser.c \
       ../src/algorithms/fifo.c ../src/algorithms/lru.c ../src/algorithms/optimal.c
 

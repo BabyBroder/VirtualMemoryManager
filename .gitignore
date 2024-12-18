@@ -44,7 +44,5 @@ Makefile~
 .gdb_history
 
 # Ignore output files
-outputFIFO.txt
-outputLRU.txt
-output.txt
-output.log
+output*.txt
+*.log

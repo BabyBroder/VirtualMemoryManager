@@ -20,8 +20,8 @@ void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int c
 
     structure->pages = (int *)malloc(structure->capacity * sizeof(int));
     structure->future_usage = (int *)malloc(ADDRESS_SIZE * sizeof(int))
-    
-    ;
+
+        ;
     structure->map = (int *)malloc(65536 * sizeof(int));
     structure->idx = (int **)malloc(ADDRESS_SIZE * sizeof(int *));
     structure->initialized = 0xdeafbeef;
@@ -38,12 +38,9 @@ void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int c
     // Write address to future_usage
     for (int i = 0; i < ADDRESS_SIZE; i++)
     {
-        structure->future_usage[i] = virtual_memory->address[i];
+        int page_number = virtual_memory->address[i] >> 8 & 0xFF;
+        structure->future_usage[i] = page_number;
     }
-
-    // check later
-    for (int i = 0; i < ADDRESS_SIZE; i++)
-        structure->future_usage[i] = structure->future_usage[i] & 0xFFFF;
 
     for (int i = 0; i < 65536; i++)
         structure->map[i] = -1;
@@ -85,7 +82,7 @@ void build_future_usage(Optimal *structure)
     }
 }
 
-int optimal_choose_page_to_replace(const Optimal *structure, int current_index)
+int optimal_choose_page_to_replace(Optimal *structure, int current_index)
 {
 
     if (!structure)
@@ -103,11 +100,14 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index)
     int index = -1, farthest = -1;
     for (int i = 0; i < structure->capacity; i++)
     {
-        if (structure->idx[structure->map[structure->pages[i]]][current_index] == -1)
+        int page = structure->pages[i];
+        int map = structure->map[page];
+
+        if (structure->idx[map][current_index] == -1)
             return i;
-        if (structure->idx[structure->map[structure->pages[i]]][current_index] > farthest)
+        if (structure->idx[map][current_index] > farthest)
         {
-            farthest = structure->idx[structure->map[structure->pages[i]]][current_index];
+            farthest = structure->idx[map][current_index];
             index = i;
         }
     }
@@ -117,7 +117,6 @@ int optimal_choose_page_to_replace(const Optimal *structure, int current_index)
 
 int optimal_add_page(Optimal *structure, int page, int current_index)
 {
-
     if (!structure)
     {
         fprintf(stderr, "Error: OPT not initialized.\n");

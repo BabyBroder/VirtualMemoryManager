@@ -63,7 +63,7 @@ void build_future_usage(Optimal *structure);
  * @param current_index The current index in the page reference string.
  * @return The index of the page to replace.
  */
-int optimal_choose_page_to_replace(const Optimal *structure, int current_index);
+int optimal_choose_page_to_replace(Optimal *structure, int current_index);
 
 /**
  * @brief Adds a page to the Optimal structure.

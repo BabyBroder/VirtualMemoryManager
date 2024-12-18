@@ -142,8 +142,10 @@ void init()
     }
 
     initialize_virtual_memory(virtual_memory, INPUT_FILE, BACKING_STORE_FILE);
+
     // Algorithm: FIFO or LRU
     initialize_physical_memory(physical_memory, algorithm_physicalmemory);
+
     // Algorithm: FIFO, LRU or OPTIMAL
     initialize_tlb(tlb, virtual_memory, algorithm_tlb);
     initialize_page_table(page_table);
@@ -281,17 +283,17 @@ void translate(PhysicalMemory *physical_memory, int current_index)
 
 void print_results()
 {
-    printf("Input file:           %-20s\n", INPUT_FILE);
-    printf("Output file:          %-20s\n", OUTPUT_FILE);
-    printf("Log file:             %-20s\n", LOG_FILE);
-    printf("Backing store file:   %-20s\n", BACKING_STORE_FILE);
-    printf("Algorithm (Memory):   %-20s\n", algorithm_physicalmemory == FIFO_ALGORITHM ? "FIFO" : "LRU");
-    printf("Algorithm (TLB):      %-20s\n", algorithm_tlb == FIFO_ALGORITHM ? "FIFO" : algorithm_tlb == LRU_ALGORITHM ? "LRU"
-                                                                                                                      : "OPTIMAL");
-    printf("TLB hit rate:         %.2f%%\n",
-           (tlb_manager->TLBhits / (float)ADDRESS_SIZE));
-    printf("Page-fault rate:      %.2f%%\n",
-           (page_fault_manager->pageFaults / (float)ADDRESS_SIZE));
+    printf("Input file:                     %-20s\n", INPUT_FILE);
+    printf("Output file:                    %-20s\n", OUTPUT_FILE);
+    printf("Log file:                       %-20s\n", LOG_FILE);
+    printf("Backing store file:             %-20s\n", BACKING_STORE_FILE);
+    printf("Algorithm (Physical Memory):    %-20s\n", algorithm_physicalmemory == FIFO_ALGORITHM ? "FIFO" : "LRU");
+    printf("Algorithm (TLB):                %-20s\n", algorithm_tlb == FIFO_ALGORITHM ? "FIFO" : algorithm_tlb == LRU_ALGORITHM ? "LRU"
+                                                                                                                                : "OPTIMAL");
+    printf("TLB hit rate:                   %.2f%%\n",
+           (tlb_manager->TLBhits / (float)ADDRESS_SIZE) * 100);
+    printf("Page-fault rate:                %.2f%%\n",
+           (page_fault_manager->pageFaults / (float)ADDRESS_SIZE) * 100);
 }
 
 int main(int argc, char **argv)
