@@ -1,5 +1,3 @@
----
-
 # Virtual Memory Manager - Design Document
 
 ## Table of Contents
