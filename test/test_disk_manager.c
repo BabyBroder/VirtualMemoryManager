@@ -18,7 +18,6 @@ int main()
     }
     initialize_disk_manager(virtual_memory, physical_memory, tlb, page_table, FIFO_ALGORITHM);
     add_page_to_physical_memory(physical_memory, virtual_memory, 0, 1);
-    char *result = read_from_physical_memory(physical_memory, 0, 0);
-    printf("Result: %s\n", result);
-
+    char result = read_from_physical_memory(physical_memory, 0, 0)[0];
+    printf("Result: %d\n", (int)result);
 }

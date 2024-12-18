@@ -19,11 +19,11 @@ SRC_PHYSICAL_MEMORY = ../src/memory/physical_memory.c $(SRC_ALGORITHMS)
 
 SRC_MEMORY_MANAGER = ../src/manager/memory_manager.c
 
-SRC_DISK_MANAGER = ../src/manager/disk_manager.c
-
 SRC_PAGE_TABLE = ../src/structure/page_table.c
 
-SRC_TLB = ../src/structure/tlb.c
+SRC_TLB = ../src/structure/tlb.c $(SRC_PAGE_TABLE) $(SRC_ALGORITHMS)
+
+SRC_DISK_MANAGER = ../src/manager/disk_manager.c $(SRC_MEMORY_MANAGER) $(SRC_PHYSICAL_MEMORY) $(SRC_TLB)
 
 
 

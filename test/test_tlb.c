@@ -1,4 +1,4 @@
-#include "../src/main.h"
+#include "structure/tlb.h"
 typedef struct
 {
     int page_number;

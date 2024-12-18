@@ -1,4 +1,4 @@
-#include "src/main.h"
+#include "manager/memory_manager.h"
 
 int main()
 {
