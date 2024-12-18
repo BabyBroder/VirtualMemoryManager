@@ -82,16 +82,13 @@ In a virtual memory system with LRU page replacement:
 The **Optimal Page Replacement** algorithm is a page replacement strategy used in memory management. It replaces the page that will not be used for the longest period in the future. This approach minimizes the number of page faults, making it the most efficient page replacement strategy theoretically.
 
 ## OPT Implementation:
-1. Before adding the page, **future_usage** needs to be optimized.
-2. Mapping page values to smaller values.
-3. Using those smaller values to reduce the search array size, construct an index array where **idx[i][j]** is the nearest occurrence of page i (i is the value after mapping) from j onwards.
-4. When adding the page, check if the page already exists in the queue. If it does, skip the current page and do not modify the queue.
-5. If the queue has space available, add the page to the queue.
-6. If the queue is full, find the page that will not be used for the longest period in the future and replace it with the new page.
+1. When adding the page, check if the page already exists in the queue. If it does, skip the current page and do not modify the queue.
+2. If the queue has space available, add the page to the queue.
+3. If the queue is full, find the   .
 
 ## OPT FLowChart When Adding The Page
+![OPT Flowchart](../images/Algorithms/OPT.png)
 
-![OPT Flowchart](../images/Algorithms/OPT_init.png)
 ## OPT Structure
 1. **int \*page:**
     - Array to store the pages currently in memory
@@ -101,11 +98,6 @@ The **Optimal Page Replacement** algorithm is a page replacement strategy used i
     - Current number of pages in memory
 4. **int \*future_usage:**
     - Array to track future usage of pages
-5. **int \*map:**
-    -  Array for mapping purposes
-6. **int \*\*idx:**
-    - Optimize the data structure for rapid nearest-neighbor searches within the array.
-
 
 ## Example of OPT Algorithm
 - Capacity is **3**.
