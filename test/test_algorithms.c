@@ -1,8 +1,9 @@
-#include "../src/main.h"
+#include "algorithms/algorithms.h"
 
 //  Different size for address
 #undef ADDRESS_SIZE
 #define ADDRESS_SIZE 20
+
 void add_to_fifo(FIFO *fifo, int value)
 {
     printf("Adding %d to FIFO\n", value);
@@ -85,6 +86,8 @@ void testOPT(VirtualMemory *virtual_memory)
 
 int main()
 {
+    printf("=====================================\n");
+    printf("Address size: %d\n", ADDRESS_SIZE);
     testFIFO(3);  
     testLRU(3);
 
