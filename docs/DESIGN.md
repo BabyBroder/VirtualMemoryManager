@@ -156,7 +156,7 @@ The `VirtualMemory` structure is a core representation of virtual memory in the 
 
 3. **`initialized`**  
    - **Type**: `bool`  
-   - **Use**: A flag indicating whether the virtual memory system has been properly initialized, ensuring operations occur only after setup.--- 
+   - **Use**: A flag indicating whether the virtual memory system has been properly initialized, ensuring operations occur only after setup.
 ---
 ### **Structure: `PageTable`**
 
