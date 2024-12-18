@@ -33,7 +33,8 @@ __pycache__/
 *.DS_Store
 
 # Ignore generated data files
-data/output.log
+data/output*.log
+data/output*.txt
 data/*.bin
 
 # Ignore Makefile backups
@@ -43,6 +44,3 @@ Makefile~
 .py
 .gdb_history
 
-# Ignore output files
-output*.txt
-*.log
