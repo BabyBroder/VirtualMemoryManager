@@ -17,11 +17,11 @@ SRC_ALGORITHMS =    ../src/algorithms/fifo.c ../src/algorithms/lru.c ../src/algo
 
 SRC_PHYSICAL_MEMORY = ../src/memory/physical_memory.c $(SRC_ALGORITHMS)
 
-SRC_MEMORY_MANAGER = ../src/manager/memory_manager.c
-
 SRC_PAGE_TABLE = ../src/structure/page_table.c
 
 SRC_TLB = ../src/structure/tlb.c $(SRC_PAGE_TABLE) $(SRC_ALGORITHMS)
+
+SRC_MEMORY_MANAGER = ../src/manager/memory_manager.c $(SRC_PHYSICAL_MEMORY) $(SRC_TLB) $(SRC_PAGE_TABLE)
 
 SRC_DISK_MANAGER = ../src/manager/disk_manager.c $(SRC_MEMORY_MANAGER) $(SRC_PHYSICAL_MEMORY) $(SRC_TLB)
 
@@ -29,7 +29,9 @@ SRC_DISK_MANAGER = ../src/manager/disk_manager.c $(SRC_MEMORY_MANAGER) $(SRC_PHY
 
 # Test sources
 TEST_SRC = test_memory_manager.c test_page_table.c \
-           test_disk_manager.c test_algorithms.c test_tlb.c
+           test_disk_manager.c test_algorithms.c test_tlb.c \
+		   test_physical_memory.c test_virtual_memory.c \
+		   test_logger.c test_parser.c 
 
 # Targets
 all: $(TESTS)

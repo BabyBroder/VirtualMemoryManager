@@ -68,7 +68,7 @@ void add_to_OPT(Optimal *optimal, int page, int current_index)
 void init_OPT(Optimal *structure, VirtualMemory *virtual_memory, int capacity)
 {
 
-    if (structure->initialized == 0xdeafbeef)
+    if (structure->initialized)
     {
         fprintf(stderr, "Error: Optimal already initialized.\n");
         exit(EXIT_FAILURE);
@@ -85,7 +85,7 @@ void init_OPT(Optimal *structure, VirtualMemory *virtual_memory, int capacity)
 
     structure->pages = (int *)malloc(structure->capacity * sizeof(int));
     structure->future_usage = (int *)malloc(ADDRESS_SIZE * sizeof(int));
-    structure->initialized = 0xdeafbeef;
+    structure->initialized = true;
 
     if (!structure->pages || !structure->future_usage)
     {
