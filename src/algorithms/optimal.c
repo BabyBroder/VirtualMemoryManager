@@ -18,20 +18,20 @@ void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int c
     structure->capacity = capacity;
     structure->size = 0;
 
-    structure->pages = (int *)malloc(structure->capacity * sizeof(int));
+    structure->page_number = (int *)malloc(structure->capacity * sizeof(int));
     structure->future_usage = (int *)malloc(ADDRESS_SIZE * sizeof(int));
-    structure->map = (int *)malloc(65536 * sizeof(int));
+    structure->map = (int *)malloc((MAX_PAGE_NUMBER + 1) * sizeof(int));
     structure->idx = (int **)malloc(ADDRESS_SIZE * sizeof(int *));
     structure->initialized = 0xdeafbeef;
 
-    if (!structure->pages || !structure->future_usage || !structure->map || !structure->idx)
+    if (!structure->page_number || !structure->future_usage || !structure->map || !structure->idx)
     {
         perror("Optimal Error: Memory allocation failed");
         exit(EXIT_FAILURE);
     }
 
     for (int i = 0; i < structure->capacity; i++)
-        structure->pages[i] = -1;
+        structure->page_number[i] = -1;
 
     // Write address to future_usage
     for (int i = 0; i < ADDRESS_SIZE; i++)
@@ -40,7 +40,7 @@ void initialize_optimal(Optimal *structure, VirtualMemory *virtual_memory, int c
         structure->future_usage[i] = page_number;
     }
 
-    for (int i = 0; i < 65536; i++)
+    for (int i = 0; i < (MAX_PAGE_NUMBER + 1); i++)
         structure->map[i] = -1;
 
     for (int i = 0; i < ADDRESS_SIZE; i++)
@@ -62,9 +62,9 @@ void build_future_usage(Optimal *structure)
 {
     int _size = 0;
 
-    for (int i = 999; i >= 0; i--)
+    for (int i = ADDRESS_SIZE - 1; i >= 0; i--)
     {
-        if (i < 999)
+        if (i < ADDRESS_SIZE - 1)
         {
             for (int j = 0; j < _size; ++j)
                 structure->idx[j][i] = structure->idx[j][i + 1];
@@ -98,7 +98,7 @@ int optimal_choose_page_to_replace(Optimal *structure, int current_index)
     int index = -1, farthest = -1;
     for (int i = 0; i < structure->capacity; i++)
     {
-        int page = structure->pages[i];
+        int page = structure->page_number[i];
         int map = structure->map[page];
 
         if (structure->idx[map][current_index] == -1)
@@ -122,7 +122,7 @@ int optimal_add_page(Optimal *structure, int page, int current_index)
     }
 
     for (int i = 0; i < structure->size; i++)
-        if (structure->pages[i] == page)
+        if (structure->page_number[i] == page)
         {
             return i;
         }
@@ -131,20 +131,20 @@ int optimal_add_page(Optimal *structure, int page, int current_index)
     {
         int index = optimal_choose_page_to_replace(structure, current_index);
 
-        structure->pages[index] = page;
+        structure->page_number[index] = page;
         return index;
     }
 
-    structure->pages[structure->size++] = page;
+    structure->page_number[structure->size++] = page;
     return -1;
 }
 
 void free_optimal(Optimal *structure)
 {
-    if (structure->pages)
+    if (structure->page_number)
     {
-        free(structure->pages);
-        structure->pages = NULL;
+        free(structure->page_number);
+        structure->page_number = NULL;
     }
     if (structure->future_usage)
     {
@@ -176,6 +176,6 @@ void print_optimal(const Optimal *structure)
 {
     printf("Optimal Structure:\n");
     for (int i = 0; i < structure->size; i++)
-        printf("%d ", structure->pages[i]);
+        printf("%d ", structure->page_number[i]);
     printf("\n");
 }

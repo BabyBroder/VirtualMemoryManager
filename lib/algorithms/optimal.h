@@ -31,7 +31,7 @@
  */
 typedef struct
 {
-    int *pages;        // Array to store the pages currently in memory
+    int *page_number;        // Array to store the pages currently in memory
     int capacity;      // Maximum number of pages the memory can hold
     int size;          // Current number of pages in memory
     int *future_usage; // Array to track future usage of pages
