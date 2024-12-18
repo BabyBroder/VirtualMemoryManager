@@ -18,5 +18,9 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
+clean_output:
+	rm -f data/output*.txt
+	rm -f data/output*.log
+
 clean:
 	rm -f $(TARGET) $(OBJ)
