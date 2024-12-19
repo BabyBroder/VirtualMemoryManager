@@ -42,7 +42,7 @@ int find_free_frame(PhysicalMemory *physical_memory)
     return -1;
 }
 
-int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, uint8_t frame_number, int current_index)
+int find_entry_to_replace(PhysicalMemory *physical_memory, int page_number, int frame_number, int current_index)
 {
     // find suitable entry
     int needReplace = -2;
@@ -61,7 +61,7 @@ int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, 
     return needReplace;
 }
 
-uint8_t add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, uint8_t frame_number, uint8_t page_number)
+int add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, TLB *tlb, PageTable *page_table, int frame_number, int page_number)
 {
     if (physical_memory == NULL)
     {
@@ -93,17 +93,45 @@ uint8_t add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemo
 
     // indx = frame number exist in physical memory or need to replace
     int indx = goodState;
+    bool exist_page_number = false;
+
+    for (int i = 0; i < FRAME_SIZE; i++)
+    {
+        if (physical_memory->frames[i].page_number == page_number)
+        {
+            exist_page_number = true;
+            break;
+        }
+    }
+
     if (indx >= TOTAL_FRAMES || indx < 0)
     { // wrong index
         printf("Error index replacement\n");
         exit(EXIT_FAILURE);
         return -1;
     }
-    physical_memory->frames[indx].page_number = page_number;
+
+    // Need replacement
+    if (!exist_page_number)
+    {
+        int old_page_number = physical_memory->frames[indx].page_number;
+        physical_memory->frames[indx].page_number = page_number;
+
+        // Clear frame_number at specific entry in TLB and Page Table
+        page_table->entries[old_page_number].frame_number = -1;
+        page_table->entries[old_page_number].valid = false;
+
+        for(int i = 0; i < TLB_ENTRIES; i++){
+            if(tlb->entries[i].page_number == old_page_number){
+                tlb->entries[i].page_number = -1;
+                tlb->entries[i].valid = false;
+            }
+        }
+    }
     return indx;
 }
 
-char *read_from_physical_memory(PhysicalMemory *physical_memory, uint8_t frame_number, uint8_t offset)
+char *read_from_physical_memory(PhysicalMemory *physical_memory, int frame_number, int offset)
 {
 
     if (physical_memory->frames[frame_number].valid)

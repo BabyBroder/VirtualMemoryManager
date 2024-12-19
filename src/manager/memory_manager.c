@@ -37,5 +37,6 @@ int page_table_check(PageTable *page_table, PageFaultManager *page_fault_manager
         return -1;
     }
 
+    
     return frame_number;
 }

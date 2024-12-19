@@ -11,6 +11,7 @@
 #define PHYSICAL_MEMORY_H
 
 #include "../algorithms/algorithms.h"
+#include "../structure/structure.h"
 
 /**
  * @struct Frame
@@ -98,7 +99,7 @@ int find_free_frame(PhysicalMemory *physical_memory);
  * @param current_index The current index in the Physical Memory.
  * @return The index of the entry to replace.
  */
-int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, uint8_t frame_number, int current_index);
+int find_entry_to_replace(PhysicalMemory *physical_memory, int page_number, int frame_number, int current_index);
 
 /**
  * @brief Adds a page to the physical memory.
@@ -107,10 +108,12 @@ int find_entry_to_replace(PhysicalMemory *physical_memory, uint8_t page_number, 
  *
  * @param physical_memory Pointer to the PhysicalMemory structure.
  * @param virtual_memory Pointer to the VirtualMemory structure.
+ * @param tlb Pointer to TLB 
+ * @param page_table Pointer to page_table
  * @param frame_number The frame number to add the page to.
  * @param page_number The page number to add.
  */
-uint8_t add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, uint8_t frame_number, uint8_t page_number);
+int add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemory *virtual_memory, TLB *tlb, PageTable *page_table, int frame_number, int page_number);
 
 /**
  * @brief Reads data from physical memory.
@@ -122,6 +125,6 @@ uint8_t add_page_to_physical_memory(PhysicalMemory *physical_memory, VirtualMemo
  * @param offset The offset within the frame to start reading.
  * @return The data read from the physical memory.
  */
-char *read_from_physical_memory(PhysicalMemory *physical_memory, uint8_t frame_number, uint8_t offset);
+char *read_from_physical_memory(PhysicalMemory *physical_memory, int frame_number, int offset);
 
 #endif // PHYSICAL_MEMORY_H;

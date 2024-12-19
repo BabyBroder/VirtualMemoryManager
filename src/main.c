@@ -246,7 +246,7 @@ int get_frame_number(int virtual_address, int current_index)
         // If Page table miss
         if (frame_number == -1)
         {
-            frame_number = add_page_to_physical_memory(physical_memory, virtual_memory, frame_number, page_number);
+            frame_number = add_page_to_physical_memory(physical_memory, virtual_memory, tlb, page_table, frame_number, page_number);
             link_page_table_to_frame(page_table, page_number, frame_number);
             page_fault = true;
         }
